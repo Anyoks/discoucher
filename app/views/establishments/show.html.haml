@@ -1,0 +1,24 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @establishment.name
+%p
+  %b Type:
+  = @establishment.type
+%p
+  %b Location:
+  = @establishment.location
+%p
+  %b Phone:
+  = @establishment.phone
+%p
+  %b Address:
+  = @establishment.address
+%p
+  %b Logo:
+  = @establishment.logo
+
+= link_to 'Edit', edit_establishment_path(@establishment)
+\|
+= link_to 'Back', establishments_path

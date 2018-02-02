@@ -1,0 +1,31 @@
+%h1 Listing establishments
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th Type
+      %th Location
+      %th Phone
+      %th Address
+      %th Logo
+      %th
+      %th
+      %th
+
+  %tbody
+    - @establishments.each do |establishment|
+      %tr
+        %td= establishment.name
+        %td= establishment.type
+        %td= establishment.location
+        %td= establishment.phone
+        %td= establishment.address
+        %td= establishment.logo
+        %td= link_to 'Show', establishment
+        %td= link_to 'Edit', edit_establishment_path(establishment)
+        %td= link_to 'Destroy', establishment, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Establishment', new_establishment_path

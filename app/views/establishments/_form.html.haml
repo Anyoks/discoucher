@@ -1,0 +1,28 @@
+= form_for @establishment, html: { multipart: true } do |f|
+  - if @establishment.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@establishment.errors.count, "error")} prohibited this establishment from being saved:"
+      %ul
+        - @establishment.errors.full_messages.each do |message|
+          %li= message
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :type
+    = f.text_field :type
+  .field
+    = f.label :location
+    = f.text_field :location
+  .field
+    = f.label :phone
+    = f.text_field :phone
+  .field
+    = f.label :address
+    = f.text_field :address
+  .field
+    = f.label :logo
+    = f.file_field :logo
+  .actions
+    = f.submit 'Save'
