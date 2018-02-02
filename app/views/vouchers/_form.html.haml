@@ -1,0 +1,22 @@
+= form_for @voucher do |f|
+  - if @voucher.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@voucher.errors.count, "error")} prohibited this voucher from being saved:"
+      %ul
+        - @voucher.errors.full_messages.each do |message|
+          %li= message
+
+  .field
+    = f.label :code
+    = f.text_field :code
+  .field
+    = f.label :description
+    = f.text_area :description
+  .field
+    = f.label :condition
+    = f.text_area :condition
+  .field
+    = f.label :year
+    = f.text_field :year
+  .actions
+    = f.submit 'Save'

@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Code:
+  = @voucher.code
+%p
+  %b Description:
+  = @voucher.description
+%p
+  %b Condition:
+  = @voucher.condition
+%p
+  %b Year:
+  = @voucher.year
+
+= link_to 'Edit', edit_voucher_path(@voucher)
+\|
+= link_to 'Back', vouchers_path
