@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :establishments
   resources :vouchers
   resources :books
   root 'books#index'

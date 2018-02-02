@@ -71,3 +71,5 @@ gem 'groupdate'
 gem 'annotate', '~> 2.7', '>= 2.7.2'
 # bootstrap it
 gem 'bootstrap-sass' #enables bootstrap in te app
+# uploads and attachements
+gem 'paperclip'
