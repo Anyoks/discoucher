@@ -22,3 +22,10 @@
 
 .byebug_history
 /public/system
+ubuntu-xenial-16.04-cloudimg-console.log
+.vagrant/
+.rvm/
+.gnupg/
+.wget-hsts
+.gitconfig
+
