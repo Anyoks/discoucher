@@ -73,3 +73,5 @@ gem 'annotate', '~> 2.7', '>= 2.7.2'
 gem 'bootstrap-sass' #enables bootstrap in te app
 # uploads and attachements
 gem 'paperclip'
+# dealing with forms
+gem 'simple_form', '~> 3.5'
