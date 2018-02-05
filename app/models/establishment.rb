@@ -23,6 +23,6 @@ class Establishment < ApplicationRecord
 					  :styles => { small: "64x64", medium: "100x100", large: "200x200" }
 					  # :default_url => "path to default image"
 	validates_attachment_content_type :logo, content_type: /\Aimage\/.*\z/
+	belongs_to :book
+	has_many :vouchers
 end
-# :url => "/system/:class/:attachment/:id_partition/:filename",
-# 	:path  => ":rails_root/public:url"

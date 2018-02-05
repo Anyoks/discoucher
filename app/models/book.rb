@@ -10,4 +10,5 @@
 #
 
 class Book < ApplicationRecord
+	has_many :establishments, dependent: :destroy
 end

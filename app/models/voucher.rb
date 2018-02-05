@@ -12,4 +12,5 @@
 #
 
 class Voucher < ApplicationRecord
+	belongs_to :establishment
 end
