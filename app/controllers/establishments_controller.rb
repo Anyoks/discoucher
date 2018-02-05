@@ -55,6 +55,9 @@ class EstablishmentsController < ApplicationController
   # DELETE /establishments/1.json
   def destroy
     @establishment.destroy
+    # remove attatchment and delete the folders
+    @establishment.logo.destroy 
+    @establishment.logo.clear
     respond_to do |format|
       format.html { redirect_to establishments_url, notice: 'Establishment was successfully destroyed.' }
       format.json { head :no_content }

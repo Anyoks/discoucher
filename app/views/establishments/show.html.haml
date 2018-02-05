@@ -18,6 +18,8 @@
 %p
   %b Logo:
   = @establishment.logo
+  = image_tag @establishment.logo.url(:medium)
+
 
 = link_to 'Edit', edit_establishment_path(@establishment)
 \|
