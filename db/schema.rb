@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20180205094307) do
     t.datetime "logo_updated_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "book_id", default: "72b1bd3d-354a-46d5-9571-3f37e95d564f"
+    t.uuid "book_id"
     t.index ["book_id"], name: "index_establishments_on_book_id"
   end
 
