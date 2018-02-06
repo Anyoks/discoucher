@@ -20,7 +20,7 @@ Vagrant.configure("2") do |config|
   config.vm.network :forwarded_port, guest: 4567, host: 4567    # sinatra
   config.vm.network :forwarded_port, guest: 1080, host: 1080    # mailcatcher
   config.vm.network :forwarded_port, guest: 8888, host: 8888    # jasmine
-  config.vm.network :forwarded_port, guest: 3306, host: 3306    # mysql
+  # config.vm.network :forwarded_port, guest: 3306, host: 3306    # mysql
   config.vm.network :forwarded_port, guest: 1234, host: 1234    # node
   config.vm.network :forwarded_port, guest: 5432, host: 5432    # postgresql
   config.vm.network :forwarded_port, guest: 6379, host: 6378    # redis
