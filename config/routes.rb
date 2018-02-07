@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   end
 
   authenticated :user do
-    root to: 'book#index', as: :authenticated_root
+    root 'books#index', as: :authenticated_root
   end
 
 

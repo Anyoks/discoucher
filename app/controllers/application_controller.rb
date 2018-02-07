@@ -1,3 +1,4 @@
+
 class ApplicationController < ActionController::Base
 
   layout :layout_by_resource
@@ -30,7 +31,7 @@ class ApplicationController < ActionController::Base
 	#****User sign_in / sign_out page redirects****************#
   def after_sign_in_path_for(resource)
     if current_user.is_admin?
-      session["user_return_to"] || "/books" #user_index_path
+      session["user_return_to"] || "/" #user_index_path
     else
       "/vouchers"
     end
