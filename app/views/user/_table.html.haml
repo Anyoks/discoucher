@@ -1,0 +1,23 @@
+%table.table.table-hover
+  %thead
+    %tr
+      %th First Name
+      %th Last Name
+      %th Email
+      %th Phone Number
+      %th Customer Role
+      %th
+
+  %tbody
+    - users.each do |user|
+      %tr
+        %td= user.first_name
+        %td= user.last_name
+        %td= user.email
+        %td= user.phone_number
+        %td= user.role.name
+        %td
+          -if current_user && current_user.is_admin?
+            = link_to 'Show Details',  user, class: "label label-warning"
+            -unless current_user == user
+              = link_to 'Destroy', user, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"

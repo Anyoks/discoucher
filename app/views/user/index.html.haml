@@ -1,0 +1,16 @@
+%section.content-header
+  %h1
+    DisCoucher Users
+    %small All Users in the database #{@users.all.count}
+
+  %ol.breadcrumb
+    %li
+      %a{:href => "#"}
+        %i.fa.fa-dashboard
+        Level
+    %li.active Here
+
+
+
+%br
+=render "user/table", users: @users

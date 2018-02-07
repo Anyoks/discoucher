@@ -40,6 +40,26 @@ def is_admin?
 		User.where(:role_id => 4 )
 	end
 
+	def is_admin?
+		if self.role.nil?
+			false
+		elsif self.role.name == "admin"
+			true
+		else
+			false
+		end
+	end
+
+	def is_customer?
+		if self.role.nil?
+			false
+		elsif self.role.name == "customer"
+			true
+		else
+			false
+		end
+	end
+
 
 end
 
