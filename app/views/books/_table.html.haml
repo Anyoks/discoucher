@@ -1,0 +1,20 @@
+%table.table.table-hover
+  %thead
+    %tr
+      %th Book
+      %th Year
+      %th Options
+      %th
+
+  %tbody
+    - books.each do |book|
+      %tr
+        %td= book.code
+        / %td= link_to book.unit.name, units_path
+        %td= book.year
+        / %td= image_tag book.attachment_url(:thumb)
+        %td
+          -if current_user && current_user.is_admin?
+            = link_to 'Edit', edit_book_path(book), class: "label label-default"
+            = link_to "Show",book, class: "label label-warning"
+            = link_to 'Destroy', book, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"

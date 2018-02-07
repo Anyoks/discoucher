@@ -1,0 +1,22 @@
+%table.table.table-hover
+  %thead
+    %tr
+      %th Code
+      %th Description
+      %th Condition
+      %th Year
+      %th Options
+      %th
+
+  %tbody
+    - vouchers.each do |voucher|
+      %tr
+        %td= voucher.code
+        %td= voucher.description
+        %td= voucher.condition
+        %td= voucher.year
+        %td
+          -if current_user && current_user.is_admin?
+            = link_to 'Edit', edit_voucher_path(voucher), class: "label label-default"
+            = link_to "Show",voucher, class: "label label-warning"
+            = link_to 'Destroy', voucher, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"

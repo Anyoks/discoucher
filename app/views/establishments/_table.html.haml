@@ -1,0 +1,26 @@
+%table.table.table-hover
+  %thead
+    %tr
+      %th establishment
+      %th Type
+      %th Location
+      %th Phone
+      %th Address
+      %th Logo
+      %th Options
+      %th
+
+  %tbody
+    - establishments.each do |establishment|
+      %tr
+        %td= establishment.name
+        %td= establishment.type
+        %td= establishment.location
+        %td= establishment.phone
+        %td= establishment.address
+        %td= image_tag establishment.logo.url(:medium)
+        %td
+          -if current_user && current_user.is_admin?
+            = link_to 'Edit', edit_establishment_path(establishment), class: "label label-default"
+            = link_to "Show",establishment, class: "label label-warning"
+            = link_to 'Destroy', establishment, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"

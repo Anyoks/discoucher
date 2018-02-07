@@ -1,27 +1,21 @@
-%h1 Listing vouchers
+%section.content-header
+  %h1
+    DisCoucher Vouchers
+    %small All Vouchers in the database
+  %ol.breadcrumb
+    %li
+      %a{:href => "#"}
+        %i.fa.fa-dashboard
+        Level
+    %li.active Here
 
-%table
-  %thead
-    %tr
-      %th Code
-      %th Description
-      %th Condition
-      %th Year
-      %th
-      %th
-      %th
-
-  %tbody
-    - @vouchers.each do |voucher|
-      %tr
-        %td= voucher.code
-        %td= voucher.description
-        %td= voucher.condition
-        %td= voucher.year
-        %td= link_to 'Show', voucher
-        %td= link_to 'Edit', edit_voucher_path(voucher)
-        %td= link_to 'Destroy', voucher, method: :delete, data: { confirm: 'Are you sure?' }
 
 %br
 
-= link_to 'New Voucher', new_voucher_path
+
+%br
+=render "vouchers/table", vouchers: @vouchers #the table that was previously here was extracted to the partial to be DRY. seems like I needed it more than I thought! :-)
+
+%br
+-if current_user && current_user.is_admin?
+  %p=link_to 'New voucher', new_voucher_path, class: "btn btn-primary"

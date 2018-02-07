@@ -1,4 +1,14 @@
-%h1 New book
+/ Content Header (Page header)
+%section.content-header
+  %h1
+    New book
+    %small Create a new book
+  %ol.breadcrumb
+    %li
+      %a{:href => "#"}
+        %i.fa.fa-dashboard
+        Level
+    %li.active Here
 
 = render 'form'
 
