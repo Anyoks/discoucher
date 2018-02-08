@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   
   
-  devise_for :users
+ 
+  devise_for :admins, path: 'admins', controllers: { sessions: "admins/sessions" }
+  devise_for :users, path: 'users'
   devise_scope :user do
       get 'sign_in', to: 'devise/sessions#new'
       get 'sign_up', to: 'devise/registrations#new'
