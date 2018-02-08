@@ -1,11 +1,12 @@
-
+  
 class ApplicationController < ActionController::Base
 
   layout :layout_by_resource
   protect_from_forgery with: :exception
   protect_from_forgery with: :null_session,
      if: Proc.new { |c| c.request.format =~ %r{application/json} }
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
+  before_action :authenticate_admin!
   before_action :configure_permitted_parameters, if: :devise_controller?	
 
 
@@ -21,7 +22,8 @@ class ApplicationController < ActionController::Base
   private
 
     def layout_by_resource
-    	if devise_controller? && action_name == "new" && action_name == "edit"
+      # byebug
+    	if devise_controller? && action_name == "new" #&& action_name == "edit"
     		"admin_lte_2_signup"
     	else
     		"admin_lte_2"
@@ -30,10 +32,11 @@ class ApplicationController < ActionController::Base
 
 	#****User sign_in / sign_out page redirects****************#
   def after_sign_in_path_for(resource)
-    if current_user.is_admin?
-      session["user_return_to"] || "/" #user_index_path
+
+    if current_admin.is_admin?
+      session["user_return_to"] || "/vouchers" #user_index_path
     else
-      "/vouchers"
+      "/establishments"
     end
   end
 

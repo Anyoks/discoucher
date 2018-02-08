@@ -12,6 +12,9 @@ class BooksController < ApplicationController
   def show
   end
 
+  def registration
+    @book = Book.find(params[:id])
+  end
   # GET /books/new
   def new
     @book = Book.new

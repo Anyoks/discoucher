@@ -17,5 +17,5 @@
 =render "establishments/table", establishments: @establishments #the table that was previously here was extracted to the partial to be DRY. seems like I needed it more than I thought! :-)
 
 %br
--if current_user && current_user.is_admin?
+-if current_admin && current_admin.is_admin?
   %p=link_to 'New establishment', new_establishment_path, class: "btn btn-primary"
