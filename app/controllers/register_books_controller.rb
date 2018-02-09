@@ -21,7 +21,6 @@ class RegisterBooksController < ApplicationController
   # GET /register_books/new
   def new
     @register_book = RegisterBook.new
-    byebug
   end
 
   # GET /register_books/1/edit
@@ -31,8 +30,10 @@ class RegisterBooksController < ApplicationController
   # POST /register_books
   # POST /register_books.json
   def create
+    
+    
     @register_book = RegisterBook.new(register_book_params)
-
+    @register_book.find_book_by_code
     respond_to do |format|
       if @register_book.save
         format.html { redirect_to @register_book, notice: 'Register book was successfully created.' }

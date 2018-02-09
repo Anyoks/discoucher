@@ -9,6 +9,7 @@ class User < ApplicationRecord
 
   
   before_create :set_default_role
+  has_many :register_books
 
 def is_admin?
 		if self.role.nil?

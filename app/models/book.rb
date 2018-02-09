@@ -11,4 +11,14 @@
 
 class Book < ApplicationRecord
 	has_many :establishments, dependent: :destroy
+	has_one  :register_book
+
+
+	def registered?
+		if self.register_book
+			return self.register_book
+		else
+			return false
+		end
+	end
 end
