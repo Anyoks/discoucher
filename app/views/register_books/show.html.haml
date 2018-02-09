@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b First name:
+  = @register_book.first_name
+%p
+  %b Last name:
+  = @register_book.last_name
+%p
+  %b Phone number:
+  = @register_book.phone_number
+%p
+  %b Email:
+  = @register_book.email
+%p
+  %b Book code:
+  = @register_book.book_code
+
+= link_to 'Edit', edit_register_book_path(@register_book)
+\|
+= link_to 'Back', register_books_path
