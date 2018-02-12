@@ -3,6 +3,7 @@
     %tr
       %th Book
       %th Year
+      %th Registration Status
       %th Options
       %th
 
@@ -13,6 +14,9 @@
         / %td= link_to book.unit.name, units_path
         %td= book.year
         / %td= image_tag book.attachment_url(:thumb)
+        %td
+          -if book.registered?
+            = link_to 'registered', '#', class: "label label-success"
         %td
           -if current_admin && current_admin.is_admin?
             = link_to 'Edit', edit_book_path(book), class: "label label-default"
