@@ -14,6 +14,7 @@
 #  logo_updated_at   :datetime
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  book_id           :uuid
 #
 
 require 'test_helper'
