@@ -12,6 +12,7 @@
 class Book < ApplicationRecord
 	has_many :establishments, dependent: :destroy
 	has_one  :register_book
+	has_many :vouchers, through: :establishments
 
 
 	def registered?
