@@ -43,8 +43,9 @@ class RegisterBook < ApplicationRecord
 		end
 	end
 
-
+protected
 #  " Prepare ye the way of the Lord..."
+#  
 # NOw lets create a user for the book, this will be used for mobile app logins in the future
 	def create_user_for_the_book
 		user = User.find_by_email self.email

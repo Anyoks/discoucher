@@ -33,4 +33,10 @@ Rails.application.routes.draw do
   # get 'user/show'   
   root 'establishments#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  namespace :api do
+    namespace :v1 do
+      resources :sms, only: [:create]
+    end
+  end
+
 end

@@ -33,7 +33,10 @@ class RegisterBooksController < ApplicationController
     
     
     @register_book = RegisterBook.new(register_book_params)
+
+    # check if book exists and is not registered
     @register_book.find_book_by_code
+    
     respond_to do |format|
       if @register_book.save
         format.html { redirect_to @register_book, notice: 'Register book was successfully created.' }

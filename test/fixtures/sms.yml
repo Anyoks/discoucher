@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  message: MyString
+  voucher_code: MyString
+  book_code: MyString
+
+two:
+  message: MyString
+  voucher_code: MyString
+  book_code: MyString
