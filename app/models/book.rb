@@ -22,4 +22,16 @@ class Book < ApplicationRecord
 			return false
 		end
 	end
+
+	def self.is_registered book_code
+		# check if the book is retistered aand return the registered book
+		book = RegisterBook.where(book_code: "#{book_code}").first
+		if book.nil?
+			p "THis book is not registered"
+			return false
+		else
+			"The book is registered"
+			return book
+		end
+	end
 end
