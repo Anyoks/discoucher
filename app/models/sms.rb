@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: sms
+#
+#  id           :uuid             not null, primary key
+#  message      :string
+#  voucher_code :string
+#  book_code    :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
+
 class Sms < ApplicationRecord
 
 
