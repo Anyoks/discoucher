@@ -91,6 +91,10 @@ class Voucher < ApplicationRecord
 			return false
 		end		
 	end
+
+	def unredeem
+		self.update_attributes(redeem_status: false)
+	end
 end
 # find the registreed book
 # check that the book has not exp
