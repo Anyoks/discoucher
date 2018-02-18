@@ -12,41 +12,41 @@ set -e
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 
 # add repo for postgres installation
-# echo "============add repo for later postgres installation"
-# sudo add-apt-repository "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -sc)-pgdg main"
-# wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+echo "============add repo for later postgres installation"
+sudo add-apt-repository "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -sc)-pgdg main"
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 
 echo "============Updates packages. Asks for your password."
 sudo apt-get update -y
 
-# echo "============Installing nginx"
-# sudo apt-get install nginx -y
+echo "============Installing nginx"
+sudo apt-get install nginx -y
 
-# echo "============Installing Git"
-# sudo apt-get install git-core -y
+echo "============Installing Git"
+sudo apt-get install git-core -y
 
-# echo "============Setting up Git"
-# git config --global user.name "Denn Orina"
-# git config --global user.email "anyoksdenn@gmail.com"
+echo "============Setting up Git"
+git config --global user.name "Denn Orina"
+git config --global user.email "anyoksdenn@gmail.com"
 
-# echo "============Installs packages. Give your password when asked."
-# sudo apt-get --ignore-missing install build-essential git-core curl openssl libssl-dev libcurl4-openssl-dev zlib1g zlib1g-dev libreadline-dev libreadline6 libreadline6-dev libyaml-dev libsqlite3-dev libsqlite3-0 sqlite3 libxml2-dev libxslt1-dev python-software-properties libffi-dev libgdm-dev libncurses5-dev automake autoconf libtool bison postgresql-9.6 postgresql-contrib libpq-dev pgadmin3 libc6-dev nodejs -y
+echo "============Installs packages. Give your password when asked."
+sudo apt-get --ignore-missing install build-essential git-core curl openssl libssl-dev libcurl4-openssl-dev zlib1g zlib1g-dev libreadline-dev libreadline6 libreadline6-dev libyaml-dev libsqlite3-dev libsqlite3-0 sqlite3 libxml2-dev libxslt1-dev python-software-properties libffi-dev libgdm-dev libncurses5-dev automake autoconf libtool bison postgresql-9.6 postgresql-contrib libpq-dev pgadmin3 libc6-dev nodejs -y
 
-# echo "============Installs ImageMagick for image processing"
-# sudo apt-get install imagemagick --fix-missing -y
+echo "============Installs ImageMagick for image processing"
+sudo apt-get install imagemagick --fix-missing -y
 
-# echo "============Installs RVM (Ruby Version Manager) for handling Ruby installation"
-# gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
-# curl -sSL https://get.rvm.io | bash -s stable
-# source ~/.rvm/scripts/rvm
+echo "============Installs RVM (Ruby Version Manager) for handling Ruby installation"
+gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+curl -sSL https://get.rvm.io | bash -s stable
+source ~/.rvm/scripts/rvm
 
-# echo "Installs Ruby"
-# rvm install 2.5.0
-# rvm use 2.5.0 --default
+echo "Installs Ruby"
+rvm install 2.5.0
+rvm use 2.5.0 --default
 
-# echo "gem: --no-ri --no-rdoc" > ~/.gemrc
-# gem install bundler
-# gem install rails
+echo "gem: --no-ri --no-rdoc" > ~/.gemrc
+gem install bundler
+gem install rails
 
 
 echo -e "\n- - - - - -\n"

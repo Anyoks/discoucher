@@ -20,39 +20,57 @@ class Sms < ApplicationRecord
 		text_message = self.message
 		phone_number = self.phone_number
 
+		if self.check_regex
+
 		# split at the star and discard empty string
-		raw_data = text_message.split('*')
-		raw_data.reject!{ |c| c.empty?}
+			raw_data = text_message.split('*')
+			raw_data.reject!{ |c| c.empty?}
 
-		# Catch any errors in the message early.
-		if text_message.empty? ||  raw_data.size !=2
-			# log the erronous message
-			failed_message = FailedMessage.new(:message => "#{text_message}", :phone_number => "#{phone_number}")
-			failed_message.save
+			# Catch any errors in the message early.
+			if text_message.empty? ||  raw_data.size !=2
+				# log the erronous message
+				failed_message = FailedMessage.new(:message => "#{text_message}", :phone_number => "#{phone_number}")
+				failed_message.save
 
-			return false, "Error with the Text message format"
-			# byebug
+				return false, "Error with the Text message format"
+				# byebug
+			else
+				# process the ext and extract relevant data
+				
+				book_code = raw_data[0].squish
+				# ge the voucher code
+				voucher_code = raw_data[1].split('#')
+				# voucher_code = voucher_code[0]
+				
+				# save the data in am array
+				params_arr = []
+				params_arr << book_code << voucher_code[0].squish << text_message << phone_number
+
+				# Prepare parameters to save to Database
+				save_params = sms_params params_arr
+
+				# save the sms at this point
+				@sms = Sms.new(save_params)
+				@sms.save
+				return @sms
+			end
+
 		else
-			# process the ext and extract relevant data
-			
-			book_code = raw_data[0].squish
-			# ge the voucher code
-			voucher_code = raw_data[1].split('#')
-			# voucher_code = voucher_code[0]
-			
-			# save the data in am array
-			params_arr = []
-			params_arr << book_code << voucher_code[0].squish << text_message << phone_number
-
-			# Prepare parameters to save to Database
-			save_params = sms_params params_arr
-
-			# save the sms at this point
-			@sms = Sms.new(save_params)
-			@sms.save
-			return @sms
+			return false, "Error with the Text message format"
 		end
 	end
+
+	def check_regex 
+		regex = /[*]\S+[*]\S+[#]/
+		if regex.match(self.message).nil? 
+			"this does not match"
+			return false 
+		else
+			"This matches"
+			return true
+		end
+	end
+		
 	
 
 	def attempt_redeem
