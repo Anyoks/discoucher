@@ -84,3 +84,4 @@ gem 'paperclip'
 gem 'simple_form', '~> 3.5'
 # API 
 gem 'jsonapi-rails'
+gem 'rake'
