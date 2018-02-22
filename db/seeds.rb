@@ -5,6 +5,6 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-['customer', 'corporate', 'moderator', 'admin'].each do |role|
+['moderator', 'admin'].each do |role|
   Role.find_or_create_by({name: role})
 end
