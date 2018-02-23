@@ -12,5 +12,8 @@
   .field
     = f.label :year
     = f.text_field :year
+  .field
+    / = f.label :book
+    = f.association :establishment, label_method: :name, value_method: :id, include_blank: false
   .actions
     = f.submit 'Save'
