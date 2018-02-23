@@ -35,6 +35,7 @@ class User < ApplicationRecord
   has_many :register_books
 
   has_many :visits
+  has_many :failed_redemptions
 
 def is_admin?
 		if self.role.nil?

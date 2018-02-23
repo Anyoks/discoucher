@@ -54,31 +54,42 @@ class Voucher < ApplicationRecord
 	# Voucher redemption process
 	def redeem
 		# first check if the book is registered if so start voucher redemption process
-		if self.check_if_book_is_registered
+		result_array = self.check_if_book_is_registered
+		if result_array.present?
 
 			#get user details from registred book
+			user_id = result_array[0].id
+			register_book_id = result_array[1]
+			establishment_id = self.establishment.id
+			voucher_id = self.id
+
 			#Check visit count for user in this establishement
+			count = check_user_visits_in_this_establishment(user_id, establishment_id)
+
 			#create a visit if the count is less than 2
-			#if the visits are more than 2 then the redemption is invalid
-			#create a failed redemption for user, establishment.
-			
-			# check if it's aready redeemed if not redeem it
-			
-			if self.redeem_status == false
-			# change redeemed status to make the voucher redeemed
-				if self.update_attributes(redeem_status: true)
-					"The voucher has been successfully redeemed"
+			if count < 2
+				visit_params = make_visit_params(user_id,register_book_id,establishment_id,voucher_id)
+				@visit = Visit.new(visit_params)
+				if @visit.save!
+
+					logger.debug "Voucher has been successfully redeemed"
 					return true
 				else
-					"The voucher has not been redeemed"
+					logger.debug "something went wront"
 					return false
 				end
+				#if the visits are more than 2 then the redemption is invalid
 			else
-				"This voucher has already been used"
+				logger.debug "Voucher You cannot redeem more than two vouchers in one establishment"
+				#create a failed redemption for user, establishment.
+				byebug
+				failed_redemptions = FailedRedemption.new(user_id: "#{user_id}", establishment_id: "#{establishment_id}")
+				failed_redemptions.save
 				return false
 			end
 		else
-			"This Book is not registered"
+			logger.debug "This Book is not registered"
+			# Create failed Reg
 			return false
 		end
 	end
@@ -94,9 +105,11 @@ class Voucher < ApplicationRecord
 
 		if self.establishment.book.registered?.present?
 			"This Book is registered"
-			# return a user instead
 			
-			return true
+			# return a user instead
+			 registered_book = self.establishment.book.registered?.id
+			 user = self.establishment.book.registered?.user
+			return user, registered_book	
 		else
 			return false
 		end		
@@ -105,6 +118,22 @@ class Voucher < ApplicationRecord
 	def unredeem
 		self.update_attributes(redeem_status: false)
 	end
+
+	def check_user_visits_in_this_establishment user_id, establishment_id
+		user = User.find("#{user_id}")
+		establishment = establishment_id
+		return user.visits.where(establishment_id:"#{establishment}").count
+	end
+
+	def make_visit_params user_id,register_book_id,establishment_id,voucher_id
+		data = []
+		data << user_id << register_book_id << establishment_id << voucher_id
+		name = ["user_id","register_book_id","establishment_id","voucher_id"] 
+		hash = Hash[*name.zip(data).flatten]
+		return hash
+	end
+
+
 end
 # find the registreed book
 # check that the book has not exp

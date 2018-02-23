@@ -27,4 +27,5 @@ class Establishment < ApplicationRecord
 	belongs_to :book
 	has_many :vouchers, :dependent => :destroy
 	has_many :visits
+	has_many :failed_redemptions
 end

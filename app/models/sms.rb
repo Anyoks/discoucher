@@ -63,10 +63,10 @@ class Sms < ApplicationRecord
 	def check_regex 
 		regex = /[*]\S+[*]\S+[#]/
 		if regex.match(self.message).nil? 
-			"this does not match"
+			logger.debug "this message #{self.message} does not match regex "
 			return false 
 		else
-			"This matches"
+			logger.debug "This message #{self.message} matches"
 			return true
 		end
 	end
@@ -97,14 +97,14 @@ protected
 		if voucher.present?
 			# byebug
 			if voucher.redeem
-				"Successful redemption"
+				logger.debug "Successful redemption"
 				return true
 			else 
-				"The voucher has already been used"
+				logger.debug "The voucher has already been used"
 				return false
 			end
 		else
-			"Failed sms redemption Process, voucher does not exist"
+			logger.debug "Failed sms redemption Process, voucher does not exist"
 			# add to failed redemption process db (belongs to voucher)
 			return false
 		end	

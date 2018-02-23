@@ -45,9 +45,6 @@ class RegisterBook < ApplicationRecord
 		end
 	end
 
-	def vouchers
-		self.book.establishment.vouchers		
-	end
 
 protected
 #  " Prepare ye the way of the Lord..."
