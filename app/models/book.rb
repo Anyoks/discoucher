@@ -10,7 +10,7 @@
 #
 
 class Book < ApplicationRecord
-	belongs_to :establishment
+	has_many :establishments
 	has_one  :register_book
 	has_many :vouchers, through: :establishments
 

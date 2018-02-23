@@ -24,6 +24,10 @@
   .field
     = f.label :logo
     = f.file_field :logo
+
+  .field
+    / = f.label :book
+    = f.association :book, label_method: :code, value_method: :id, include_blank: false
   
   .actions
     = f.submit 'Save'

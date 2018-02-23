@@ -55,6 +55,12 @@ class Voucher < ApplicationRecord
 	def redeem
 		# first check if the book is registered if so start voucher redemption process
 		if self.check_if_book_is_registered
+
+			#get user details from registred book
+			#Check visit count for user in this establishement
+			#create a visit if the count is less than 2
+			#if the visits are more than 2 then the redemption is invalid
+			#create a failed redemption for user, establishment.
 			
 			# check if it's aready redeemed if not redeem it
 			
@@ -85,8 +91,11 @@ class Voucher < ApplicationRecord
 	# check if the book is registered.Only books that exist are registered.
 
 	def check_if_book_is_registered
+
 		if self.establishment.book.registered?.present?
 			"This Book is registered"
+			# return a user instead
+			
 			return true
 		else
 			return false
