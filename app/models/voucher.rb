@@ -15,6 +15,7 @@
 
 class Voucher < ApplicationRecord
 	belongs_to :establishment
+	has_many :visits
 
 	# Check if the voucher is redeemed or not and return true or false
 	def redeemed?
