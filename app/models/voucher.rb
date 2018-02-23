@@ -82,7 +82,7 @@ class Voucher < ApplicationRecord
 			else
 				logger.debug "Voucher You cannot redeem more than two vouchers in one establishment"
 				#create a failed redemption for user, establishment.
-				byebug
+				# byebug
 				failed_redemptions = FailedRedemption.new(user_id: "#{user_id}", establishment_id: "#{establishment_id}")
 				failed_redemptions.save
 				return false
