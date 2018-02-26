@@ -85,3 +85,5 @@ gem 'simple_form', '~> 3.5'
 # API 
 gem 'jsonapi-rails'
 gem 'rake'
+# Pagination
+gem 'will_paginate', '~> 3.1.1'
