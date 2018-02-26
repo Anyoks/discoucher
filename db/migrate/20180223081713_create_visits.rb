@@ -8,5 +8,9 @@ class CreateVisits < ActiveRecord::Migration[5.1]
       t.uuid :voucher_id
       t.timestamps
     end
+    add_index :visits, :user_id
+    add_index :visits, :register_book_id
+    add_index :visits, :establishment_id
+    add_index :visits, :voucher_id
   end
 end
