@@ -18,7 +18,7 @@ class Sms < ApplicationRecord
 # Extract relevant info from the message and save it. This method also catches errors in the SMS
 	def process_text
 		# remove any spaces and new line characters from the message
-		text_message = self.message.gsub!(/[[:space:]]/, '')
+		text_message = self.message.gsub(/[[:space:]]/, '')
 		# set up variables to use 
 		# update model with the new message
 		# 
@@ -29,9 +29,9 @@ class Sms < ApplicationRecord
 		
 
 		if check_regex_text text_message #self.check_regex
-
 		# split at the star and discard empty string
 			raw_data = text_message.split('*')
+
 			raw_data.reject!{ |c| c.empty?}
 
 			# Catch any errors in the message early.
@@ -87,8 +87,8 @@ class Sms < ApplicationRecord
 	def check_regex_text text
 		regex = /[*]\S+[*]\S+[#]/
 		# remove white spaces and new lines from the message
-		# text_message = text_message.gsub(/[[:space:]]/, '') 
-		if regex.match(self.message).nil? 
+		text_message = text
+		if regex.match(text_message).nil? 
 			logger.debug "this message #{self.message} does not match regex "
 			return false 
 		else
