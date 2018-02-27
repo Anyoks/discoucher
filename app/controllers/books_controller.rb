@@ -4,46 +4,7 @@ class BooksController < ApplicationController
   # GET /books
   # GET /books.json
   def index
-<<<<<<< Updated upstream
     @books = Book.all
-=======
-    @books = Book.all.paginate(:page => params[:page], :per_page => 20)
-    lables = FailedRedemption.group_by_month(:created_at).count
-    @data = {
-      labels: lables.map {|label, data| label.strftime("%B") },
-      datasets: [
-        {
-           # label: "My First dataset",
-           # pointStrokeColor: "#FFA500",
-           # fillColor: "rgba(255,165,0,0.5)",
-           # pointColor: "rgba(255,165,0,1)",
-           # strokeColor: "rgba(255,165,0,1)",
-           data: lables.map {|label, data| data  },
-           backgroundColor: "#FF6384",
-           hoverBackgroundColor: "#FF6384"
-
-        }
-      ]
-    }
-    @options1 = {:height => "253", :width => "507"}
-
-    @data2 = {
-      labels: lables.map {|label, data| label.strftime("%B") },
-      datasets: [
-        {
-           # label: "My First dataset",
-           # pointStrokeColor: "#FFA500",
-           # fillColor: "rgba(255,165,0,0.5)",
-           # pointColor: "rgba(255,165,0,1)",
-           # strokeColor: "rgba(255,165,0,1)",
-           data: lables.map {|label, data| data  },
-           backgroundColor: "#FF6384",
-           hoverBackgroundColor: "#FF6384"
-
-        }
-      ]
-    }
->>>>>>> Stashed changes
   end
 
   # GET /books/1
