@@ -1,33 +1,28 @@
-.container
-  .row-fluid
-    .col-md-6
-      .box.box-danger
-        .box-header.with-border
-          %h3.box-title Donut Chart
-          .box-tools.pull-right
-            %button.btn.btn-box-tool{"data-widget" => "collapse", :type => "button"}
-              %i.fa.fa-minus
-            %button.btn.btn-box-tool{"data-widget" => "remove", :type => "button"}
-              %i.fa.fa-times
-        .box-body
-          = doughnut_chart @data, @options1
-          / = doughnut_chart Establishment.joins(:visits).select(:location).group_by(&:location).count, @options1
-
-          / = pie_chart FailedRedemption.group_by_month(:created_at).count#@data, @options1
-          / = line_chart FailedRedemption.group_by_day(:created_at).count
-  .row-fluid
-    .col-md-6
-      .box.box-danger
-        .box-header.with-border
-          %h3.box-title Donut Chart
-          .box-tools.pull-right
-            %button.btn.btn-box-tool{"data-widget" => "collapse", :type => "button"}
-              %i.fa.fa-minus
-            %button.btn.btn-box-tool{"data-widget" => "remove", :type => "button"}
-              %i.fa.fa-times
-        .box-body
-          / = doughnut_chart @data, @options1
-          = doughnut_chart Establishment.joins(:visits).select(:location).group_by(&:location).count, @options1
+.row-fluid
+  .col-md-6
+    .box.box-danger
+      .box-header.with-border
+        %h3.box-title Establishment Visits By Location
+        .box-tools.pull-right
+          %button.btn.btn-box-tool{"data-widget" => "collapse", :type => "button"}
+            %i.fa.fa-minus
+          %button.btn.btn-box-tool{"data-widget" => "remove", :type => "button"}
+            %i.fa.fa-times
+      .box-body
+        = doughnut_chart @data , @options1
+.row-fluid
+  .col-md-6
+    .box.box-danger
+      .box-header.with-border
+        %h3.box-title Establishment Visits By name
+        .box-tools.pull-right
+          %button.btn.btn-box-tool{"data-widget" => "collapse", :type => "button"}
+            %i.fa.fa-minus
+          %button.btn.btn-box-tool{"data-widget" => "remove", :type => "button"}
+            %i.fa.fa-times
+      .box-body
+        / = doughnut_chart @data, @options1
+        = doughnut_chart @establishment_vistis_by_name, @options2
 
 %table.table.table-hover
   %thead

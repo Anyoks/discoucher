@@ -5,9 +5,22 @@ class BooksController < ApplicationController
   # GET /books.json
   def index
     @books = Book.all.paginate(:page => params[:page], :per_page => 20)
-    lables = FailedRedemption.group_by_month(:created_at).count
+    # lables = FailedRedemption.group_by_month(:created_at).count
+    # 
+    # Establishment Visits By Location
+    labels =  Establishment.select(:location).joins(:visits).select(:location)
+    array_of_data_one = labels.to_a.group_by(&:location).map {|label, data| data.count}
+    colour = []
+    array_of_data_one.size.times { |c| colour <<"#%06x" % (rand * 0xffffff) }
+
+    # Establishment Visits By name
+    labels2 =  Establishment.select(:name).joins(:visits).select(:name)
+    array_of_data_two = labels2.to_a.group_by(&:name).map {|name, data| data.count}
+    colour2 = []
+    array_of_data_two.size.times { |c| colour2 <<"#%06x" % (rand * 0xffffff) }
+
     @data = {
-      labels: lables.map {|label, data| label.strftime("%B") },
+      labels: labels.to_a.group_by(&:location).map {|label, data| label},
       datasets: [
         {
            # label: "My First dataset",
@@ -15,14 +28,35 @@ class BooksController < ApplicationController
            # fillColor: "rgba(255,165,0,0.5)",
            # pointColor: "rgba(255,165,0,1)",
            # strokeColor: "rgba(255,165,0,1)",
-           data: lables.map {|label, data| data  },
-           backgroundColor: "#FF6384",
-           hoverBackgroundColor: "#FF6384"
+           data: array_of_data_one,
+           backgroundColor: colour,
+           hoverBackgroundColor: "#FFA500"
 
         }
       ]
     }
-    @options1 = {:height => "253", :width => "507"}
+    @establishment_vistis_by_name = {
+      labels: labels2.to_a.group_by(&:name).map {|name, data| name},
+      datasets: [
+        {
+           # label: "My First dataset",
+           # pointStrokeColor: "#FFA500",
+           # fillColor: "rgba(255,165,0,0.5)",
+           # pointColor: "rgba(255,165,0,1)",
+           # strokeColor: "rgba(255,165,0,1)",
+           data: array_of_data_two,
+           backgroundColor: colour2,
+           hoverBackgroundColor: "#FFA500"
+
+        }
+      ]
+    }
+
+    # Books Registered this week
+    labels3 = RegisterBook.group_by_day(:created_at).count
+
+    @options1 = {:height => "257px", :width => "514px"}
+    @options2 = {:height => "257px", :width => "514px"}
   end
 
   # GET /books/1
