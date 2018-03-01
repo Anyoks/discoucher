@@ -20,7 +20,7 @@ class BooksController < ApplicationController
     array_of_data_two.size.times { |c| colour2 <<"#%06x" % (rand * 0xffffff) }
 
     @data = {
-      labels: labels.to_a.group_by(&:location).map {|label, data| label},
+      labels: ['Westlands', 'Nairobi CBD', 'Outside Nairobi', 'Karen', 'Ngong Road'],#labels.to_a.group_by(&:location).map {|label, data| label},
       datasets: [
         {
            # label: "My First dataset",
@@ -28,7 +28,7 @@ class BooksController < ApplicationController
            # fillColor: "rgba(255,165,0,0.5)",
            # pointColor: "rgba(255,165,0,1)",
            # strokeColor: "rgba(255,165,0,1)",
-           data: array_of_data_one,
+           data: [10,12,50,100,60],#array_of_data_one,
            backgroundColor: colour,
            hoverBackgroundColor: "#FFA500"
 
@@ -36,7 +36,7 @@ class BooksController < ApplicationController
       ]
     }
     @establishment_vistis_by_name = {
-      labels: labels2.to_a.group_by(&:name).map {|name, data| name},
+      labels: ['Java', 'Chicken Inn', 'Pizza Inn', 'Red Carpet','About Thyme'] ,#labels2.to_a.group_by(&:name).map {|name, data| name},
       datasets: [
         {
            # label: "My First dataset",
@@ -44,7 +44,7 @@ class BooksController < ApplicationController
            # fillColor: "rgba(255,165,0,0.5)",
            # pointColor: "rgba(255,165,0,1)",
            # strokeColor: "rgba(255,165,0,1)",
-           data: array_of_data_two,
+           data: [44,55,90,11,76],#array_of_data_two,
            backgroundColor: colour2,
            hoverBackgroundColor: "#FFA500"
 
@@ -53,10 +53,56 @@ class BooksController < ApplicationController
     }
 
     # Books Registered this week
-    labels3 = RegisterBook.group_by_day(:created_at).count
+    labels3 = RegisterBook.group_by_month(:created_at).count
+    array_of_data_three = labels3.to_a.map {|name, data| data}
+    colour3 = []
+    array_of_data_three.size.times { |c| colour3 <<"#%06x" % (rand * 0xffffff) }
+
+    @registered_book_data = {
+      labels: ['January', 'Febraury', 'March'],#labels3.to_a.map {|label, data| label.strftime("%B")},
+      datasets: [
+        {
+           # label: "My First dataset",
+           # pointStrokeColor: "#FFA500",
+           # fillColor: "rgba(255,165,0,0.5)",
+           # pointColor: "rgba(255,165,0,1)",
+           # strokeColor: "rgba(255,165,0,1)",
+           data: [3,2,7], #array_of_data_three,
+           backgroundColor: colour3,
+           hoverBackgroundColor: "#FFA500"
+
+        }
+      ]
+    }
+
+    # Visits by month
+    labels4 = Visit.select(:establishment_id, :created_at).to_a.group_by_month(&:created_at)
+
+    array_of_data_four = labels4.map {|name, data| data.count}
+    colour4 = []
+    array_of_data_four.size.times { |c| colour4 <<"#%06x" % (rand * 0xffffff) }
+
+    @visits_by_month = {
+      labels: ['January', 'Febraury', 'March'],#labels4.to_a.map {|label, data| label.strftime("%B")},
+      datasets: [
+        {
+           # label: "My First dataset",
+           # pointStrokeColor: "#FFA500",
+           # fillColor: "rgba(255,165,0,0.5)",
+           # pointColor: "rgba(255,165,0,1)",
+           # strokeColor: "rgba(255,165,0,1)",
+           data: [3,2,7],#array_of_data_four,
+           backgroundColor: colour4,
+           hoverBackgroundColor: "#FFA500"
+
+        }
+      ]
+    }
 
     @options1 = {:height => "257px", :width => "514px"}
     @options2 = {:height => "257px", :width => "514px"}
+    @options3 = {:height => "257px", :width => "514px"}
+    @options4 = {:height => "257px", :width => "514px"}
   end
 
   # GET /books/1
