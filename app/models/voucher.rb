@@ -65,7 +65,6 @@ class Voucher < ApplicationRecord
 
 			#Check visit count for user in this establishement
 			count = check_user_visits_in_this_establishment(user_id, establishment_id)
-
 			#create a visit if the count is less than 2
 			if count < 2
 				visit_params = make_visit_params(user_id,register_book_id,establishment_id,voucher_id)
@@ -110,6 +109,7 @@ class Voucher < ApplicationRecord
 			 registered_book = self.establishment.book.registered?.id
 			 user = self.establishment.book.registered?.user
 			return user, registered_book	
+			
 		else
 			return false
 		end		
@@ -122,6 +122,7 @@ class Voucher < ApplicationRecord
 	def check_user_visits_in_this_establishment user_id, establishment_id
 		user = User.find("#{user_id}")
 		establishment = establishment_id
+		
 		return user.visits.where(establishment_id:"#{establishment}").count
 	end
 
