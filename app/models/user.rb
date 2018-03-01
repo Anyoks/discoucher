@@ -28,7 +28,7 @@ class User < ApplicationRecord
   belongs_to :role
   before_validation :set_default_role
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable, password_length: 4..128
 
   
   before_create :set_default_role
