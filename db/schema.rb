@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180223122952) do
+ActiveRecord::Schema.define(version: 20180301074550) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20180223122952) do
     t.string "year"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["code"], name: "index_books_on_code", unique: true
   end
 
   create_table "establishments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -140,6 +141,7 @@ ActiveRecord::Schema.define(version: 20180223122952) do
     t.datetime "updated_at", null: false
     t.uuid "establishment_id"
     t.boolean "redeem_status", default: false
+    t.index ["code"], name: "index_vouchers_on_code", unique: true
     t.index ["establishment_id"], name: "index_vouchers_on_establishment_id"
   end
 
