@@ -30,7 +30,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, password_length: 4..128
 
-  
+  # reduced password length to four to accomdate users using their bank cards as book codes
   before_create :set_default_role
   has_many :register_books
 
