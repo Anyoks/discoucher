@@ -101,38 +101,49 @@ class Sms < ApplicationRecord
 	def attempt_redeem
 		redeem_from_sms = self.sms_voucher_redemption
 
-		if redeem_from_sms
+		if redeem_from_sms[0] == true
 			self.update_attributes(status: true)
-			"Successful sms voucher redemption"
-			return true, "voucher redeemption successful"
+			logger.debug "Success:: #{redeem_from_sms[1]}"
+			return true, redeem_from_sms[1]
 		else
 			self.update_attributes(status: false)
-			"The voucher has already been used"
-			return false, "voucher does not exist or has already been redeemed"
+			logger.debug "Error redeeming code:: #{redeem_from_sms[1]}"
+			return false, redeem_from_sms[1]
 		end
 	end
 
 protected
 	# Redeem the voucher by passing the sms object so that the details can be extracted
 	def sms_voucher_redemption 
+		# first find the book
 		
-		# find the voucher
-		voucher = Voucher.where(code: self.voucher_code).first
+		book = Book.where(code:"#{self.book_code}").first
 
-		if voucher.present?
-			# byebug
-			if voucher.redeem
-				logger.debug "Successful redemption"
-				return true
-			else 
-				logger.debug "The voucher has already been used"
-				return false
-			end
+		if book.present?
+			# find the voucher
+			voucher = book.vouchers.where(code: self.voucher_code).first
+			
+			if voucher.present?
+				
+				result = voucher.redeem
+				# byebug
+				if result.class != Array
+					logger.debug "Successful redemption"
+					return true, "This voucher is valid, allow discount."
+				else 
+					logger.debug "The voucher has already been used"
+					# we should have a better error message for this.
+					return false, result[1]
+				end
+			else
+				logger.debug "Error:: voucher does not exist for book #{book.code}"
+				# add to failed redemption process db (belongs to voucher)
+				return false, "Voucher code invalid, kindly try again."
+			end	
 		else
-			logger.debug "Failed sms redemption Process, voucher does not exist"
-			# add to failed redemption process db (belongs to voucher)
-			return false
-		end	
+			logger.debug "Book does not exist"
+			return false, "Book/Card code not valid, kindly try again. "
+		end
 	end
 
 	# FOrm the sms parameters

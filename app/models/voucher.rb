@@ -55,14 +55,15 @@ class Voucher < ApplicationRecord
 	def redeem
 		# first check if the book is registered if so start voucher redemption process
 		result_array = self.check_if_book_is_registered
-		if result_array.present?
+
+		if result_array[0] != false
 
 			#get user details from registred book
 			user_id = result_array[0].id
 			register_book_id = result_array[1]
 			establishment_id = self.establishment.id
 			voucher_id = self.id
-
+			# byebug
 			#Check visit count for user in this establishement
 			count = check_user_visits_in_this_establishment(user_id, establishment_id)
 			#create a visit if the count is less than 2
@@ -74,8 +75,8 @@ class Voucher < ApplicationRecord
 					logger.debug "Voucher has been successfully redeemed"
 					return true
 				else
-					logger.debug "something went wront"
-					return false
+					logger.debug "Error:: something went wrong Creating a new visit"
+					return false, "Error, Processing Request code: x00oERRZX5Y"
 				end
 				#if the visits are more than 2 then the redemption is invalid
 			else
@@ -84,12 +85,12 @@ class Voucher < ApplicationRecord
 				# byebug
 				failed_redemptions = FailedRedemption.new(user_id: "#{user_id}", establishment_id: "#{establishment_id}")
 				failed_redemptions.save
-				return false
+				return false, "Voucher code invalid, it has been used multiple times. Kindly try again."
 			end
 		else
 			logger.debug "This Book is not registered"
 			# Create failed Reg
-			return false
+			return false, result_array[1]
 		end
 	end
 
@@ -103,7 +104,7 @@ class Voucher < ApplicationRecord
 	def check_if_book_is_registered
 
 		if self.establishment.book.registered?.present?
-			"This Book is registered"
+			logger.debug "This Book is registered"
 			
 			# return a user instead
 			 registered_book = self.establishment.book.registered?.id
@@ -111,7 +112,8 @@ class Voucher < ApplicationRecord
 			return user, registered_book	
 			
 		else
-			return false
+			logger.debug "Error :: This Book/Card is  Not registered"
+			return false, "Book/Card code not valid, kindly try again."
 		end		
 	end
 
