@@ -18,9 +18,7 @@
   .field
     / = f.label :year
     / = f.text_field :year
-    = f.input :year, as: :date, start_year: Date.today.year, |
-              end_year: Date.today.year - 12, discard_day: true,                   |
-              order: [:year]                                               |
+    = f.input :year
 
 
   .field
