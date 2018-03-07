@@ -24,8 +24,11 @@ class Establishment < ApplicationRecord
 					  :styles => { small: "64x64", medium: "100x100", large: "200x200" }
 					  # :default_url => "path to default image"
 	validates_attachment_content_type :logo, content_type: /\Aimage\/.*\z/
-	belongs_to :book
+	# belongs_to :register_book
 	has_many :vouchers, :dependent => :destroy
 	has_many :visits
 	has_many :failed_redemptions
+	has_many :details
+	has_many :books, through: :details
+	has_many :register_books, through: :books
 end

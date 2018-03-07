@@ -19,6 +19,7 @@ class RegisterBook < ApplicationRecord
 	belongs_to :user
 	has_many :vouchers, through: :book
 	has_many :visits
+	has_many :establishments, through: :book
  
  # "Blessed are they that do His commandments that they may have right to the tree of life"
 	

@@ -125,7 +125,8 @@ protected
 			
 			if voucher.present?
 				
-				result = voucher.redeem
+				# pass in the book object, we'll need it because voucher are not unique. they appear in every book
+				result = voucher.redeem book
 				# byebug
 				if result.class != Array
 					logger.debug "Successful redemption"
