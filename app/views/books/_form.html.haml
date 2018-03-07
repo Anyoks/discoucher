@@ -1,17 +1,46 @@
-= simple_form_for @book do |f|
-  - if @book.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@book.errors.count, "error")} prohibited this book from being saved:"
-      %ul
-        - @book.errors.full_messages.each do |message|
-          %li= message
+.form-group
+  = simple_form_for @book do |f|
+    - if @book.errors.any?
+      #error_explanation
+        %h2= "#{pluralize(@book.errors.count, "error")} prohibited this book from being saved:"
+        %ul
+          - @book.errors.full_messages.each do |message|
+            %li= message
 
-  .field
-    = f.label :code
-    = f.text_field :code
-  .field
-    = f.label :year
-    = f.text_field :year
+    .field
+      = f.label :code
+      = f.text_field :code
+    .field
+      = f.label :year
+      = f.text_field :year
+    
+    .field
+      = f.label :Add_Establishments_to_this_book
+    .field
 
-  .actions
-    = f.submit 'Save'
+      = f.collection_check_boxes(:establishment_ids, Establishment.all, :id, :name, selected: @book.establishments) do |cb|
+        .form-group
+          .form-check
+            %label.form-check-label
+              %table.table.table-hover
+                %thead
+                  %tr
+                    %th= cb.text
+                    %th
+                %tbody
+                  %tr
+                    %td= cb.check_box
+                    %td
+      / = f.simple_fields_for :establishments do |c|
+      /   name
+      /   =c.input :name
+
+    
+    / .field
+    /   - Establishment.all.each do |establishment|
+    /     %label
+    /       = check_box_tag "book[establishments_attributes][]", establishment.id, f.object.establishments.include?(establishment)
+    /       = establishment.name
+
+    .actions
+      = f.submit 'Save'

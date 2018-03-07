@@ -129,6 +129,8 @@ class BooksController < ApplicationController
 
     respond_to do |format|
       if @book.save
+        # update Establishments
+        
         format.html { redirect_to @book, notice: 'Book was successfully created.' }
         format.json { render :show, status: :created, location: @book }
       else
@@ -170,6 +172,6 @@ class BooksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def book_params
-      params.require(:book).permit(:code, :year)
+      params.require(:book).permit(:code, :year, {establishment_ids: []})
     end
 end

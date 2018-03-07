@@ -6,6 +6,25 @@
 %p
   %b Year:
   = @book.year
+%table.table.table-hover
+  %thead
+    %tr
+      %th establishment
+      %th Location
+      %th No. of Vouchers
+      %th
+
+  %tbody
+    - @book.establishments.each do |establishment|
+      %tr
+        %td= establishment.name
+        %td= establishment.location
+        %td= establishment.vouchers.count
+        %td
+          / -if current_admin && current_admin.is_admin?
+          /   = link_to 'Edit', edit_establishment_path(establishment), class: "label label-default"
+          /   = link_to "Show",establishment, class: "label label-warning"
+          /   = link_to 'Destroy', establishment, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
 
 = link_to 'Edit', edit_book_path(@book)
 \|

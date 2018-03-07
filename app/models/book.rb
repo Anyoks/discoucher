@@ -13,6 +13,7 @@ class Book < ApplicationRecord
 	has_many :establishments
 	has_one  :register_book
 	has_many :vouchers, through: :establishments
+	accepts_nested_attributes_for :establishments
 
 
 	def registered?
