@@ -71,6 +71,7 @@
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "book_id"
+
     t.integer "establishment_type_id"
     t.index ["establishment_type_id"], name: "index_establishments_on_establishment_type_id"
   end
