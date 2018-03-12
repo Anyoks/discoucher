@@ -32,7 +32,7 @@ class Establishment < ApplicationRecord
 	has_many :details
 	has_many :books, through: :details
 	has_many :register_books, through: :books
-	belongs_to :book
+	# belongs_to :book
 	belongs_to :establishment_type
 	has_many :vouchers, :dependent => :destroy
 	has_many :visits

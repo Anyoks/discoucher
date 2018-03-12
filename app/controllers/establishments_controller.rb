@@ -72,6 +72,6 @@ class EstablishmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def establishment_params
-      params.require(:establishment).permit(:name, :type, :location, :phone, :address, :logo, :book_id)
+      params.require(:establishment).permit(:name, :type, :location, :phone, :address,:establishment_type_id, :logo, {book_ids: []})
     end
 end

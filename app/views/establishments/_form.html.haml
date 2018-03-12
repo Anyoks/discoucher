@@ -11,7 +11,7 @@
     = f.text_field :name
   .field
     = f.label :type
-    = f.text_field :type
+    = f.association :establishment_type, label_method: :name, value_method: :id, include_blank: false
   .field
     = f.label :location
     = f.text_field :location
@@ -26,8 +26,19 @@
     = f.file_field :logo
 
   .field
-    / = f.label :book
-    = f.association :book, label_method: :code, value_method: :id, include_blank: false
+    = f.collection_check_boxes(:book_ids, Book.all, :id, :code) do |cb|
+      .form-group
+        .form-check
+          %label.form-check-label
+            %table.table.table-hover
+              %thead
+                %tr
+                  %th= cb.text
+                  %th
+              %tbody
+                %tr
+                  %td= cb.check_box
+                  %td
   
   .actions
     = f.submit 'Save'
