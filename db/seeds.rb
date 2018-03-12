@@ -74,4 +74,9 @@ csv.each do |row|
 	est.name 	 = row['name']
 	est.area 	 = row['area']
 	est.location = row['location']
+	est.establishment_type = EstablishmentType.find_or_create_by({name: "#{row['type']}" }).id
+
+	puts "#{est.name}, #{est.area}, #{est.location}, #{est.establishment_type} } "
+	puts "\n"
+
 end
