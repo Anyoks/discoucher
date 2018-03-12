@@ -5,7 +5,7 @@
   = @establishment.name
 %p
   %b Type:
-  = @establishment.type.name
+  = @establishment.type.name unless @establishment.type.nil?
 %p
   %b Location:
   = @establishment.location

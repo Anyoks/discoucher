@@ -21,7 +21,8 @@ class Establishment < ApplicationRecord
 	has_attached_file :logo, 
 					  :path => ':rails_root/public/system/:class/:attachment/:id/:style_:filename',
 					  :url => "/system/:class/:attachment/:id/:style_:filename",
-					  :styles => { small: "64x64", medium: "100x100", large: "200x200" }
+					  :styles => { small: "64x64", medium: "100x100", large: "200x200" },
+					  :default_url => "/assets/missing.png"
 					  # :default_url => "path to default image"
 	validates_attachment_content_type :logo, content_type: /\Aimage\/.*\z/
 
