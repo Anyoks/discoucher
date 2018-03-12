@@ -25,7 +25,12 @@ class Establishment < ApplicationRecord
 					  # :default_url => "path to default image"
 	validates_attachment_content_type :logo, content_type: /\Aimage\/.*\z/
 	belongs_to :book
+	belongs_to :establishment_type
 	has_many :vouchers, :dependent => :destroy
 	has_many :visits
 	has_many :failed_redemptions
+
+	def type
+		return self.establishment_type
+	end
 end
