@@ -42,5 +42,4 @@ class Establishment < ApplicationRecord
 	def type
 		return self.establishment_type
 	end
-
 end
