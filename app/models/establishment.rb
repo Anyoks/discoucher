@@ -24,6 +24,7 @@ class Establishment < ApplicationRecord
 					  :styles => { small: "64x64", medium: "100x100", large: "200x200" }
 					  # :default_url => "path to default image"
 	validates_attachment_content_type :logo, content_type: /\Aimage\/.*\z/
+<<<<<<< 0e53f8034588684c21226081f93abb8fcf8df7e1
 	# belongs_to :register_book
 	has_many :vouchers, :dependent => :destroy
 	has_many :visits
@@ -31,4 +32,15 @@ class Establishment < ApplicationRecord
 	has_many :details
 	has_many :books, through: :details
 	has_many :register_books, through: :books
+=======
+	belongs_to :book
+	belongs_to :establishment_type
+	has_many :vouchers, :dependent => :destroy
+	has_many :visits
+	has_many :failed_redemptions
+
+	def type
+		return self.establishment_type
+	end
+>>>>>>> updated view with type and Area
 end
