@@ -7,9 +7,9 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 #   
 #   ROles seeds
-['customer', 'corporate', 'moderator', 'admin'].each do |role|
-  Role.find_or_create_by({name: role})
-end
+# ['customer', 'corporate', 'moderator', 'admin'].each do |role|
+#   Role.find_or_create_by({name: role})
+# end
 
 require 'csv'
 
@@ -30,32 +30,48 @@ require 'csv'
 # end
 
 
-vouchers_csv_text = File.read(Rails.root.join('lib', 'seeds', 'vouchers.csv'))
-# display the wall of text
-# puts csv_text  
-# Create an establishment
-Establishment.new(name: 'Default', location: 'default')
-vouchers_csv = CSV.parse(vouchers_csv_text, :headers => true, :encoding => 'ISO-8859-1')
-vouchers_csv.each do |row|
-	Voucher.find_or_create_by(code: "#{row['code'}"]) do |v|
-		# Put s the hash to be save
-		# puts row.to_hash
-		# Create a new Obeject 
-		voucher = Voucher.new
-		voucher.code = row['code']
-		voucher.description = row['description']
-		voucher.condition = row['condition']
-		voucher.year = Time.now.year
-		# Save the obeject
-		# voucher.save
-		# voucher.find_or_create_by(:code => "#{voucher.code}")
-	end
+# vouchers_csv_text = File.read(Rails.root.join('lib', 'seeds', 'vouchers.csv'))
+# # display the wall of text
+# # puts csv_text  
+# # Create an establishment
+# Establishment.new(name: 'Default', location: 'default')
+# vouchers_csv = CSV.parse(vouchers_csv_text, :headers => true, :encoding => 'ISO-8859-1')
+# vouchers_csv.each do |row|
+# 	Voucher.find_or_create_by(code: "#{row['code'}"]) do |v|
+# 		# Put s the hash to be save
+# 		# puts row.to_hash
+# 		# Create a new Obeject 
+# 		voucher = Voucher.new
+# 		voucher.code = row['code']
+# 		voucher.description = row['description']
+# 		voucher.condition = row['condition']
+# 		voucher.year = Time.now.year
+# 		# Save the obeject
+# 		# voucher.save
+# 		# voucher.find_or_create_by(:code => "#{voucher.code}")
+# 	end
    
-  puts "#{voucher.code}, #{voucher.year} saved"
+#   puts "#{voucher.code}, #{voucher.year} saved"
+# end
+
+# User.find_or_create_by(first_name: 'Scarlett') do |user|
+#   user.last_name = 'Johansson'
+# end
+# 
+
+
+
+=begin
+	Seeding Establishment details from the csv file
+
+=end
+est_csv_text = File.read(Rails.root.join('lib', 'seeds', 'establishments.csv'))
+csv = CSV.parse(est_csv_text, :headers => true, :encoding => 'ISO-8859-1')
+
+csv.each do |row|
+	puts row.to_hash
+	est = Establishment.new
+	est.name 	 = row['name']
+	est.area 	 = row['area']
+	est.location = row['location']
 end
-
-User.find_or_create_by(first_name: 'Scarlett') do |user|
-  user.last_name = 'Johansson'
-end
-
-
