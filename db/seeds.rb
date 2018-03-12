@@ -74,9 +74,17 @@ csv.each do |row|
 	est.name 	 = row['name']
 	est.area 	 = row['area']
 	est.location = row['location']
-	est.establishment_type = EstablishmentType.find_or_create_by({name: "#{row['type']}" }).id
+	est.establishment_type_id = EstablishmentType.find_or_create_by({name: "#{row['type']}" }).id
+	
+	if est.save
+		puts "#{est.name}, #{est.area}, #{est.location}, #{est.establishment_type.name} } SAVED! "
+	else
+		puts "#{est.name}, #{est.area}, #{est.location}, #{est.establishment_type.name} } ERR:: Failed to Save! "
 
-	puts "#{est.name}, #{est.area}, #{est.location}, #{est.establishment_type} } "
+		puts "\n"
+		puts "****Error****"
+		puts "#{est.errors.messages}"
+	end
 	puts "\n"
 
 end
