@@ -76,9 +76,14 @@ est_csv.each do |row|
 	puts row.to_hash
 	
 	# add establishment type. create it if it does not exist
+	name = row['name']
+	area = row['area']
+	location = row['location']
+
+
 	establishment_type_id = EstablishmentType.find_or_create_by({name: "#{row['type']}" }).id
 
-	est = Establishment.find_or_create_by( name: "row['name']", area: "#{row['area']}", location: "row['location']", establishment_type_id: "#{establishment_type_id}" )
+	est = Establishment.find_or_create_by( name: "#{name}", area: "#{area}", location: "#{location}", establishment_type_id: "#{establishment_type_id}" )
 	
 	if est
 		puts "#{est.name}, #{est.area}, #{est.location}, #{est.establishment_type.name} } SAVED! "
