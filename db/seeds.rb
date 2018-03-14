@@ -21,11 +21,9 @@ csv.each do |row|
   #  Put s the hash to be save
   # puts row.to_hash
   # Create a new Obeject 
-  book = Book.new
-  book.code = row['code']
-  book.year = Time.now.year
+  book = Book.find_or_create_by( code: "#{row['code']}", year: "#{Time.now.year}" )
   # Save the obeject
-  if book.save
+  if book
   	puts "#{book.code}, #{book.year} saved"
   else
   	puts "#{book.code}, #{book.year} ERR:: Failed to Save! "
@@ -33,6 +31,7 @@ csv.each do |row|
 	puts "****Error****"
 	puts "#{book.errors.messages}"
   end
+
 end 
 
 
@@ -75,15 +74,13 @@ est_csv = CSV.parse(est_csv_text, :headers => true, :encoding => 'ISO-8859-1')
 
 est_csv.each do |row|
 	puts row.to_hash
-	est = Establishment.new
-	est.name 	 = row['name']
-	est.area 	 = row['area']
-	est.location = row['location']
-
-	# add establishment type. create it if it does not exist
-	est.establishment_type_id = EstablishmentType.find_or_create_by({name: "#{row['type']}" }).id
 	
-	if est.save
+	# add establishment type. create it if it does not exist
+	establishment_type_id = EstablishmentType.find_or_create_by({name: "#{row['type']}" }).id
+
+	est = Establishment.find_or_create_by( name: "row['name']", area: "#{row['area']}", location: "row['location']", establishment_type_id: "#{establishment_type_id}" )
+	
+	if est
 		puts "#{est.name}, #{est.area}, #{est.location}, #{est.establishment_type.name} } SAVED! "
 	else
 		puts "#{est.name}, #{est.area}, #{est.location}, #{est.establishment_type.name} } ERR:: Failed to Save! "
