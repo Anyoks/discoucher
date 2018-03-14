@@ -13,21 +13,27 @@
 
 require 'csv'
 
-# csv_text = File.read(Rails.root.join('lib', 'seeds', 'bookcodes.csv'))
-# # display the wall of text
-# # puts csv_text  
-# csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
-# csv.each do |row|
-#   #  Put s the hash to be save
-#   # puts row.to_hash
-#   # Create a new Obeject 
-#   book = Book.new
-#   book.code = row['code']
-#   book.year = Time.now.year
-#   # Save the obeject
-#   book.save
-#   puts "#{book.code}, #{book.year} saved"
-# end
+csv_text = File.read(Rails.root.join('lib', 'seeds', 'bookcodes.csv'))
+# display the wall of text
+# puts csv_text  
+csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+csv.each do |row|
+  #  Put s the hash to be save
+  # puts row.to_hash
+  # Create a new Obeject 
+  book = Book.new
+  book.code = row['code']
+  book.year = Time.now.year
+  # Save the obeject
+  if book.save
+  	puts "#{book.code}, #{book.year} saved"
+  else
+  	puts "#{book.code}, #{book.year} ERR:: Failed to Save! "
+	puts "\n"
+	puts "****Error****"
+	puts "#{book.errors.messages}"
+  end
+end 
 
 
 # vouchers_csv_text = File.read(Rails.root.join('lib', 'seeds', 'vouchers.csv'))
@@ -63,17 +69,18 @@ require 'csv'
 
 =begin
 	Seeding Establishment details from the csv file
-
 =end
 est_csv_text = File.read(Rails.root.join('lib', 'seeds', 'establishments.csv'))
-csv = CSV.parse(est_csv_text, :headers => true, :encoding => 'ISO-8859-1')
+est_csv = CSV.parse(est_csv_text, :headers => true, :encoding => 'ISO-8859-1')
 
-csv.each do |row|
+est_csv.each do |row|
 	puts row.to_hash
 	est = Establishment.new
 	est.name 	 = row['name']
 	est.area 	 = row['area']
 	est.location = row['location']
+
+	# add establishment type. create it if it does not exist
 	est.establishment_type_id = EstablishmentType.find_or_create_by({name: "#{row['type']}" }).id
 	
 	if est.save
@@ -86,5 +93,4 @@ csv.each do |row|
 		puts "#{est.errors.messages}"
 	end
 	puts "\n"
-
 end
