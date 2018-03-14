@@ -25,6 +25,7 @@ class Establishment < ApplicationRecord
 					  :default_url => "/assets/missing.png"
 					  # :default_url => "path to default image"
 	validates_attachment_content_type :logo, content_type: /\Aimage\/.*\z/
+	before_save :set_establishment_type
 
 	# belongs_to :register_book
 	has_many :vouchers, :dependent => :destroy
@@ -41,5 +42,34 @@ class Establishment < ApplicationRecord
 	
 	def type
 		return self.establishment_type
+	end
+
+	def set_establishment_type
+		if establishment_type_id.blank?
+			self.establishment_type_id = set_default_type
+		end
+	end
+
+	# Incase there are not types in the database and a type has not been set 
+	# by the user.
+
+	# all establishments that don't hve types will be assigned a type
+	def self.assign_type_to_missing_types
+		type = self.set_default_type
+		Establishment.where(establishment_type_id: nil).each do |est|
+			est.update_attributes(establishment_type_id: "#{type}")
+		end	
+	end
+
+protected
+
+	def self.set_default_type
+		type = EstablishmentType.find_or_create_by({name: "Restaurant"}).id
+		return type
+	end
+
+	def set_default_type
+		type = EstablishmentType.find_or_create_by({name: "Restaurant"}).id
+		return type
 	end
 end
