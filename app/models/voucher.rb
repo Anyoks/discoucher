@@ -127,8 +127,12 @@ class Voucher < ApplicationRecord
 	def check_user_visits_in_this_establishment user_id, establishment_id
 		user = User.find("#{user_id}")
 		establishment = establishment_id
-		
-		return user.visits.where(establishment_id:"#{establishment}").count
+
+		if user.is_admin?
+			return 0
+		else
+			return user.visits.where(establishment_id:"#{establishment}").count
+		end
 	end
 
 	def make_visit_params user_id,register_book_id,establishment_id,voucher_id
