@@ -35,37 +35,62 @@ csv.each do |row|
 end 
 
 
-vouchers_csv_text = File.read(Rails.root.join('lib', 'seeds', 'vouchers.csv'))
-# display the wall of text
-# puts csv_text  
-# Create an establishment
-Establishment.new(name: 'Default', location: 'default')
+vouchers_csv_text = File.read(Rails.root.join('lib', 'seeds', 'estvouchers.csv'))
 vouchers_csv = CSV.parse(vouchers_csv_text, :headers => true, :encoding => 'ISO-8859-1')
 vouchers_csv.each do |row|
-	Voucher.find_or_create_by(code: "#{row['code'}"]) do |v|
-		# Put s the hash to be save
 		# puts row.to_hash
-		# Create a new Obeject 
-		voucher = Voucher.new
-		voucher.code = row['code']
-		voucher.description = row['description']
-		voucher.condition = row['condition']
-		voucher.year = Time.now.year
-		# Save the obeject
-		# voucher.save
-		# voucher.find_or_create_by(:code => "#{voucher.code}")
+
+		establishment = row['establishment']
+		location = row['Location']
+
+		voucher1 = row['Voucher1']
+		voucher2 = row['Voucher2']
+		voucher3 = row['Voucher3']
+		description = row['offer']
+		condition = row['condition']
+
+		array = []
+		array << voucher1 << voucher2 << voucher3
+
+		save_array = array.reject { |e| e.to_s.empty?}
+
+		est = Establishment.find_by(name: "#{establishment}", location: "#{location}")
+
+		if est
+			puts "\n"
+			puts "DESC => #{description}, COND => #{condition}"
+			puts "code1 => #{voucher1}, code2 => #{voucher2}, code3 => #{voucher3} "
+			puts "Establishment Found,  #{est.name}"
+			puts "\n"
+
+			save_array.size.times do |indexx|
+				if Voucher.find_by_code("#{save_array[indexx]}").present?
+					puts "VOUCER EXISTS code #{save_array[indexx]}----------Skipping"
+				else
+					voucher = est.vouchers.find_or_create_by( code: "#{save_array[indexx]}", description: "#{description}", condition: "#{condition}", year: "#{Time.now.year}")
+					if voucher
+						puts "\n"
+						puts "Voucher #{voucher.code} SAVED  for Establishment #{voucher.establishment.name}"
+					else
+						puts "\n"
+						puts "Voucher #{voucher.code} ERR:: Failed to Save! "
+						puts "****Error****"
+						puts "#{voucher.errors.messages}"
+					end
+				end
+			end	
+		else
+			puts "\n"
+			puts "DESC => #{description}, COND => #{condition}"
+			puts "code1 => #{voucher1}, code2 => #{voucher2}, code3 => #{voucher3} "
+			puts "Establishment NOT FOUND,  #{establishment}"
+			puts "\n"
+
+		end
+		# Establishment.first.vouchers.new
+
+		
 	end
-   
-  puts "#{voucher.code}, #{voucher.year} saved"
-end
-
-# User.find_or_create_by(first_name: 'Scarlett') do |user|
-#   user.last_name = 'Johansson'
-# end
-# 
-
-
-
 =begin
 	Seeding Establishment details from the csv file
 =end
