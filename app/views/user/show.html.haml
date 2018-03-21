@@ -1,2 +1,33 @@
-%h1 User#show
-%p Find me in app/views/user/show.html.haml
+.row-fluid
+  .col-md-6
+    .box.box-danger
+      .box-header.with-border
+        %h3.box-title 
+        = @user.first_name 
+        = @user.last_name
+        Has a total of  
+        = @user_visits.count
+        Visits (Redeemed Vouchers)
+        .box-tools.pull-right
+          %button.btn.btn-box-tool{"data-widget" => "collapse", :type => "button"}
+            %i.fa.fa-minus
+          %button.btn.btn-box-tool{"data-widget" => "remove", :type => "button"}
+            %i.fa.fa-times
+      .box-body
+        = doughnut_chart @data , @options
+.row-fluid
+  .col-md-6
+    .box.box-danger
+      .box-header.with-border
+        %h3.box-title 
+        = @user.first_name 
+        = @user.last_name
+        Visits by month
+        .box-tools.pull-right
+          %button.btn.btn-box-tool{"data-widget" => "collapse", :type => "button"}
+            %i.fa.fa-minus
+          %button.btn.btn-box-tool{"data-widget" => "remove", :type => "button"}
+            %i.fa.fa-times
+      .box-body
+        = bar_chart @dates , @options1
+

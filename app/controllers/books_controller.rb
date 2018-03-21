@@ -165,6 +165,25 @@ class BooksController < ApplicationController
   end
 
   private
+
+    # 
+    # Names of establishments visited by customers (Larna visited Java, Palanka this month/ btn jan and feb)
+    # 
+    
+    # 
+    # Total voucher redeemed in all establishments
+    # 
+    # least visited establishments
+    # 
+    # 
+    # most active Establishment
+    def most_visited_establishment
+      v = Establishment.select(:name).joins(:visits).select(:name).to_a.group_by(&:name)
+      names =  v.map {|name, data|  names}
+      data = v.map {|name, data|  data.count}
+      hash = Hash[*names.zip(data).flatten]
+      return hash
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_book
       @book = Book.find(params[:id])

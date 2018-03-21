@@ -1,28 +1,64 @@
+%section.content-header
+  %h1
+    #{@establishment.name}
+    %small Has a total of #{@establishment_visits.count} redeemed vouchers
+  %ol.breadcrumb
+    %li
+      %a{:href => "#"}
+        %i.fa.fa-dashboard
+        Level
 %p#notice= notice
 
-%p
-  %b Name:
-  = @establishment.name
-%p
-  %b Type:
-  = @establishment.type.name unless @establishment.type.nil?
-%p
-  %b Location:
-  = @establishment.location
-%p
-  %b Phone:
-  = @establishment.phone
-%p
-  %b Address:
-  = @establishment.address
-%p
-  %b Logo:
-  = @establishment.logo
-  = image_tag @establishment.logo.url(:medium)
+/ %p
+/   %b Name:
+/   = @establishment.name
+/ %p
+/   %b Type:
+/   = @establishment.type.name unless @establishment.type.nil?
+/ %p
+/   %b Location:
+/   = @establishment.location
+/ %p
+/   %b Phone:
+/   = @establishment.phone
+/ %p
+/   %b Address:
+/   = @establishment.address
+/ %p
+/   %b Logo:
+/   = @establishment.logo
+/   = image_tag @establishment.logo.url(:medium)
 
-%p
-%p
-%p
+/ %p
+/ %p
+/ %p
+
+.row-fluid
+  .col-md-6
+    .box.box-danger
+      .box-header.with-border
+        %h3.box-title 
+        Redeemed vouchers per user 
+        .box-tools.pull-right
+          %button.btn.btn-box-tool{"data-widget" => "collapse", :type => "button"}
+            %i.fa.fa-minus
+          %button.btn.btn-box-tool{"data-widget" => "remove", :type => "button"}
+            %i.fa.fa-times
+      .box-body
+        = doughnut_chart @dates , @options1
+.row-fluid
+  .col-md-6
+    .box.box-danger
+      .box-header.with-border
+        %h3.box-title 
+        Voucher redemption by month
+        .box-tools.pull-right
+          %button.btn.btn-box-tool{"data-widget" => "collapse", :type => "button"}
+            %i.fa.fa-minus
+          %button.btn.btn-box-tool{"data-widget" => "remove", :type => "button"}
+            %i.fa.fa-times
+      .box-body
+        = bar_chart @data , @options
 
 %table.table.table-hover
   %thead 
