@@ -22,5 +22,5 @@
         %td
           -if current_admin && current_admin.is_admin?
             = link_to 'Edit', edit_establishment_path(establishment), class: "label label-default"
-            = link_to "Show",establishment, class: "label label-warning"
+            = link_to "Show Details",establishment, class: "label label-warning"
             = link_to 'Destroy', establishment, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
