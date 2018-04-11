@@ -13,7 +13,12 @@
         %h2= "#{pluralize(@register_book.errors.count, "error")} prohibited this Book from being registerred:"
         %ul
           - @register_book.errors.full_messages.each do |message|
-            %li= message
+            -if message == 'Book must exist'
+              %li Kindly enter the correct book code
+            -elsif message == 'User must exist'
+              %li Kindly check your email and try again
+            -else
+              %li Kindly check your details and try again
 
 
 
