@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   
   
  
+  get 'dashboard/index'
+
   resources :register_books
   devise_for :admins, path: 'admins', controllers: { sessions: "admins/sessions" }
   devise_for :users, path: 'users', controllers: { sessions: "users/sessions" }
