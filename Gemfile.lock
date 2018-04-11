@@ -105,6 +105,10 @@ GEM
       railties (>= 4.1.0, < 5.2)
       responders
       warden (~> 1.2.3)
+    dotenv (2.2.2)
+    dotenv-rails (2.2.2)
+      dotenv (= 2.2.2)
+      railties (>= 3.2, < 6.0)
     erubi (1.7.0)
     erubis (2.7.0)
     execjs (2.7.0)
@@ -296,6 +300,7 @@ DEPENDENCIES
   chartjs-ror
   coffee-rails (~> 4.2)
   devise
+  dotenv-rails
   friendly_id (~> 5.1.0)
   groupdate
   haml-rails
