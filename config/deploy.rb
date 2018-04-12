@@ -37,7 +37,10 @@ namespace :deploy do
 end
 
 
-
+set :sidekiq_role, :app  
+set :sidekiq_config, "#{current_path}/config/sidekiq.yml"  
+set :sidekiq_env, 'production' 
+set :pty,  false
 # Default value for :pty is false
 # set :pty, true
 

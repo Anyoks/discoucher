@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  
+  require 'sidekiq/web'
   
  
   resources :register_books
@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   # end
 
   authenticated :admin do
+    mount Sidekiq::Web => '/sidekiq'
     root 'books#index', as: :authenticated_admin
   end
 
