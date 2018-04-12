@@ -39,6 +39,11 @@ class RegisterBooksController < ApplicationController
     
     respond_to do |format|
       if @register_book.save
+        # find the user
+        @user = @register_book.user
+        # send an email asynchronously
+        RegisterMailer.registration_email(@user).deliver_later
+
         format.html { redirect_to @register_book, notice: 'Register book was successfully created.' }
         format.json { render :show, status: :created, location: @register_book }
       else
