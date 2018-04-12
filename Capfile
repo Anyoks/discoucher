@@ -3,8 +3,6 @@ require "capistrano/setup"
 
 # Include default deployment tasks
 require "capistrano/deploy"
-# sidekiq deployment
-require 'capistrano/sidekiq'
 # Load the SCM plugin appropriate to your project:
 #
 # require "capistrano/scm/hg"
@@ -19,7 +17,8 @@ install_plugin Capistrano::SCM::Git
 require 'capistrano/rails'
 require 'capistrano/rvm'
 require 'capistrano/passenger'
-
+# sidekiq deployment
+require 'capistrano/sidekiq'
 # Include tasks from other gems included in your Gemfile
 #
 # For documentation on these, see for example:
