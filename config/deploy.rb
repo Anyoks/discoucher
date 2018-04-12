@@ -41,6 +41,9 @@ set :sidekiq_role, :app
 set :sidekiq_config, "#{current_path}/config/sidekiq.yml"  
 set :sidekiq_env, 'production' 
 set :pty,  false
+set :sidekiq_pid => File.join(shared_path, 'tmp', 'pids', 'sidekiq.pid')
+set :sidekiq_log => File.join(shared_path, 'log', 'sidekiq.log')
+set :sidekiq_timeout => 10
 # Default value for :pty is false
 # set :pty, true
 
