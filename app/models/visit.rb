@@ -3,4 +3,23 @@ class Visit < ApplicationRecord
 	belongs_to :establishment
 	belongs_to :register_book
 	belongs_to :voucher
+
+
+	def self.visited_establishments
+		visited_establishments = []
+		Visit.all.each do |visit|
+			visited_establishments << visit.establishment_id
+		end
+		return visited_establishments		
+	end
+
+	def self.not_visited_establishments
+		establishment_ids = Visit.visited_establishments
+		return Establishment.where("id NOT IN (?)", establishment_ids).count
+
+	end
+
+	def self.number_of_visited_establishments
+		Visit.visited_establishments.size
+	end
 end

@@ -1,8 +1,8 @@
 class DashboardController < ApplicationController
   def index
   	establishments_data	
-
-
+  	user_data
+  	number_of_not_visited_establishments
   end
 
 private
@@ -11,15 +11,15 @@ private
 
 		  # Bar chart
 		@vists_data = overal_visits_by_month
-		@options1 = {:height => "257px", :width => "514px"}
+		@options_user = {:height => "257px", :width => "514px"}
 
 		# doughnut
-		@data = establisments_visits
+		@data = establisments_visits "user"
 		@options = {:height => "257px", :width => "514px"}
 
 		# least and most active users
-		@most_active = most_active
-		@least_active = least_active
+		@most_active_user = most_active "user"
+		@least_active_user = least_active "user"
 	end
 
 
@@ -29,7 +29,7 @@ private
 		@total_visits = Visit.all.count
 
 
-		@data = establisments_visits
+		@data_establishments = establisments_visits "establishments"
 		@options = {:height => "257px", :width => "514px"}
 
 		# Bar chart
@@ -37,18 +37,25 @@ private
 		@options1 = {:height => "257px", :width => "514px"}
 
 		# least and most active establishments
-		@most_active = most_active
-		@least_active = least_active		
+		@most_active_est = most_active "establishments"
+		@least_active_est = least_active "establishments"
 	end
 
-	def establisments_visits
-	
-	  base = Establishment.select(:name).joins(:visits).select(:name)
-	  establishment_names = base.to_a.group_by(&:name).map {|label, data| label}
-	  establishment_vists_count = base.to_a.group_by(&:name).map {|label, data| data.count}
+	def establisments_visits type
 
-	  colour = []
-	  establishment_vists_count.size.times { |c| colour <<"#%06x" % (rand * 0xffffff) }
+		if type == "establishments"
+	
+	  		base = Establishment.select(:name).joins(:visits).select(:name)
+	  	else
+	  		base = User.select(:first_name).joins(:visits).select(:first_name)
+	  	end
+
+
+		establishment_names = base.to_a.group_by(&:name).map {|label, data| label}
+		establishment_vists_count = base.to_a.group_by(&:name).map {|label, data| data.count}
+
+		colour = []
+		establishment_vists_count.size.times { |c| colour <<"#%06x" % (rand * 0xffffff) }
 
 	  @visits_by_month = {
 	    labels: establishment_names,
@@ -129,7 +136,7 @@ private
 	  visit_per_user_count = base.map {|name, data| data.count}
 	  
 	  user_ids = base.map {|name, data| name}
-	  user_names = get_names user_ids
+	  user_names = get_names(user_ids, user)
 
 	  colour = []
 	  visit_per_user_count.size.times { |c| colour <<"#%06x" % (rand * 0xffffff) }
@@ -154,9 +161,9 @@ private
 	  return @user_vistis_by_name
 	end
 
-	def most_active
-	  most_and_least_active = get_most_least
-	  most_active_name = most_and_least_active[1].first.establishment.name   
+	def most_active type
+	  most_and_least_active = get_most_least(type)
+	  most_active_name = get_active_name_by_class(most_and_least_active[1].first, type)
 	  most_active_count = most_and_least_active[1].size
 	  array = []
 
@@ -164,9 +171,19 @@ private
 	  return array      
 	end
 
-	def least_active
-	  least_active_name = get_most_least
-	  least_active_name = least_active_name[0].first.establishment.name
+	def get_active_name_by_class(arr_item, klass)
+		# byebug
+		if klass == "establishments"
+			return arr_item.establishment.name  
+		else
+			return arr_item.user.first_name
+		end
+		
+	end
+
+	def least_active type
+	  least_active_name = get_most_least(type)
+	  least_active_name = get_active_name_by_class(least_active_name[0].first, type)
 	  least_active_count = least_active_name[0].size
 	  array = []
 
@@ -174,17 +191,39 @@ private
 	  return array
 	end
 
-	def get_most_least
-	  most_and_least_active = Visit.select(:establishment_id).group_by(&:establishment_id).map {|name, data| data}.minmax
-	  return most_and_least_active
+	def get_most_least type
+
+		if type == "establishments"
+	  		most_and_least_active = Visit.select(:establishment_id).group_by(&:establishment_id).map {|name, data| data}.minmax
+	  	else
+	  		most_and_least_active = Visit.select(:user_id).group_by(&:user_id).map {|name, data| data}.minmax
+	  	end
+		return most_and_least_active
+
 	end
 
-	def get_names array
+	def get_names(array, klass)
+		it = get_class klass
 	  names = []
 	  array.each do |est|
-	    user_name = User.find(est).first_name
+	    user_name = it.find(est).name
 	    names << user_name
 	  end
 	  return names  
+	end
+
+	def number_of_not_visited_establishments
+		@not_visited = Visit.not_visited_establishments	
+		return @not_visited
+	end
+
+	def get_class klass
+
+		if klass == "establishments"
+			return "Establishment".constantize
+		else
+			return "User".constantize
+		end
+		
 	end
 end

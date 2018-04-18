@@ -187,7 +187,7 @@ class UserController < ApplicationController
 
     def least_active
       least_active_name = get_most_least
-      least_active_name = least_active_name[0].first.user.first_name
+      least_active_name = least_active_name[0].first.user.name
       least_active_count = least_active_name[0].size
       array = []
 

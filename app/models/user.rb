@@ -88,6 +88,10 @@ def is_admin?
 		end
 	end
 
+	def name
+		return self.first_name
+	end
+
 
 end
 
