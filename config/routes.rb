@@ -18,7 +18,7 @@ Rails.application.routes.draw do
 
   authenticated :admin do
     mount Sidekiq::Web => '/sidekiq'
-    root 'books#index', as: :authenticated_admin
+    root 'dashboard#index', as: :authenticated_admin
   end
 
   resources :establishments
@@ -34,7 +34,7 @@ Rails.application.routes.draw do
 
   # get 'user/index'
   # get 'user/show'   
-  root 'establishments#index'
+  root 'dashboard#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   namespace :api do
     namespace :v1 do
