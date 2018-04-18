@@ -1,0 +1,65 @@
+%h1 Dashboard
+.row
+	.col-md-3.col-sm-6.col-xs-12
+		/ small box
+		.small-box.bg-aqua
+			.inner
+				%h3 #{@most_active_est[0]} 
+				%p Most active est, #{@most_active_est[1]} Visits
+			.icon
+				%i.ion.ion-stats-bars
+			%a.small-box-footer{:href => "/establishments"}
+				More info
+				%i.fa.fa-arrow-circle-right
+
+
+	.col-lg-3.col-xs-6
+		/ small box
+		.small-box.bg-red
+			.inner
+				%h3 #{@not_visited}
+				%p In Active Establishment
+			.icon
+				%i.ion.ion-pie-graph
+			%a.small-box-footer{:href => "/establishments"}
+				More info
+				%i.fa.fa-arrow-circle-right
+
+
+	.col-md-3.col-sm-6.col-xs-12
+		/ small box
+		.small-box.bg-green
+			.inner
+				%h3 #{@most_active_user[0]}
+				%p Most Active user
+			.icon
+				%i.ion.ion-person-add
+			%a.small-box-footer{:href => "/user"}
+				More info
+				%i.fa.fa-arrow-circle-right
+	.col-md-3.col-sm-6.col-xs-12
+		/ small box
+		.small-box.bg-yellow
+			.inner
+				%h3 #{@users.all.count}
+				%p Total users
+			.icon
+				%i.ion.ion-person-add
+			%a.small-box-footer{:href => "/user"}
+				More info
+				%i.fa.fa-arrow-circle-right
+.row
+	.col-md-6	
+		.box.box-solid
+			.box-header.with-border
+				%h3.box-title 
+				Vists per Establishment (Vouchers redeemed per establishment)
+			.box-body
+				= doughnut_chart @data_establishments , @options
+	.col-md-6
+		.box.box-solid
+			.box-header.with-border
+				%h3.box-title 
+				Number of Visits per user
+			.box-body
+				= doughnut_chart @data , @options_user
