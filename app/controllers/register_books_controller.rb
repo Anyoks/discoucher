@@ -1,6 +1,7 @@
 class RegisterBooksController < ApplicationController
-  skip_before_action :authenticate_admin!#, only: [:new, :create], raise: false
-
+  # skip_before_action :authenticate_admin!, only: [:new, :create], raise: false
+  # before_filter :authenticate_user!, except: [:index]
+  before_action :authenticate_admin!, except: [:new]
   before_action :set_register_book, only: [:show, :edit, :update, :destroy]
 
   layout false
