@@ -6,6 +6,24 @@ class DashboardController < ApplicationController
   end
 
 private
+	def user_data
+		@users = User.all.order(created_at: :desc)
+
+		  # Bar chart
+		@vists_data = overal_visits_by_month
+		@options1 = {:height => "257px", :width => "514px"}
+
+		# doughnut
+		@data = establisments_visits
+		@options = {:height => "257px", :width => "514px"}
+
+		# least and most active users
+		@most_active = most_active
+		@least_active = least_active
+	end
+
+
+
 	def establishments_data
 		@establishments = Establishment.all
 		@total_visits = Visit.all.count
@@ -24,6 +42,7 @@ private
 	end
 
 	def establisments_visits
+	
 	  base = Establishment.select(:name).joins(:visits).select(:name)
 	  establishment_names = base.to_a.group_by(&:name).map {|label, data| label}
 	  establishment_vists_count = base.to_a.group_by(&:name).map {|label, data| data.count}

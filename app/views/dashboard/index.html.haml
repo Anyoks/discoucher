@@ -1,6 +1,26 @@
 %h1 Dashboard#index
 %p Find me in app/views/dashboard/index.html.haml
 .row
+	.col-md-3.col-sm-6.col-xs-12
+		.info-box
+			%span.info-box-icon.bg-green
+				%i.fa.fa-flag-o
+			.info-box-content
+				%span.info-box-text #{@most_active[0]}
+				%span.info-box-number #{@most_active[1]} Voucher redemptions
+				/ /.info-box-content
+				/ /.info-box
+	.col-md-3.col-sm-6.col-xs-12
+		.info-box
+			%span.info-box-icon.bg-red
+				%i.fa.fa-flag-o
+			.info-box-content
+				%span.info-box-text #{@least_active[0]}
+				%span.info-box-number #{@least_active[1]} Voucher redemptions
+				/ /.info-box-content
+				/ /.info-box
+
+.row
 	.col-md-6	
 		.box.box-solid
 			.box-header.with-border
