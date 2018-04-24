@@ -91,3 +91,9 @@ gem 'rake'
 gem 'will_paginate', '~> 3.1.1'
 #sending mails
 gem 'sidekiq'
+# API authentication
+gem 'devise_token_auth'
+# facebook/google sign in
+# gem 'omniauth-facebook'
+gem 'omniauth-google-oauth2'
+# gem 'omniauth', '~> 1.8', '>= 1.8.1'

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  
   require 'sidekiq/web'
   
  
@@ -40,7 +41,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       get '/sms', :to => 'sms#create'
       resources :sms, only: [:create]
-      resources :users
+      mount_devise_token_auth_for 'User', at: 'auth'
+      # resources :users
     end
   end
 

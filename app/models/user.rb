@@ -22,13 +22,17 @@
 #
 
 class User < ApplicationRecord
+  # Include default devise modules.
+  devise :database_authenticatable, :registerable,
+          :recoverable, :rememberable, :trackable, :validatable,
+          :confirmable, :omniauthable, password_length: 4..128
+  include DeviseTokenAuth::Concerns::User
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   
   belongs_to :role
   before_validation :set_default_role
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, password_length: 4..128
+  
 
   # reduced password length to four to accomdate users using their bank cards as book codes
   before_create :set_default_role

@@ -1,4 +1,5 @@
 class Api::V1::BaseController < ActionController::API
+	include DeviseTokenAuth::Concerns::SetUserByToken
 	before_action :authenticate_user!
 
 	rescue_from ActionController::ParameterMissing do
