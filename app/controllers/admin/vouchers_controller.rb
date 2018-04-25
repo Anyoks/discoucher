@@ -1,4 +1,4 @@
-class VouchersController < ApplicationController
+class Admin::VouchersController < Admin::ApplicationController
   before_action :set_voucher, only: [:show, :edit, :update, :destroy]
 
   # GET /vouchers

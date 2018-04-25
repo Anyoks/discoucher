@@ -1,4 +1,4 @@
-class DashboardController < ApplicationController
+class Admin::DashboardController < Admin::ApplicationController
   def index
   	establishments_data	
   	user_data

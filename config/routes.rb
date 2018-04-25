@@ -3,11 +3,11 @@ Rails.application.routes.draw do
   require 'sidekiq/web'
   
  
-  get 'dashboard/index'
+  
 
-  resources :register_books
+  
   devise_for :admins, path: 'admins', controllers: { sessions: "admins/sessions" }
-  devise_for :users, path: 'users', controllers: { sessions: "users/sessions" }
+  # devise_for :users, path: 'users', controllers: { sessions: "users/sessions" }
   # devise_scope :user do
   #     get 'sign_in', to: 'devise/sessions#new'
   #     get 'sign_up', to: 'devise/registrations#new'
@@ -19,12 +19,21 @@ Rails.application.routes.draw do
 
   authenticated :admin do
     mount Sidekiq::Web => '/sidekiq'
-    root 'dashboard#index', as: :authenticated_admin
+    root 'admin/dashboard#index', as: :authenticated_admin
   end
 
-  resources :establishments
-  resources :vouchers
-  resources :books 
+
+  namespace :admin do
+    get 'dashboard/index'
+    resources :register_books
+    resources :establishments
+    resources :vouchers
+    resources :books 
+  end
+
+  # resources :establishments
+  # resources :vouchers
+  # resources :books 
 
   resources :user do
     # get :make_moderator
@@ -33,9 +42,11 @@ Rails.application.routes.draw do
     get 'user/:id' => 'user#show', as: :user
   end
 
+   
+
   # get 'user/index'
   # get 'user/show'   
-  root 'dashboard#index'
+  root 'admin/dashboard#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   namespace :api do
     namespace :v1 do

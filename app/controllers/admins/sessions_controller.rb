@@ -2,9 +2,11 @@
 
 class Admins::SessionsController < Devise::SessionsController
   include Accessible
+  
   skip_before_action :check_user, only: [:destroy, :new]
   # before_action :configure_sign_in_params, only: [:create]
-
+  
+  
   # GET /resource/sign_in
   # def new
   #   super

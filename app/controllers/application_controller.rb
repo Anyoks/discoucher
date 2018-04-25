@@ -3,15 +3,21 @@ class ApplicationController < ActionController::Base
   
 
   layout :layout_by_resource
-  protect_from_forgery with: :exception
+  # protect_from_forgery with: :exception
+  protect_from_forgery with: :exception, if: :verify_api
+
   protect_from_forgery with: :null_session,
      if: Proc.new { |c| c.request.format =~ %r{application/json} }
-  # before_action :authenticate_user!
-  before_action :authenticate_admin!
+  
+  # before_action :authenticate_admin!
   before_action :configure_permitted_parameters, if: :devise_controller?	
 
 
   protected
+
+  def verify_api
+    params[:controller].split('/')[0] != 'devise_token_auth'
+  end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :email, :password, :password_confirmation])
@@ -43,6 +49,6 @@ class ApplicationController < ActionController::Base
 
   def after_sign_out_path_for(resource_or_scope)
     #byebug
-        "/"
+        "/admins/sign_in"
   end
 end

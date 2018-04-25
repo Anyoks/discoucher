@@ -1,0 +1,29 @@
+%h1 Listing register_books
+
+%table
+  %thead
+    %tr
+      %th First name
+      %th Last name
+      %th Phone number
+      %th Email
+      %th Book code
+      %th
+      %th
+      %th
+
+  %tbody
+    - @register_books.each do |register_book|
+      %tr
+        %td= register_book.first_name
+        %td= register_book.last_name
+        %td= register_book.phone_number
+        %td= register_book.email
+        %td= register_book.book_code
+        %td= link_to 'Show', register_book
+        %td= link_to 'Edit', edit_register_book_path(register_book)
+        %td= link_to 'Destroy', register_book, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Register book', new_register_book_path

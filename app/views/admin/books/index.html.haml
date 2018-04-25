@@ -11,7 +11,7 @@
     %li.active Here
 
 %br
-=render "books/table", books: @books #the table that was previously here was extracted to the partial to be DRY. seems like I needed it more than I thought! :-)
+=render "admin/books/table", books: @books #the table that was previously here was extracted to the partial to be DRY. seems like I needed it more than I thought! :-)
 
 -if current_admin && current_admin.is_admin?
   %p=link_to 'New Book', new_book_path, class: "btn btn-primary"
