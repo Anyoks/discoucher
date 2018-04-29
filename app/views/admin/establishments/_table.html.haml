@@ -21,6 +21,6 @@
         %td= image_tag establishment.logo.url(:medium)
         %td
           -if current_admin && current_admin.is_admin?
-            = link_to 'Edit', edit_establishment_path(establishment), class: "label label-default"
-            = link_to "Show Details",establishment, class: "label label-warning"
-            = link_to 'Destroy', establishment, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
+            = link_to 'Edit', edit_admin_establishment_path(establishment), class: "label label-default"
+            = link_to "Show Details", admin_establishment_path(establishment), class: "label label-warning"
+            = link_to 'Destroy', admin_establishment_path(establishment), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
