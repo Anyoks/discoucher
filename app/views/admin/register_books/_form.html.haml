@@ -6,7 +6,7 @@
   / /.login-logo
   .login-box-body
     %p.login-box-msg Register Your Book
-    = simple_form_for(@register_book) do |f|
+    = simple_form_for [ :admin, @register_book] do |f|
       = f.error_notification
       - if @register_book.errors.any?
         / #error_explanation
