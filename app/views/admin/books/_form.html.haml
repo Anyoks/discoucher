@@ -1,5 +1,5 @@
 .form-group
-  = simple_form_for @book do |f|
+  = simple_form_for [ :admin, @book] do |f|
     - if @book.errors.any?
       #error_explanation
         %h2= "#{pluralize(@book.errors.count, "error")} prohibited this book from being saved:"

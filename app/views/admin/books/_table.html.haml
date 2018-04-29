@@ -74,7 +74,7 @@
             = link_to 'registered', '#', class: "label label-success"
         %td
           -if current_admin && current_admin.is_admin?
-            = link_to 'Edit', edit_book_path(book), class: "label label-default"
-            = link_to "Show",book, class: "label label-warning"
-            = link_to 'Destroy', book, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
+            = link_to 'Edit', edit_admin_book_path(book), class: "label label-default"
+            = link_to "Show",admin_book_path(book), class: "label label-warning"
+            = link_to 'Destroy', admin_book_path(book), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
 = will_paginate books , :page_links => false, class: "btn btn-default" #, renderer: BootstrapPagination::Rails

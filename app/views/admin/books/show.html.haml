@@ -26,6 +26,6 @@
           /   = link_to "Show",establishment, class: "label label-warning"
           /   = link_to 'Destroy', establishment, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
 
-= link_to 'Edit', edit_book_path(@book)
+= link_to 'Edit', edit_admin_book_path(@book)
 \|
-= link_to 'Back', books_path
+= link_to 'Back', admin_books_path
