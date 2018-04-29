@@ -1,4 +1,4 @@
-= simple_form_for @voucher do |f|
+= simple_form_for [:admin , @voucher] do |f|
   - if @voucher.errors.any?
     #error_explanation
       %h2= "#{pluralize(@voucher.errors.count, "error")} prohibited this voucher from being saved:"
