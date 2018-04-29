@@ -29,24 +29,16 @@ Rails.application.routes.draw do
     resources :establishments
     resources :vouchers
     resources :books 
+
+    resources :user do
+      # get :make_moderator
+      # get :make_normal_user
+      delete 'user/:id' => 'user#destroy', :via => :delete #, :as => :admin_destroy_user
+      get 'user/:id' => 'user#show', as: :user
+    end
   end
   get '/register', :to => "admin/register_books#new"
-
-  # resources :establishments
-  # resources :vouchers
-  # resources :books 
-
-  resources :user do
-    # get :make_moderator
-    # get :make_normal_user
-    delete 'user/:id' => 'user#destroy', :via => :delete #, :as => :admin_destroy_user
-    get 'user/:id' => 'user#show', as: :user
-  end
-
-   
-
-  # get 'user/index'
-  # get 'user/show'   
+  
   root 'admin/dashboard#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   namespace :api do
