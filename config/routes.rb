@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     resources :vouchers
     resources :books 
   end
+  get '/register', :to => "admin/register_books#new"
 
   # resources :establishments
   # resources :vouchers
