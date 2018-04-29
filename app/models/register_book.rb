@@ -26,20 +26,28 @@ class RegisterBook < ApplicationRecord
 # confirm the book being registered exists and add book id to the book before saving
 
 	def find_book_by_code 
-		book = Book.find_by_code self.book_code
-
-		if book.nil?
-			"Book does not Exist!"
+		@book = Book.find_by_code self.book_code
+		# byebug
+		if @book.nil?
+			logger.debug "Book does not Exist!"
 			return false
 		elsif RegisterBook.find_by_book_code self.book_code
-			"Book already registered"
+			logger.debug "Book already registered"
 			return false 
 		else
-			"Book Registration successfully"
-			if create_user_for_the_book
-				self.user_id = @user.id
-				self.book_id = book.id
-				return true
+			logger.debug "Book Registration successfully"
+			byebug
+			regbook = create_user_for_the_book
+			if regbook
+
+				# byebug
+				if self.book_id.blank?
+					self.book_id = @book.id
+				elsif self.user_id.blank?
+					self.user_id = @user.id 
+				end
+
+				return regbook
 			else
 				return false
 			end
@@ -52,11 +60,35 @@ protected
 #  
 # NOw lets create a user for the book, this will be used for mobile app logins in the future
 	def create_user_for_the_book
+		
 		user = User.find_by_email self.email
 		if user.nil?
 			create_user
 		else
 			"User Exists!"
+			
+			# create  new register book for the user
+			registeredBook = create_register_book_for_existing_user user
+			logger.debug "Created a book"
+			return registeredBook
+		end
+	end
+
+	def create_register_book_for_existing_user existinguser
+		user = existinguser
+		regBook = user.register_books.new
+		regBook.first_name = user.first_name
+		regBook.last_name = user.last_name
+		regBook.phone_number = user.phone_number
+		regBook.email = user.email
+		regBook.book_code = self.book_code
+		regBook.book_id = @book.id
+
+		if regBook.save!
+			logger.debug "Created another Reg book for this user"
+			return regBook
+		else
+			logger.debug "FAILED to create another Reg book for this user"
 			return false
 		end
 	end
@@ -64,7 +96,9 @@ protected
 	def create_user
 		@user = User.new( first_name: "#{self.first_name}", last_name: "#{self.last_name}",
 					 email: "#{self.email}", phone_number: "#{self.phone_number}",
-					 password: "#{self.book_code}", password_confirmation: "#{self.book_code}")
+					 password: "#{self.book_code}", password_confirmation: "#{self.book_code}", uid: "#{self.email}",
+					 provider: "email")
+		byebug
 		if @user.save!
 			# byebug
 			# return true

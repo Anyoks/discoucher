@@ -33,23 +33,28 @@ class Admin::RegisterBooksController < Admin::ApplicationController
   def create
     
     
-    @register_book = RegisterBook.new(register_book_params)
+    savedBook = RegisterBook.new(register_book_params)
 
-    # check if book exists and is not registered
-    @register_book.find_book_by_code
+    # check if the user exists
+
+    # check if book exists and is not registered & create new reg book for existing user
+    check = savedBook.find_book_by_code
     
     respond_to do |format|
-      if @register_book.save
+      if  check.class.name != "FalseClass" #@register_book.save
         # find the user
+        @register_book = check
         @user = @register_book.user
         # send an email asynchronously
         RegisterMailer.registration_email(@user).deliver_later
 
-        format.html { redirect_to @register_book, notice: 'Register book was successfully created.' }
+        format.html { redirect_to admin_register_book_path(@register_book), notice: 'Register book was successfully created.' }
         format.json { render :show, status: :created, location: @register_book }
       else
+       
         format.html { render :new }
         format.json { render json: @register_book.errors, status: :unprocessable_entity }
+        @register_book = RegisterBook.new(register_book_params)
       end
     end
   end
