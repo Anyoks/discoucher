@@ -50,7 +50,9 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   namespace :api do
     namespace :v1 do
+      # devise_for :users , path: 'users', controllers: { sessions: "users/sessions" }
       get '/sms', :to => 'sms#create'
+      get '/profile', :to => 'profile#profile'
       resources :sms, only: [:create]
       mount_devise_token_auth_for 'User', at: 'auth'
       # resources :users
