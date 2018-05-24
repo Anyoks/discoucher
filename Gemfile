@@ -97,3 +97,7 @@ gem 'devise_token_auth'
 # gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
 # gem 'omniauth', '~> 1.8', '>= 1.8.1'
+# Search plugins
+
+gem 'elasticsearch-model', '~> 5.0', '>= 5.0.2'
+gem 'elasticsearch-rails', '~> 5.0', '>= 5.0.2'
