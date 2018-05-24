@@ -17,14 +17,17 @@
     </div>
 
     <!-- search form (Optional) -->
-    <form action="#" method="get" class="sidebar-form">
-      <div class="input-group">
-        <input type="text" name="q" class="form-control" placeholder="Search..."/>
-        <span class="input-group-btn">
-          <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
-        </span>
-      </div>
-    </form>
+    <%= controller_name%> <%= current_admin.last_name%>
+    <% if controller.controller_name != "dashboard" && controller.controller_name != "search" %>
+      <form action="search" method="get" class="sidebar-form">
+        <div class="input-group">
+          <input type="text" name="q" class="form-control" placeholder="Search..."/>
+          <span class="input-group-btn">
+            <button type='submit' name='<%= controller_name%>' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+          </span>
+        </div>
+      </form>
+    <%end%>
     <!-- /.search form -->
 
     <!-- Sidebar Menu -->
@@ -34,6 +37,7 @@
       <li class="active"><a href="/admin/books"><i class='fa fa-link'></i> <span>Manage Books</span></a></li>
       <li><a href="/admin/establishments"><i class='fa fa-link'></i> <span>Manage Esablishments</span></a></li>
       <li><a href="/admin/user"><i class='fa fa-link'></i> <span>Manage Users</span></a></li>
+      <li><a href="/admin/vouchers"><i class='fa fa-link'></i> <span>Manage Vouchers</span></a></li>
       <li class="treeview">
         <a href="#"><i class='fa fa-link'></i> <span>Create New...</span> <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
