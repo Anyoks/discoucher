@@ -15,6 +15,9 @@ class Book < ApplicationRecord
 	has_many :establishments, through: :details
 	has_many :vouchers, through: :establishments
 
+	# including elastic search
+	include Elasticsearch::Model
+  	include Elasticsearch::Model::Callbacks
 
 	def registered?
 		if self.register_book

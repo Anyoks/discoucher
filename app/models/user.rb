@@ -29,7 +29,12 @@ class User < ApplicationRecord
   include DeviseTokenAuth::Concerns::User
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  
+  	
+  # including elastic search
+	include Elasticsearch::Model
+  	include Elasticsearch::Model::Callbacks
+  	
+
   belongs_to :role
   before_validation :set_default_role
   

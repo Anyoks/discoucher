@@ -17,6 +17,10 @@ class Voucher < ApplicationRecord
 	belongs_to :establishment
 	has_many :visits
 
+	# including elastic search
+	include Elasticsearch::Model
+  	include Elasticsearch::Model::Callbacks
+
 	# Check if the voucher is redeemed or not and return true or false
 	def redeemed?
 		if self.redeem_status == true

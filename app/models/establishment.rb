@@ -39,6 +39,10 @@ class Establishment < ApplicationRecord
 	has_many :vouchers, :dependent => :destroy
 	has_many :visits
 	has_many :failed_redemptions
+
+	# including elastic search
+	include Elasticsearch::Model
+  	include Elasticsearch::Model::Callbacks
 	
 	def type
 		return self.establishment_type
