@@ -5,6 +5,8 @@ class Admin::DashboardController < Admin::ApplicationController
   	number_of_not_visited_establishments
   end
 
+  
+
 private
 	def user_data
 		@users = User.all.order(created_at: :desc)
