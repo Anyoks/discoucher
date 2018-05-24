@@ -25,10 +25,13 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get 'dashboard/index'
+    get '/search', :to => 'search#search'
     resources :register_books
     resources :establishments
     resources :vouchers
-    resources :books 
+    resources :books do 
+      get '/search', :to => 'search#search'
+    end
 
     resources :user do
       # get :make_moderator
