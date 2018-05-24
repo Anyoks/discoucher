@@ -1,0 +1,32 @@
+%section.content-header
+  %h1
+    DisCoucher #{ @results == nil || @results.results.total == 0 ? " ": @results.first._index   }
+    %small Search Results
+  %ol.breadcrumb
+    %li
+      %a{:href => "#"}
+        %i.fa.fa-dashboard
+        Level
+    %li.active Here
+
+
+%br
+
+%br
+
+-if  @results ==  nil || @results.results.total == 0
+  =render "admin/search/ntable"
+-else
+  -if @results.first._index == "books"
+    =render "admin/search/btable", results: @results 
+  -elsif @results.first._index == "establishments"
+    =render "admin/search/etable", results: @results 
+  -elsif @results.first._index == "vouchers"
+    =render "admin/search/vtable", results: @results 
+  -elsif @results.first._index == "users"
+    =render "admin/search/utable", results: @results 
+  -else
+/ render error page
+
+
+    

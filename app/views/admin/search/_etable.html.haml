@@ -1,0 +1,26 @@
+%table.table.table-hover
+  %thead
+    %tr
+      %th Logo
+      %th Name
+      %th Location
+      %th Options
+      %th
+
+  %tbody
+    - if results.nil? 
+      %tr
+        %td "No Results"
+    -else
+      - results.results.each do |result|
+        %tr
+          %td
+          %td= result._source.name
+          %td= result._source.location
+          %td
+          
+          %td
+            -if current_admin && current_admin.is_admin?
+              / = link_to 'Edit', edit_admin_results_path(results), class: "label label-default"
+              / = link_to "Show",admin_results_path(results), class: "label label-warning"
+              / = link_to 'Destroy', admin_results_path(results), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
