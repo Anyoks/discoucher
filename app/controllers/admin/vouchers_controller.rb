@@ -4,7 +4,7 @@ class Admin::VouchersController < Admin::ApplicationController
   # GET /vouchers
   # GET /vouchers.json
   def index
-    @vouchers = Voucher.all
+    @vouchers = Voucher.all.paginate(:page => params[:page], :per_page => 20)
   end
 
   # GET /vouchers/1

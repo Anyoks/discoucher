@@ -1,24 +1,80 @@
-%table.table.table-hover
-  %thead
-    %tr
-      %th Code
-      %th Year
-      %th Options
-      %th
 
-  %tbody
-    - if results.nil? 
-      %tr
-        %td "No Results"
-    -else
-      - results.results.each do |result|
-        %tr
-          %td= result._source.code
-          %td= result._source.year
-          %td
-          
-          %td
-            -if current_admin && current_admin.is_admin?
-              / = link_to 'Edit', edit_admin_results_path(results), class: "label label-default"
-              / = link_to "Show",admin_results_path(results), class: "label label-warning"
-              / = link_to 'Destroy', admin_results_path(results), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
+.row
+  .col-xs-12
+    .box
+      .box-header
+        %h3.box-title Showing #{results.results.total} Result(s)
+      / /.box-header
+      .box-body
+        #example1_wrapper.dataTables_wrapper.form-inline.dt-bootstrap
+          .row
+            / .col-sm-6
+            /   #example1_length.dataTables_length
+            /     %label
+            /       Show
+            /       %select.form-control.input-sm{"aria-controls" => "example1", :name => "example1_length"}
+            /         %option{:value => "10"} 10
+            /         %option{:value => "25"} 25
+            /         %option{:value => "50"} 50
+            /         %option{:value => "100"} 100
+            /       entries
+            / .col-sm-6
+            /   #example1_filter.dataTables_filter
+            /     %label
+            /       Search:
+            /       %input.form-control.input-sm{"aria-controls" => "example1", :placeholder => "", :type => "search"}/
+          .row
+            .col-sm-12
+              %table#example1.table.table-bordered.table-striped.dataTable{"aria-describedby" => "example1_info", :role => "grid"}
+                %thead
+                  %tr{:role => "row"}
+                    %th.sorting_asc{"aria-controls" => "example1", "aria-label" => "Rendering engine: activate to sort column descending", "aria-sort" => "ascending", :colspan => "1", :rowspan => "1", :style => "width: 182px;", :tabindex => "0"} Book Code
+                    %th.sorting{"aria-controls" => "example1", "aria-label" => "Browser: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 225px;", :tabindex => "0"} Year
+                    %th.sorting{"aria-controls" => "example1", "aria-label" => "Platform(s): activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 199px;", :tabindex => "0"} Options
+            
+                %tbody
+                  - if results.nil? 
+                    %tr.odd
+                      %td "No Results"
+                  - else
+                    - results.results.each do |result|
+
+
+                      %tr{:class => "#{cycle('even', 'odd')}"}
+                        %td.sorting_1= result._source.code
+                        %td= result._source.year
+                        %td 
+                          -if current_admin && current_admin.is_admin?
+                            = link_to "Details",admin_books_path(result._source.id), class: "label label-warning"
+
+                %tfoot
+                  %tr
+                    %th{:colspan => "1", :rowspan => "1"} Book Cdde
+                    %th{:colspan => "1", :rowspan => "1"} Year
+                    %th{:colspan => "1", :rowspan => "1"} Options
+
+          .row
+            .col-sm-5
+              #example1_info.dataTables_info{"aria-live" => "polite", :role => "status"} Showing 1 to 10 of 57 entries
+            .col-sm-7
+              #example1_paginate.dataTables_paginate.paging_simple_numbers
+                %ul.pagination
+                  %li#example1_previous.paginate_button.previous.disabled
+                    %a{"aria-controls" => "example1", "data-dt-idx" => "0", :href => "#", :tabindex => "0"} Previous
+                  %li.paginate_button.active
+                    %a{"aria-controls" => "example1", "data-dt-idx" => "1", :href => "#", :tabindex => "0"} 1
+                  %li.paginate_button
+                    %a{"aria-controls" => "example1", "data-dt-idx" => "2", :href => "#", :tabindex => "0"} 2
+                  %li.paginate_button
+                    %a{"aria-controls" => "example1", "data-dt-idx" => "3", :href => "#", :tabindex => "0"} 3
+                  %li.paginate_button
+                    %a{"aria-controls" => "example1", "data-dt-idx" => "4", :href => "#", :tabindex => "0"} 4
+                  %li.paginate_button
+                    %a{"aria-controls" => "example1", "data-dt-idx" => "5", :href => "#", :tabindex => "0"} 5
+                  %li.paginate_button
+                    %a{"aria-controls" => "example1", "data-dt-idx" => "6", :href => "#", :tabindex => "0"} 6
+                  %li#example1_next.paginate_button.next
+                    %a{"aria-controls" => "example1", "data-dt-idx" => "7", :href => "#", :tabindex => "0"} Next
+      / /.box-body
+    / /.box
+  / /.col
