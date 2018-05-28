@@ -48,7 +48,7 @@
                         %td= result._source.phone_number
                         %td 
                           -if current_admin && current_admin.is_admin?
-                            = link_to "Details",admin_establishment_path(result._source.id), class: "label label-warning"
+                            = link_to "Details",admin_user_path(result._source.id), class: "label label-warning"
 
                 %tfoot
                   %tr
