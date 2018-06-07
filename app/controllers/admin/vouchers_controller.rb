@@ -29,7 +29,7 @@ class Admin::VouchersController < Admin::ApplicationController
 
     respond_to do |format|
       if @voucher.save
-        format.html { redirect_to @voucher, notice: 'Voucher was successfully created.' }
+        format.html { redirect_to admin_vouchers_url(@voucher), notice: 'Voucher was successfully created.' }
         format.json { render :show, status: :created, location: @voucher }
       else
         format.html { render :new }
@@ -43,7 +43,7 @@ class Admin::VouchersController < Admin::ApplicationController
   def update
     respond_to do |format|
       if @voucher.update(voucher_params)
-        format.html { redirect_to @voucher, notice: 'Voucher was successfully updated.' }
+        format.html { redirect_to admin_vouchers_url(@voucher), notice: 'Voucher was successfully updated.' }
         format.json { render :show, status: :ok, location: @voucher }
       else
         format.html { render :edit }
@@ -57,7 +57,7 @@ class Admin::VouchersController < Admin::ApplicationController
   def destroy
     @voucher.destroy
     respond_to do |format|
-      format.html { redirect_to vouchers_url, notice: 'Voucher was successfully destroyed.' }
+      format.html { redirect_to admin_vouchers_url, notice: 'Voucher was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

@@ -50,7 +50,7 @@ class Admin::EstablishmentsController < Admin::ApplicationController
 
     respond_to do |format|
       if @establishment.save
-        format.html { redirect_to @establishment, notice: 'Establishment was successfully created.' }
+        format.html { redirect_to admin_establishment_url(@establishment), notice: 'Establishment was successfully created.' }
         format.json { render :show, status: :created, location: @establishment }
       else
         format.html { render :new }
@@ -64,7 +64,7 @@ class Admin::EstablishmentsController < Admin::ApplicationController
   def update
     respond_to do |format|
       if @establishment.update(establishment_params)
-        format.html { redirect_to @establishment, notice: 'Establishment was successfully updated.' }
+        format.html { redirect_to admin_establishment_url(@establishment), notice: 'Establishment was successfully updated.' }
         format.json { render :show, status: :ok, location: @establishment }
       else
         format.html { render :edit }
@@ -81,7 +81,7 @@ class Admin::EstablishmentsController < Admin::ApplicationController
     @establishment.logo.destroy 
     @establishment.logo.clear
     respond_to do |format|
-      format.html { redirect_to establishments_url, notice: 'Establishment was successfully destroyed.' }
+      format.html { redirect_to admin_establishment_url, notice: 'Establishment was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

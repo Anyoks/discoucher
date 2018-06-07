@@ -64,7 +64,7 @@ class Admin::RegisterBooksController < Admin::ApplicationController
   def update
     respond_to do |format|
       if @register_book.update(register_book_params)
-        format.html { redirect_to @register_book, notice: 'Register book was successfully updated.' }
+        format.html { redirect_to admin_register_book_path(@register_book), notice: 'Register book was successfully updated.' }
         format.json { render :show, status: :ok, location: @register_book }
       else
         format.html { render :edit }
@@ -78,7 +78,7 @@ class Admin::RegisterBooksController < Admin::ApplicationController
   def destroy
     @register_book.destroy
     respond_to do |format|
-      format.html { redirect_to register_books_url, notice: 'Register book was successfully destroyed.' }
+      format.html { redirect_to admin_register_books_url, notice: 'Register book was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
