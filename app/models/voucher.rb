@@ -72,7 +72,7 @@ class Voucher < ApplicationRecord
 			#Check visit count for user in this establishement
 			count = check_user_visits_in_this_establishment(user_id, establishment_id)
 			#create a visit if the count is less than 2
-			if count < 2
+			if count < 1
 				visit_params = make_visit_params(user_id,register_book_id,establishment_id,voucher_id)
 				@visit = Visit.new(visit_params)
 				if @visit.save!
