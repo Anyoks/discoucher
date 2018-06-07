@@ -32,6 +32,11 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.3)
+    active_model_serializers (0.10.7)
+      actionpack (>= 4.1, < 6)
+      activemodel (>= 4.1, < 6)
+      case_transform (>= 0.2)
+      jsonapi-renderer (>= 0.1.1.beta1, < 0.3)
     activejob (5.1.4)
       activesupport (= 5.1.4)
       globalid (>= 0.3.6)
@@ -91,6 +96,8 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (>= 2.0, < 4.0)
+    case_transform (0.2)
+      activesupport
     chartjs-ror (3.3.1)
       rails (>= 3.1)
     childprocess (0.8.0)
@@ -181,6 +188,16 @@ GEM
     jsonapi-renderer (0.2.0)
     jsonapi-serializable (0.3.0)
       jsonapi-renderer (~> 0.2.0)
+    jsonapi_compliable (0.11.19)
+      jsonapi-serializable (~> 0.3.0)
+    jsonapi_errorable (0.9.0)
+      jsonapi-serializable (~> 0.1)
+    jsonapi_suite (0.7.0)
+      actionpack (>= 4.1, < 6)
+      activesupport (>= 4.1, < 6)
+      jsonapi_compliable (~> 0.11)
+      jsonapi_errorable (~> 0.6)
+      strong_resources (~> 0.6)
     jwt (1.5.6)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -312,6 +329,13 @@ GEM
     sshkit (1.16.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
+    strong_resources (0.6.3)
+      actionpack (>= 4.1, < 6.0)
+      activesupport (>= 4.1, < 6.0)
+      jsonapi_compliable (~> 0.6)
+      stronger_parameters (~> 2.6)
+    stronger_parameters (2.11.0)
+      actionpack (>= 3.2, < 5.3)
     temple (0.8.0)
     thor (0.20.0)
     thread_safe (0.3.6)
@@ -341,6 +365,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_model_serializers
   adminlte2-rails
   annotate (~> 2.7, >= 2.7.2)
   bootstrap-sass
@@ -366,6 +391,7 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   jquery-rails
   jsonapi-rails
+  jsonapi_suite (~> 0.5)
   listen (>= 3.0.5, < 3.2)
   omniauth-google-oauth2
   paperclip

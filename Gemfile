@@ -86,6 +86,8 @@ gem 'paperclip'
 gem 'simple_form', '~> 3.5'
 # API 
 gem 'jsonapi-rails'
+gem 'jsonapi_suite', '~> 0.5'
+
 gem 'rake'
 # Pagination
 gem 'will_paginate', '~> 3.1.1'
@@ -98,6 +100,7 @@ gem 'devise_token_auth'
 gem 'omniauth-google-oauth2'
 # gem 'omniauth', '~> 1.8', '>= 1.8.1'
 # Search plugins
-
 gem 'elasticsearch-model', '~> 5.0', '>= 5.0.2'
 gem 'elasticsearch-rails', '~> 5.0', '>= 5.0.2'
+# serializing data
+gem 'active_model_serializers'
