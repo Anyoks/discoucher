@@ -85,7 +85,11 @@ gem 'paperclip'
 # dealing with forms
 gem 'simple_form', '~> 3.5'
 # API 
+# 
+gem 'jsonapi_suite', '~> 0.7'
 gem 'jsonapi-rails'
+
+
 gem 'rake'
 # Pagination
 gem 'will_paginate', '~> 3.1.1'

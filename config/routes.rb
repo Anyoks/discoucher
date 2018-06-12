@@ -52,6 +52,7 @@ Rails.application.routes.draw do
       resources :sms, only: [:create]
       mount_devise_token_auth_for 'User', at: 'auth'
       # resources :users
+      get '/establishments/est'
     end
   end
 

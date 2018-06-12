@@ -1,5 +1,8 @@
   
 class ApplicationController < ActionController::Base
+  # Bootstrap jsonapi_suite with relevant modules
+  
+
   
 
   layout :layout_by_resource
