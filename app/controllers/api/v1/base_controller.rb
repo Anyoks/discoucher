@@ -4,7 +4,7 @@ class Api::V1::BaseController < ActionController::API
 	include DeviseTokenAuth::Concerns::SetUserByToken
 	# include JsonapiSuite::ControllerMixin
 
-	# include JsonapiSuite::ControllerMixin
+	include JsonapiSuite::ControllerMixin
 
   register_exception JsonapiCompliable::Errors::RecordNotFound,
     status: 404
