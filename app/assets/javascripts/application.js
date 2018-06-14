@@ -15,6 +15,7 @@
 //= require jquery_ujs
 //= require rails-ujs
 //= require turbolinks
+//= require icheck
 //= require Chart.min
 //= require app
 //= require_tree .
