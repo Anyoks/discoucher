@@ -22,9 +22,24 @@ class Admin::UserController < Admin::ApplicationController
 
     @dates = date_activites @user
 
+    @total = progress @user
+    @so_far = @user.visits.count
+
     
     @options = {:height => "257px", :width => "514px"}
     @options1 = {:height => "257px", :width => "514px"}
+  end
+
+  def progress user
+
+    user = user
+    total = 0
+
+    user.register_books.each do |b| 
+       total_book_for_this_book = b.book.vouchers.count
+       total = total + total_book_for_this_book
+     end
+     return total
   end
 
   # def make_moderator

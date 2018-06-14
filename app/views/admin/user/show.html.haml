@@ -1,4 +1,59 @@
-.row-fluid
+.row
+  .col-md-4
+    / Widget: user widget style 1
+    .box.box-widget.widget-user
+      / Add the bg color to the header using any of the bg-* classes
+      .widget-user-header.bg-aqua-active
+        %h3.widget-user-username #{@user.first_name} #{@user.last_name}
+        %h5.widget-user-desc Founder &amp; CEO
+      .widget-user-image
+        %img.img-circle{:alt => "User Avatar", :src => "/assets/user.jpg"}/
+      .box-footer
+        .row
+          .col-sm-4.border-right
+            .description-block
+              %h5.description-header #{@user_visits.count}
+              %span.description-text Visits
+            / /.description-block
+          / /.col
+          .col-sm-4.border-right
+            .description-block
+              %h5.description-header #{@user_visits.count}
+              %span.description-text Visits
+            / /.description-block
+          / /.col
+          .col-sm-4
+            .description-block
+              %h5.description-header #{@user_visits.count}
+              %span.description-text Visits
+            / /.description-block
+          / /.col
+        / /.row
+    / /.widget-user
+
+  .col-md-4
+    .box.box-solid
+      .box-header.with-border
+        %h3.box-title Progress bars
+      / /.box-header
+      .box-body
+        %p Voucher Redemption progress
+        .progress.progress-sm.active
+          .progress-bar.progress-bar-success.progress-bar-striped{"aria-valuemax" => "#{@total}", "aria-valuemin" => "0", "aria-valuenow" => "40", :role => "progressbar", :style => "width: #{@so_far}%"}
+            %span.sr-only 40% Complete (success)
+        %p 
+          used #{@so_far} of #{@total}
+          %span.pull-right.badge.bg-aqua #{@so_far}
+        .progress.progress-sm.active
+          .progress-bar.progress-bar-success.progress-bar-striped{"aria-valuemax" => "#{@total}", "aria-valuemin" => "0", "aria-valuenow" => "40", :role => "progressbar", :style => "width: #{@so_far}%"}
+            %span.sr-only 40% Complete (success)
+        %p 
+          used #{@so_far} of #{@total}
+          %span.pull-right.badge.bg-aqua #{@so_far}
+
+  .col-md-4
+
+.row
   .col-md-6
     .box.box-danger
       .box-header.with-border
@@ -15,7 +70,6 @@
             %i.fa.fa-times
       .box-body
         = doughnut_chart @data , @options
-.row-fluid
   .col-md-6
     .box.box-danger
       .box-header.with-border

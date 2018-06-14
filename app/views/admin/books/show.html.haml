@@ -4,6 +4,103 @@
 %p
   %b Year:
   = @book.year
+
+.section
+  .row
+    .col-md-4
+      / Widget: user widget style 1
+      .box.box-widget.widget-user-2
+        / Add the bg color to the header using any of the bg-* classes
+        .widget-user-header.bg-yellow
+          .widget-user-image
+            %img.img-circle{:alt => "User Avatar", :src => "/assets/user.jpg"}/
+          / /.widget-user-image
+          %h3.widget-user-username Nadia Carmichael
+          %h5.widget-user-desc Lead Developer
+        .box-footer.no-padding
+          %ul.nav.nav-stacked
+            %li
+              %a{:href => "#"}
+                Projects
+                %span.pull-right.badge.bg-blue 31
+            %li
+              %a{:href => "#"}
+                Tasks
+                %span.pull-right.badge.bg-aqua 5
+            %li
+              %a{:href => "#"}
+                Completed Projects
+                %span.pull-right.badge.bg-green 12
+            %li
+              %a{:href => "#"}
+                Followers
+                %span.pull-right.badge.bg-red 842
+      / /.widget-user
+    .col-md-4
+      / Widget: user widget style 1
+      .box.box-widget.widget-user
+        / Add the bg color to the header using any of the bg-* classes
+        .widget-user-header.bg-aqua-active
+          %h3.widget-user-username Alexander Pierce
+          %h5.widget-user-desc Founder &amp; CEO
+        .widget-user-image
+          %img.img-circle{:alt => "User Avatar", :src => "/assets/user.jpg"}/
+        .box-footer
+          .row
+            .col-sm-4.border-right
+              .description-block
+                %h5.description-header 3,200
+                %span.description-text SALES
+              / /.description-block
+            / /.col
+            .col-sm-4.border-right
+              .description-block
+                %h5.description-header 13,000
+                %span.description-text FOLLOWERS
+              / /.description-block
+            / /.col
+            .col-sm-4
+              .description-block
+                %h5.description-header 35
+                %span.description-text PRODUCTS
+              / /.description-block
+            / /.col
+          / /.row
+      / /.widget-user
+
+
+
+
+.row
+  .col-xs-12
+    .box
+      .box-header
+        %h3.box-title Books In the Database
+      / /.box-header
+      .box-body
+        #example1_wrapper.dataTables_wrapper.form-inline.dt-bootstrap
+          .row
+            .col-sm-5
+            .col-sm-7
+          .row
+            .col-sm-12
+              %table#example1.table.table-bordered.table-striped.dataTable{"aria-describedby" => "example1_info", :role => "grid"}
+                %thead
+                  %tr{:role => "row"}
+                    %th.sorting_asc{"aria-controls" => "example1", "aria-label" => "Rendering engine: activate to sort column descending", "aria-sort" => "ascending", :colspan => "1", :rowspan => "1", :style => "width: 182px;", :tabindex => "0"} Establishment
+                    %th.sorting{"aria-controls" => "example1", "aria-label" => "Browser: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 100px;", :tabindex => "0"} Location
+                    %th.sorting{"aria-controls" => "example1", "aria-label" => "Platform(s): activate to sort column ascending", :colspan => "", :rowspan => "1", :style => "width: 100px;", :tabindex => "0"} No. of Vouchers
+                    %th.sorting{"aria-controls" => "example1", "aria-label" => "Engine version: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 156px;", :tabindex => "0"} Registration Status
+                    %th.sorting{"aria-controls" => "example1", "aria-label" => "CSS grade: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 113px;", :tabindex => "0"} Options
+                %tbody
+                  - @book.establishments.each do |establishment|
+                    %tr
+                      %td= establishment.name
+                      %td= establishment.location
+                      %td= establishment.vouchers.count
+                      %td
+
+
 %table.table.table-hover
   %thead
     %tr

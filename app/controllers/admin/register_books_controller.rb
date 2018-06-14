@@ -5,13 +5,14 @@ class Admin::RegisterBooksController < Admin::ApplicationController
   before_action :set_register_book, only: [:show, :edit, :update, :destroy]
 
   layout false
+  layout 'admin_lte_2', :except => :view, except: [:new, :create]
   # layout 'new'
   # layout :resolve_layout
 
   # GET /register_books
   # GET /register_books.json
   def index
-    @register_books = RegisterBook.all
+    @register_books = RegisterBook.all.paginate(:page => params[:page], :per_page => 20)
   end
 
   # GET /register_books/1
