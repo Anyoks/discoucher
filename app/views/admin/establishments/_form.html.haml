@@ -26,6 +26,9 @@
     = f.file_field :logo
 
   .field
+    %input#selectAll{:type => "checkbox", :value => "selectAll"}/
+    Mark all
+  .field
     = f.collection_check_boxes(:book_ids, Book.all, :id, :code) do |cb|
       .form-group
         .form-check
