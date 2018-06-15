@@ -1,72 +1,65 @@
-%p
-  %b Code:
-  = @book.code
-%p
-  %b Year:
-  = @book.year
-
-.section
-  .row
-    .col-md-4
-      / Widget: user widget style 1
-      .box.box-widget.widget-user-2
-        / Add the bg color to the header using any of the bg-* classes
-        .widget-user-header.bg-yellow
-          .widget-user-image
-            %img.img-circle{:alt => "User Avatar", :src => "/assets/user.jpg"}/
-          / /.widget-user-image
-          %h3.widget-user-username Nadia Carmichael
-          %h5.widget-user-desc Lead Developer
-        .box-footer.no-padding
-          %ul.nav.nav-stacked
-            %li
-              %a{:href => "#"}
-                Projects
-                %span.pull-right.badge.bg-blue 31
-            %li
-              %a{:href => "#"}
-                Tasks
-                %span.pull-right.badge.bg-aqua 5
-            %li
-              %a{:href => "#"}
-                Completed Projects
-                %span.pull-right.badge.bg-green 12
-            %li
-              %a{:href => "#"}
-                Followers
-                %span.pull-right.badge.bg-red 842
-      / /.widget-user
-    .col-md-4
-      / Widget: user widget style 1
-      .box.box-widget.widget-user
-        / Add the bg color to the header using any of the bg-* classes
-        .widget-user-header.bg-aqua-active
-          %h3.widget-user-username Alexander Pierce
-          %h5.widget-user-desc Founder &amp; CEO
-        .widget-user-image
-          %img.img-circle{:alt => "User Avatar", :src => "/assets/user.jpg"}/
-        .box-footer
-          .row
-            .col-sm-4.border-right
-              .description-block
-                %h5.description-header 3,200
-                %span.description-text SALES
-              / /.description-block
-            / /.col
-            .col-sm-4.border-right
-              .description-block
-                %h5.description-header 13,000
-                %span.description-text FOLLOWERS
-              / /.description-block
-            / /.col
-            .col-sm-4
-              .description-block
-                %h5.description-header 35
-                %span.description-text PRODUCTS
-              / /.description-block
-            / /.col
-          / /.row
-      / /.widget-user
+/ .section
+/   .row
+/     .col-md-4
+/       / Widget: user widget style 1
+/       .box.box-widget.widget-user-2
+/         / Add the bg color to the header using any of the bg-* classes
+/         .widget-user-header.bg-yellow
+/           .widget-user-image
+/             %img.img-circle{:alt => "User Avatar", :src => "/assets/user.jpg"}/
+/           / /.widget-user-image
+/           %h3.widget-user-username Nadia Carmichael
+/           %h5.widget-user-desc Lead Developer
+/         .box-footer.no-padding
+/           %ul.nav.nav-stacked
+/             %li
+/               %a{:href => "#"}
+/                 Projects
+/                 %span.pull-right.badge.bg-blue 31
+/             %li
+/               %a{:href => "#"}
+/                 Tasks
+/                 %span.pull-right.badge.bg-aqua 5
+/             %li
+/               %a{:href => "#"}
+/                 Completed Projects
+/                 %span.pull-right.badge.bg-green 12
+/             %li
+/               %a{:href => "#"}
+/                 Followers
+/                 %span.pull-right.badge.bg-red 842
+/       / /.widget-user
+/     .col-md-4
+/       / Widget: user widget style 1
+/       .box.box-widget.widget-user
+/         / Add the bg color to the header using any of the bg-* classes
+/         .widget-user-header.bg-aqua-active
+/           %h3.widget-user-username Alexander Pierce
+/           %h5.widget-user-desc Founder &amp; CEO
+/         .widget-user-image
+/           %img.img-circle{:alt => "User Avatar", :src => "/assets/user.jpg"}/
+/         .box-footer
+/           .row
+/             .col-sm-4.border-right
+/               .description-block
+/                 %h5.description-header 3,200
+/                 %span.description-text SALES
+/               / /.description-block
+/             / /.col
+/             .col-sm-4.border-right
+/               .description-block
+/                 %h5.description-header 13,000
+/                 %span.description-text FOLLOWERS
+/               / /.description-block
+/             / /.col
+/             .col-sm-4
+/               .description-block
+/                 %h5.description-header 35
+/                 %span.description-text PRODUCTS
+/               / /.description-block
+/             / /.col
+/           / /.row
+/       / /.widget-user
 
 
 
@@ -75,7 +68,7 @@
   .col-xs-12
     .box
       .box-header
-        %h3.box-title Books In the Database
+        %h3.box-title Book Code: #{@book.code},  Year #{@book.year}
       / /.box-header
       .box-body
         #example1_wrapper.dataTables_wrapper.form-inline.dt-bootstrap
@@ -101,26 +94,32 @@
                       %td
 
 
-%table.table.table-hover
-  %thead
-    %tr
-      %th establishment
-      %th Location
-      %th No. of Vouchers
-      %th
+/ %table.table.table-hover
+/   %thead
+/     %tr
+/       %th establishment
+/       %th Location
+/       %th No. of Vouchers
+/       %th
 
+/   %tbody
+/     - @book.establishments.each do |establishment|
+/       %tr
+/         %td= establishment.name
+/         %td= establishment.location
+/         %td= establishment.vouchers.count
+/         %td
+/           -if current_admin && current_admin.is_admin?
+/             = link_to 'Edit', edit_establishment_path(establishment), class: "label label-default"
+/             = link_to "Show",establishment, class: "label label-warning"
+/             = link_to 'Destroy', establishment, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
+.table.table.table-bordered.text-center
   %tbody
-    - @book.establishments.each do |establishment|
-      %tr
-        %td= establishment.name
-        %td= establishment.location
-        %td= establishment.vouchers.count
-        %td
-          / -if current_admin && current_admin.is_admin?
-          /   = link_to 'Edit', edit_establishment_path(establishment), class: "label label-default"
-          /   = link_to "Show",establishment, class: "label label-warning"
-          /   = link_to 'Destroy', establishment, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
+    %tr
+      %td
+        = link_to 'Edit', edit_admin_book_path(@book), class: "btn btn-block btn-default"
 
-= link_to 'Edit', edit_admin_book_path(@book)
-\|
-= link_to 'Back', admin_books_path
+      %td
+        = link_to 'Back', admin_books_path, class: "btn btn-block btn-primary"
+        
+/ = link_to 'Back', admin_books_path

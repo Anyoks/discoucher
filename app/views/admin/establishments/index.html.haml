@@ -1,15 +1,74 @@
 %section.content-header
   %h1
     DisCoucher Establishments
-    %small All stablishments in the database #{@establishments.count} || Total redeemed vouchers #{@total_visits}
+    %small #{@establishments.count}
   %h1
-    %small Most active establishement #{@most_active[0]}, with #{@most_active[1]} Voucher redemptions || Least active establishement #{@least_active[0]}, with #{@least_active[1]} Voucher redemptions
+    / %small Most active establishement #{@most_active[0]}, with #{@most_active[1]} Voucher redemptions || Least active establishement #{@least_active[0]}, with #{@least_active[1]} Voucher redemptions
   %ol.breadcrumb
     %li
       %a{:href => "#"}
         %i.fa.fa-dashboard
         Level
     %li.active Here
+%br
+.row
+  .col-lg-3.col-xs-6
+    / small box
+    .small-box.bg-aqua
+      .inner
+        %h3 #{@total_visits}
+        %p Redeemed
+        %p vouchers
+      .icon
+        %i.ion.ion-bag
+      %a.small-box-footer{:href => "#"}
+        More info
+        %i.fa.fa-arrow-circle-right
+  / ./col
+  .col-lg-3.col-xs-6
+    / small box
+    .small-box.bg-green
+      .inner
+        %h3
+          #{@most_active[1]}
+          %sup{:style => "font-size: 20px"} redemptions
+        %p Most Active Est
+        %p #{@most_active[0]}
+      .icon
+        %i.ion.ion-stats-bars
+      %a.small-box-footer{:href => "#"}
+        More info
+        %i.fa.fa-arrow-circle-right
+  / ./col
+  .col-lg-3.col-xs-6
+    / small box
+    .small-box.bg-red
+      .inner
+        %h3
+          #{@least_active[1]}
+          %sup{:style => "font-size: 20px"} redemptions
+        %p Least Active Est
+        %p #{@least_active[0]}
+      .icon
+        %i.ion.ion-stats-bars
+      %a.small-box-footer{:href => "#"}
+        More info
+        %i.fa.fa-arrow-circle-right
+  / ./col
+  .col-lg-3.col-xs-6
+    / small box
+    .small-box.bg-yellow
+      .inner
+        %h3 #{@total_visits}
+        %p Total
+        %p User visits
+      .icon
+        %i.ion.ion-person-add
+      %a.small-box-footer{:href => "#"}
+        More info
+        %i.fa.fa-arrow-circle-right
+  / ./col
+
 
 
 %br
