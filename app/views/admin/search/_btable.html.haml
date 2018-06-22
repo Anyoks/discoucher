@@ -3,7 +3,7 @@
   .col-xs-12
     .box
       .box-header
-        %h3.box-title Showing #{results.results.total} Result(s)
+        %h3.box-title Showing #{results.size} Result(s) for "#{results.options[:term]}"
       / /.box-header
       .box-body
         #example1_wrapper.dataTables_wrapper.form-inline.dt-bootstrap
@@ -41,11 +41,11 @@
 
 
                       %tr{:class => "#{cycle('even', 'odd')}"}
-                        %td.sorting_1= result._source.code
-                        %td= result._source.year
+                        %td.sorting_1= result.code
+                        %td= result.year
                         %td 
                           -if current_admin && current_admin.is_admin?
-                            = link_to "Details",admin_books_path(result._source.id), class: "label label-warning"
+                            = link_to "Details",admin_books_path(result.id), class: "label label-warning"
 
                 %tfoot
                   %tr

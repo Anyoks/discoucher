@@ -24,16 +24,14 @@
 class User < ApplicationRecord
   # Include default devise modules.
   devise :database_authenticatable, :registerable,
-          :recoverable, :rememberable, :trackable, :validatable,
-          :omniauthable, password_length: 4..128 #,:confirmable,
+		  :recoverable, :rememberable, :trackable, :validatable,
+		  :omniauthable, password_length: 4..128 #,:confirmable,
   include DeviseTokenAuth::Concerns::User
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  	
-  # including elastic search
-	include Elasticsearch::Model
-  	include Elasticsearch::Model::Callbacks
-  	
+	
+  
+	
 
   belongs_to :role
   before_validation :set_default_role
@@ -46,7 +44,22 @@ class User < ApplicationRecord
   has_many :visits
   has_many :failed_redemptions
 
-def is_admin?
+  # including elastic search
+	# include Elasticsearch::Model
+	# include Elasticsearch::Model::Callbacks
+	searchkick
+
+	# SearchKick 
+	def search_data
+		{ 
+			first_name: first_name,
+			last_name: last_name,
+			email: email,
+			phone_number: phone_number,
+		}
+	end
+
+	def is_admin?
 		if self.role.nil?
 			false
 		elsif self.role.name == "admin"
@@ -100,6 +113,7 @@ def is_admin?
 	def name
 		return self.first_name
 	end
+
 
 
 end

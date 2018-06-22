@@ -103,5 +103,6 @@ gem 'omniauth-google-oauth2'
 
 gem 'elasticsearch-model', '~> 5.0', '>= 5.0.2'
 gem 'elasticsearch-rails', '~> 5.0', '>= 5.0.2'
+gem 'searchkick' #making things easier to do on searchkick
 # styling check boxes
 gem 'icheck-rails'

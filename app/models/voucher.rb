@@ -18,8 +18,20 @@ class Voucher < ApplicationRecord
 	has_many :visits
 
 	# including elastic search
-	include Elasticsearch::Model
-  	include Elasticsearch::Model::Callbacks
+	# include Elasticsearch::Model
+ #  	include Elasticsearch::Model::Callbacks
+  	searchkick #using searchkick gem instead
+
+  	scope :search_import, -> { includes(:establishment) }
+
+  	# SearchKick 
+	def search_data
+	  { code: code,
+	  	description: description,
+	    condition: condition,
+	    establishment: establishment.name,
+	  }
+	end
 
 	# Check if the voucher is redeemed or not and return true or false
 	def redeemed?

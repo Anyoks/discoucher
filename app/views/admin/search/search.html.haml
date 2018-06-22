@@ -1,6 +1,6 @@
 %section.content-header
   %h1
-    DisCoucher #{ @results == nil || @results.results.total == 0 ? " ": @results.first._index   }
+    DisCoucher #{ @results == nil || @results.size == 0 ? " ": @results.klass.name}
     %small Search Results
   %ol.breadcrumb
     %li
@@ -14,16 +14,16 @@
 
 %br
 
--if  @results ==  nil || @results.results.total == 0
+-if  @results ==  nil || @results.size == 0
   =render "admin/search/ntable"
 -else
-  -if @results.first._index == "books"
+  -if @results.klass.name == "Book"
     =render "admin/search/btable", results: @results 
-  -elsif @results.first._index == "establishments"
+  -elsif @results.klass.name == "Establishment"
     =render "admin/search/etable", results: @results 
-  -elsif @results.first._index == "vouchers"
+  -elsif @results.klass.name == "Voucher"
     =render "admin/search/vtable", results: @results 
-  -elsif @results.first._index == "users"
+  -elsif @results.klass.name == "User"
     =render "admin/search/utable", results: @results 
   -else
 / render error page

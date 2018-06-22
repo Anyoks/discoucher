@@ -41,8 +41,22 @@ class Establishment < ApplicationRecord
 	has_many :failed_redemptions
 
 	# including elastic search
-	include Elasticsearch::Model
-  	include Elasticsearch::Model::Callbacks
+		# include Elasticsearch::Model
+	    # include Elasticsearch::Model::Callbacks
+    searchkick #using searchkick gem instead
+
+    # SearchKick 
+	def search_data
+	  { 
+	  	name: name,
+	  	type: type,
+	    location: location,
+	    area: area,
+	    phone: phone
+
+	  }
+	end
+
 	
 	def type
 		return self.establishment_type

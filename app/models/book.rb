@@ -16,8 +16,17 @@ class Book < ApplicationRecord
 	has_many :vouchers, through: :establishments
 
 	# including elastic search
-	include Elasticsearch::Model
-  	include Elasticsearch::Model::Callbacks
+	# include Elasticsearch::Model
+    #  	include Elasticsearch::Model::Callbacks
+
+  	searchkick #using searchkick gem instead
+
+    # SearchKick 
+	def search_data
+	  { 
+	  	code: code
+	  }
+	end
 
 	def registered?
 		if self.register_book

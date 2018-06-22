@@ -3,7 +3,7 @@
   .col-xs-12
     .box
       .box-header
-        %h3.box-title Showing #{results.results.total} Result(s)
+        %h3.box-title Showing #{results.size} Result(s) for "#{results.options[:term]}"
       / /.box-header
       .box-body
         #example1_wrapper.dataTables_wrapper.form-inline.dt-bootstrap
@@ -38,17 +38,17 @@
                     %tr.odd
                       %td "No Results"
                   - else
-                    - results.results.each do |result|
+                    - results.each do |result|
 
 
                       %tr{:class => "#{cycle('even', 'odd')}"}
-                        %td.sorting_1= result._source.first_name
-                        %td= result._source.last_name
-                        %td= result._source.email
-                        %td= result._source.phone_number
+                        %td.sorting_1= result.first_name
+                        %td= result.last_name
+                        %td= result.email
+                        %td= result.phone_number
                         %td 
                           -if current_admin && current_admin.is_admin?
-                            = link_to "Details",admin_user_path(result._source.id), class: "label label-warning"
+                            = link_to "Details",admin_user_path(result.id), class: "label label-warning"
 
                 %tfoot
                   %tr
