@@ -2,7 +2,7 @@ class Api::V1::BaseController < ActionController::API
 	 respond_to :json
 	include DeviseTokenAuth::Concerns::SetUserByToken
 	# skip_before_action :verify_authenticity_token
- 	before_action :authenticate_api_v1_user!
+ 	# before_action :authenticate_api_v1_user!
 	
 	rescue_from ActionController::ParameterMissing do
 		api_error(status: 400, errors: 'Invalid parameters')
