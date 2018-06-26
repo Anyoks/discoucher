@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 20180429174045) do
     t.datetime "updated_at", null: false
     t.uuid "book_id"
     t.integer "establishment_type_id"
+    t.index ["book_id"], name: "index_establishments_on_book_id"
     t.index ["establishment_type_id"], name: "index_establishments_on_establishment_type_id"
   end
 
@@ -155,6 +156,10 @@ ActiveRecord::Schema.define(version: 20180429174045) do
     t.uuid "voucher_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["establishment_id"], name: "index_visits_on_establishment_id"
+    t.index ["register_book_id"], name: "index_visits_on_register_book_id"
+    t.index ["user_id"], name: "index_visits_on_user_id"
+    t.index ["voucher_id"], name: "index_visits_on_voucher_id"
   end
 
   create_table "vouchers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

@@ -7,9 +7,9 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 #   
 #   ROles seeds
-# ['customer', 'corporate', 'moderator', 'admin'].each do |role|
-#   Role.find_or_create_by({name: role})
-# end
+['customer', 'corporate', 'moderator', 'admin'].each do |role|
+  Role.find_or_create_by({name: role})
+end
 
 require 'csv'
 
