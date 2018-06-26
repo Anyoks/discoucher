@@ -16,7 +16,7 @@ Vagrant.configure("2") do |config|
   # config.vm.synced_folder ".", "/vagrant", disabled: true 
   # Setting up public network
   # config.vm.network "public_network", bridge: "en1: Wi-Fi (AirPort)"
-  config.ssh.private_key_path = '~/.ssh/id_rsa'
+  # config.ssh.private_key_path = '~/.ssh/id_rsa'
 
   config.vm.network :forwarded_port, guest: 3000, host: 3000    # rails
   config.vm.network :forwarded_port, guest: 9292, host: 9292    # rack
