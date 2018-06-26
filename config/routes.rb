@@ -50,6 +50,11 @@ Rails.application.routes.draw do
       get '/sms', :to => 'sms#create'
       get '/profile', :to => 'profile#profile'
       get '/establishments/est'
+
+      get '/establishments/hotels'
+      get '/establishments/restaurants'
+      get '/establishments/spas'
+
       resources :sms, only: [:create]
       mount_devise_token_auth_for 'User', at: 'auth'
       # resources :users

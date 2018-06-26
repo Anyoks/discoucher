@@ -4,6 +4,9 @@ class  Api::V1::SerializableEstablishment < JSONAPI::Serializable::Resource
   attribute :name
   attribute :area
   attribute :location
+  attribute :type do
+  	@object.type.name
+  end
   attribute :logo do
   	@object.logo.url(:small)
   end

@@ -79,6 +79,24 @@ class Establishment < ApplicationRecord
 		end	
 	end
 
+	def self.hotels
+		hotels =  Establishment.where(establishment_type_id: 2)
+
+		return hotels
+	end
+
+	def self.restaurants
+		 restaurants = Establishment.where(establishment_type_id: 1)
+
+		 return restaurants
+	end
+
+	def self.spas_and_salons
+		 spas_and_salons = Establishment.where(establishment_type_id: 3)
+
+		 return spas_and_salons
+	end
+
 protected
 
 	def self.set_default_type
