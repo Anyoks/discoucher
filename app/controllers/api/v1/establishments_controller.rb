@@ -1,5 +1,5 @@
 class Api::V1::EstablishmentsController < Api::V1::BaseController
-	skip_before_action :authenticate_api_v1_user!
+	# skip_before_action :authenticate_api_v1_user!
 	# jsonapi resource:  Api::V1::EstablishmentResource
 	
 	def est
