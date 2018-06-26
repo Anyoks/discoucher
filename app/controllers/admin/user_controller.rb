@@ -35,11 +35,16 @@ class Admin::UserController < Admin::ApplicationController
     user = user
     total = 0
 
-    user.register_books.each do |b| 
-       total_book_for_this_book = b.book.vouchers.count
-       total = total + total_book_for_this_book
-     end
-     return total
+    if user.register_books.count == 0
+      return total
+    else
+      user.register_books.each do |b| 
+         total_book_for_this_book = b.book.vouchers.count
+         total = total + total_book_for_this_book
+      end
+      
+      return total
+   end
   end
 
   # def make_moderator
