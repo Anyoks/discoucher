@@ -36,7 +36,7 @@ echo "============Installs ImageMagick for image processing"
 sudo apt-get install imagemagick --fix-missing -y
 
 echo "============Installs RVM (Ruby Version Manager) for handling Ruby installation"
-gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+gpg --keyserver 18.191.65.131 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
 curl -sSL https://get.rvm.io | bash -s stable
 source ~/.rvm/scripts/rvm
 
