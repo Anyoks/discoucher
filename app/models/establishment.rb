@@ -39,6 +39,7 @@ class Establishment < ApplicationRecord
 	has_many :vouchers, :dependent => :destroy
 	has_many :visits
 	has_many :failed_redemptions
+	has_many :pictures, :dependent => :destroy
 
 	# including elastic search
 		# include Elasticsearch::Model

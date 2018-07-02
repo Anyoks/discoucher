@@ -36,6 +36,10 @@ class Book < ApplicationRecord
 		end
 	end
 
+	def book_code
+		"#{self.code}"
+	end
+
 	def self.is_registered book_code
 		# check if the book is retistered aand return the registered book
 		book = RegisterBook.where(book_code: "#{book_code}").first

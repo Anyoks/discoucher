@@ -25,11 +25,16 @@
     = f.label :logo
     = f.file_field :logo
 
+  .control-group
+    = f.label :pictures, :class => 'control-label'
+    .controls
+      = file_field_tag "images[]", type: :file, multiple: true
+
   .field
     %input#selectAll{:type => "checkbox", :value => "selectAll"}/
     Mark all
   .field
-    = f.collection_check_boxes(:book_ids, Book.all, :id, :code) do |cb|
+    = f.collection_check_boxes(:book_ids, Book.all, :id, :book_code) do |cb|
       .form-group
         .form-check
           %label.form-check-label

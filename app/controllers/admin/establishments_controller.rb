@@ -50,6 +50,14 @@ class Admin::EstablishmentsController < Admin::ApplicationController
 
     respond_to do |format|
       if @establishment.save
+        # check if some images have been uploaded.
+        if params[:images]
+          #===== The magic is here ;)
+          params[:images].each { |image|
+            @establishment.pictures.create(image: image)
+          }
+        end
+
         format.html { redirect_to admin_establishment_url(@establishment), notice: 'Establishment was successfully created.' }
         format.json { render :show, status: :created, location: @establishment }
       else
@@ -85,6 +93,13 @@ class Admin::EstablishmentsController < Admin::ApplicationController
       format.json { head :no_content }
     end
   end
+
+  # def is_this_one_checked
+  #   byebug
+  #   @establishment = Establishment.find(params[:id])
+  #   # @establishment.details.where(book_id: )
+
+  # end
 
   private
 
@@ -241,6 +256,6 @@ class Admin::EstablishmentsController < Admin::ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def establishment_params
-      params.require(:establishment).permit(:name, :type, :location, :phone, :address,:establishment_type_id, :logo, {book_ids: []})
+      params.require(:establishment).permit(:name, :type, :location, :phone, :address,:establishment_type_id, :logo, {book_ids: []}, :images[])
     end
 end
