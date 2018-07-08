@@ -72,6 +72,13 @@ class Admin::EstablishmentsController < Admin::ApplicationController
   def update
     respond_to do |format|
       if @establishment.update(establishment_params)
+
+        if params[:images]
+          #===== The magic is here ;)
+          params[:images].each { |image|
+            @establishment.pictures.create(image: image)
+          }
+        end
         format.html { redirect_to admin_establishment_url(@establishment), notice: 'Establishment was successfully updated.' }
         format.json { render :show, status: :ok, location: @establishment }
       else
@@ -256,6 +263,6 @@ class Admin::EstablishmentsController < Admin::ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def establishment_params
-      params.require(:establishment).permit(:name, :type, :location, :phone, :address,:establishment_type_id, :logo, {book_ids: []}, :images[])
+      params.require(:establishment).permit(:name, :type, :location, :phone, :address,:establishment_type_id, :logo, {book_ids: []}, {images: []})
     end
 end

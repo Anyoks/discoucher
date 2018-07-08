@@ -17,5 +17,6 @@
 //= require turbolinks
 //= require icheck
 //= require Chart.min
+//= require lightbox
 //= require app
 //= require_tree .

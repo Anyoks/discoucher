@@ -58,6 +58,17 @@
             %i.fa.fa-times
       .box-body
         = bar_chart @data , @options
+.row.fluid
+  .col-md-12
+    
+    %h3 Establishment Images
+    - if @establishment.pictures.present?
+      %div
+        - @establishment.pictures.each do |pic|
+          %a.example-image-link{"data-lightbox" => "example-set", "data-title" => "Click the right half of the image to move forward.", :href => "#{pic.image(:large)}"}
+            %img.example-image{:alt => "", :src => "#{pic.image(:medium)}"}/
+
+
 
 %table.table.table-hover
   %thead 
