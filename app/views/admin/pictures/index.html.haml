@@ -1,0 +1,20 @@
+%h1 Listing admin_pictures
+
+%table
+  %thead
+    %tr
+      %th
+      %th
+      %th
+
+  %tbody
+    - if @admin_pictures.present?
+      - @admin_pictures.each do |admin_picture|
+        %tr
+          %td= link_to 'Show', admin_picture
+          %td= link_to 'Edit', edit_admin_picture_path(admin_picture)
+          %td= link_to 'Destroy', admin_picture, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Picture', new_admin_establishment_picture_path

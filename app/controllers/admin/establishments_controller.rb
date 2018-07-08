@@ -101,6 +101,29 @@ class Admin::EstablishmentsController < Admin::ApplicationController
     end
   end
 
+  def editpic
+     respond_to do |format|
+      if @establishment.update(establishment_params)
+
+        if params[:images]
+          #===== The magic is here ;)
+          params[:images].each { |image|
+            @establishment.pictures.create(image: image)
+          }
+        end
+        format.html { redirect_to admin_establishment_url(@establishment), notice: 'Establishment was successfully updated.' }
+        format.json { render :show, status: :ok, location: @establishment }
+      else
+        format.html { render :edit }
+        format.json { render json: @establishment.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def showpic
+    @establishment = Establishment.find(params[:id])
+  end
+
   # def is_this_one_checked
   #   byebug
   #   @establishment = Establishment.find(params[:id])

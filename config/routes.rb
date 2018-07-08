@@ -27,7 +27,9 @@ Rails.application.routes.draw do
     get 'dashboard/index'
     get '/search', :to => 'search#search'
     resources :register_books
-    resources :establishments
+    resources :establishments  do
+      resources :pictures
+    end
     resources :vouchers
     resources :books do 
       get '/search', :to => 'search#search'
