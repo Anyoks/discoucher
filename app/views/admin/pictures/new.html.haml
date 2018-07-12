@@ -1,6 +1,11 @@
+.LoadingOverlay
 %h1 New admin_picture
 
 = render 'form'
+
+.field
+    %input#selectAll{:type => "checkbox"}
+    test
 / = render 'admin/establishments/picform'
 
 / = link_to 'Back', admin_pictures_path
