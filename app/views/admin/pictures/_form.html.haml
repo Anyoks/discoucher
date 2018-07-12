@@ -1,11 +1,10 @@
-byebug
 = simple_form_for  @picture, :url =>  admin_establishment_pictures_path, html: { multipart: true } do |f|
   = f.error_notification
 
   .control-group
     = f.label :pictures, :class => 'control-label'
     .controls
-      = f.file_field_tag "images[]", type: :file, multiple: true
+      = file_field_tag "images[]", type: :file, multiple: true
 
   .form-actions
     = f.button :submit

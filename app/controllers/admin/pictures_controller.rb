@@ -5,7 +5,7 @@ class Admin::PicturesController < Admin::ApplicationController
   # GET /admin/pictures.json
   def index
     @establishment = Establishment.find(params[:establishment_id])
-    @picture = @establishment.pictures.all
+    @pictures = @establishment.pictures.all
   end
 
   # GET /admin/pictures/1
@@ -27,8 +27,8 @@ class Admin::PicturesController < Admin::ApplicationController
   # POST /admin/pictures.json
   def create
     @establishment = Establishment.find(params[:establishment_id])
+    @picture = @establishment.pictures.new
     # @picture = Picture.new(picture_params)
-    # byebug
     # @picture = @establishment.pictures.new
 
     respond_to do |format|
@@ -38,8 +38,8 @@ class Admin::PicturesController < Admin::ApplicationController
           @picture = @establishment.pictures.create(image: image)
         }
 
-        format.html { redirect_to admin_establishment_picture_path, notice: 'Picture was successfully created.' }
-        format.json { render :show, status: :created, location: @picture }
+        format.html { redirect_to admin_establishment_pictures_path(@establishment), notice: 'Picture was successfully created.' }
+        format.json { render :show, status: :created, location: @establishment }
       else
         format.html { render :new }
         format.json { render json: @picture.errors, status: :unprocessable_entity }
@@ -50,10 +50,11 @@ class Admin::PicturesController < Admin::ApplicationController
   # PATCH/PUT /admin/pictures/1
   # PATCH/PUT /admin/pictures/1.json
   def update
+    @establishment = Establishment.find(params[:establishment_id])
     respond_to do |format|
       if @picture.update(picture_params)
-        format.html { redirect_to @picture, notice: 'Picture was successfully updated.' }
-        format.json { render :show, status: :ok, location: @picture }
+        format.html { redirect_to admin_establishment_pictures_path(@establishment), notice: 'Picture was successfully updated.' }
+        format.json { render :show, status: :ok, location: @establishment }
       else
         format.html { render :edit }
         format.json { render json: @picture.errors, status: :unprocessable_entity }
@@ -64,9 +65,10 @@ class Admin::PicturesController < Admin::ApplicationController
   # DELETE /admin/pictures/1
   # DELETE /admin/pictures/1.json
   def destroy
+    @establishment = Establishment.find(params[:establishment_id])
     @picture.destroy
     respond_to do |format|
-      format.html { redirect_to pictures_url, notice: 'Picture was successfully destroyed.' }
+      format.html { redirect_to  admin_establishment_pictures_path(@establishment), notice: 'Picture was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -79,6 +81,6 @@ class Admin::PicturesController < Admin::ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def picture_params
-      params.fetch(:picture, {images: []})
+      params.require(:picture).permit(:picture, :description, {images: []})
     end
 end

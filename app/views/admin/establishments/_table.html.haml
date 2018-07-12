@@ -49,7 +49,7 @@
                       %td= establishment.area
                       %td= establishment.phone
                       %td= establishment.address
-                      %td= image_tag establishment.logo.url(:medium)
+                      %td= image_tag establishment.logo.url(:small)
                       %td 
                         -if current_admin && current_admin.is_admin?
                           = link_to 'Edit', edit_admin_establishment_path(establishment), class: "label label-default"

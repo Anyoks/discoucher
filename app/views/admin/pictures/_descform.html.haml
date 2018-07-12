@@ -1,0 +1,9 @@
+= simple_form_for  @picture, :url =>  admin_establishment_picture_path, :method => :patch,html: { multipart: true } do |f|
+  = f.error_notification
+
+  .field
+    = f.label :Desctiption
+    = f.text_field :description
+
+  .form-actions
+    = f.button :submit

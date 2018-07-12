@@ -1,7 +1,8 @@
-%h1 Editing admin_picture
+%h1 Editing 
 
-= render 'form'
+= image_tag @picture.image.url(:small)
+= render 'admin/pictures/descform'
 
-= link_to 'Show', @admin_picture
+/ = link_to 'Show', @admin_picture
 \|
-= link_to 'Back', admin_pictures_path
+= link_to 'Back', admin_establishment_pictures_path

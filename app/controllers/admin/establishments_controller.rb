@@ -4,7 +4,7 @@ class Admin::EstablishmentsController < Admin::ApplicationController
   # GET /establishments
   # GET /establishments.json
   def index
-    @establishments = Establishment.all.paginate(:page => params[:page], :per_page => 20)
+    @establishments = Establishment.all.order('name ASC').paginate(:page => params[:page], :per_page => 20)
     @total_visits = Visit.all.count
 
 
