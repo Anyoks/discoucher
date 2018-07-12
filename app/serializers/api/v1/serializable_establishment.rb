@@ -8,7 +8,7 @@ class  Api::V1::SerializableEstablishment < JSONAPI::Serializable::Resource
   	@object.type.name
   end
   attribute :logo do
-  	@object.logo.url(:small)
+  	ApplicationController.helpers.asset_url(@object.logo.url(:small))
   end
   attribute :featured_image do
     @object.pic_urls.first

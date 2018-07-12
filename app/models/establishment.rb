@@ -70,9 +70,17 @@ class Establishment < ApplicationRecord
 	end
 
 	def pic_urls
+
+		if Rails.env == "development" 
+			root_url = "http://localhost:3000"
+		else
+			root_url = "http://46.101.137.125"
+		end
+
 		urls = []
 		self.pictures.each do |pic|
-			urls << pic.image.url(:medium)
+			urls << root_url + pic.image.url(:medium)
+			# pic.image.url(:medium)
 		end	
 		return urls	
 	end

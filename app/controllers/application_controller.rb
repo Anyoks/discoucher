@@ -12,6 +12,13 @@ class ApplicationController < ActionController::Base
   # before_action :authenticate_admin!
   before_action :configure_permitted_parameters, if: :devise_controller?	
 
+  def default_url_options
+    if Rails.env.production?
+      {:host => "46.101.137.125"}
+    else  
+      { :host => "46.101.137.125"}
+    end
+  end
 
   protected
 
