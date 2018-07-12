@@ -69,6 +69,14 @@ class Establishment < ApplicationRecord
 		end
 	end
 
+	def pic_urls
+		urls = []
+		self.pictures.each do |pic|
+			urls << pic.image.url(:medium)
+		end	
+		return urls	
+	end
+
 	# Incase there are not types in the database and a type has not been set 
 	# by the user.
 
