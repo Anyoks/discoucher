@@ -1,13 +1,13 @@
 %section.content-header
   %h1
-    #{@establishment.name}
+    #{@establishment.name} (#{@establishment.type.name})
     %small Has a total of #{@establishment_visits.count} redeemed vouchers
   %ol.breadcrumb
     %li
       %a{:href => "#"}
         %i.fa.fa-dashboard
         Level
-
+%br
 / %p
 /   %b Name:
 /   = @establishment.name
