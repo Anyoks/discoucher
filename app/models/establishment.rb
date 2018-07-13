@@ -18,6 +18,16 @@
 #
 
 class Establishment < ApplicationRecord
+
+	filterrific(
+	   # default_filter_params: { sorted_by: 'created_at_desc' },
+	   available_filters: [
+	     :with_type,
+	     :with_location,
+	     :with_area
+	   ]
+	)
+
 	has_attached_file :logo, 
 					  :path => ':rails_root/public/system/:class/:attachment/:id/:style_:filename',
 					  :url => "/system/:class/:attachment/:id/:style_:filename",
@@ -57,6 +67,62 @@ class Establishment < ApplicationRecord
 
 	  }
 	end
+
+	
+	scope :sorted_by, lambda { |sort_option|
+	  # extract the sort direction from the param value.
+	  direction = (sort_option =~ /desc$/) ? 'desc' : 'asc'
+	  case sort_option.to_s
+	  when /^created_at_/
+	    # Simple sort on the created_at column.
+	    # Make sure to include the table name to avoid ambiguous column names.
+	    # Joining on other tables is quite common in Filterrific, and almost
+	    # every ActiveRecord table has a 'created_at' column.
+	    order("establishments.created_at #{ direction }")
+	  when /^name_/
+	    # Simple sort on the name colums
+	    order("LOWER(establishments.name) #{ direction }")
+	  else
+	    raise(ArgumentError, "Invalid sort option: #{ sort_option.inspect }")
+	  end
+	}
+
+	scope :with_type, lambda { |establishment_name|
+		where( type: {name: establishment_name }).joins(:establishment_type)
+	}
+
+	scope :with_location, lambda {  |location|
+		where(location: [*location])
+	}
+
+	scope :with_area, lambda {  |area|
+		where(area: [*area])
+	}
+
+	def self.options_for_sorted_by
+	    [
+	      ['Name (a-z)', 'name_asc'],
+	      ['Registration date (newest first)', 'created_at_desc'],
+	      ['Registration date (oldest first)', 'created_at_asc'],
+	      ['Country (a-z)', 'country_name_asc']
+	    ]
+  	end
+
+  	def self.options_for_with_location
+  		Establishment.all.map {|e| [e.location, e.id]}
+  	end
+
+  	def self.options_for_with_area
+  		Establishment.all.map {|e| [e.area, e.id]}
+  	end
+
+  	def self.options_for_with_type
+  		Establishment.all.map {|e| [e.area, e.id]}
+  	end
+
+  	# def self.options_for_select
+  	#   order('LOWER(name)').map { |e| [e.name, e.id] }
+  	# end
 
 	
 	def type

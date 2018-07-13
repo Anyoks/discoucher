@@ -4,8 +4,27 @@ class Admin::EstablishmentsController < Admin::ApplicationController
   # GET /establishments
   # GET /establishments.json
   def index
+
+    @filterrific = initialize_filterrific(
+     Establishment,
+     params[:filterrific],
+     select_options: {
+             sorted_by: Establishment.options_for_sorted_by,
+             with_area: Establishment.options_for_with_area,
+             with_location: Establishment.options_for_with_location,
+             with_type: EstablishmentType.options_for_select
+
+           },
+           persistence_id: 'shared_key',
+           default_filter_params: {},
+           available_filters: [:sorted_by, :with_area, :with_location, :with_type]
+    ) or return
+
     @establishments = Establishment.all.order('name ASC').paginate(:page => params[:page], :per_page => 20)
     @total_visits = Visit.all.count
+    @types = EstablishmentType.all
+
+
 
 
     @data = establisments_visits

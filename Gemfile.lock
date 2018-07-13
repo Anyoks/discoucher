@@ -140,6 +140,7 @@ GEM
     faraday (0.12.2)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.18)
+    filterrific (5.0.1)
     friendly_id (5.1.0)
       activerecord (>= 4.0.0)
     globalid (0.4.1)
@@ -368,6 +369,7 @@ DEPENDENCIES
   dotenv-rails
   elasticsearch-model (~> 5.0, >= 5.0.2)
   elasticsearch-rails (~> 5.0, >= 5.0.2)
+  filterrific
   friendly_id (~> 5.1.0)
   groupdate
   haml-rails
@@ -396,4 +398,4 @@ DEPENDENCIES
   will_paginate (~> 3.1.1)
 
 BUNDLED WITH
-   1.16.1
+   1.16.2
