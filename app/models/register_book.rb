@@ -36,7 +36,6 @@ class RegisterBook < ApplicationRecord
 			return false 
 		else
 			logger.debug "Book Registration successfully"
-			byebug
 			regbook = create_user_for_the_book
 			if regbook
 

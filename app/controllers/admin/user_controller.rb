@@ -39,8 +39,11 @@ class Admin::UserController < Admin::ApplicationController
       return total
     else
       user.register_books.each do |b| 
+
+        if b.book.vouchers.count != 0
          total_book_for_this_book = b.book.vouchers.count
          total = total + total_book_for_this_book
+        end
       end
       
       return total
