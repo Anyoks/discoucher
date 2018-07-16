@@ -11,96 +11,110 @@
         Level
     %li.active Here
 %br
-.row
-  .col-lg-3.col-xs-6
-    / small box
-    .small-box.bg-aqua
-      .inner
-        %h3 #{@total_visits}
-        %p Redeemed
-        %p vouchers
-      .icon
-        %i.ion.ion-bag
-      %a.small-box-footer{:href => "#"}
-        More info
-        %i.fa.fa-arrow-circle-right
-  / ./col
-  .col-lg-3.col-xs-6
-    / small box
-    .small-box.bg-green
-      .inner
-        %h3
-          #{@most_active[1]}
-          %sup{:style => "font-size: 20px"} redemptions
-        %p Most Active Est
-        %p #{@most_active[0]}
-      .icon
-        %i.ion.ion-stats-bars
-      %a.small-box-footer{:href => "#"}
-        More info
-        %i.fa.fa-arrow-circle-right
-  / ./col
-  .col-lg-3.col-xs-6
-    / small box
-    .small-box.bg-red
-      .inner
-        %h3
-          #{@least_active[1]}
-          %sup{:style => "font-size: 20px"} redemptions
-        %p Least Active Est
-        %p #{@least_active[0]}
-      .icon
-        %i.ion.ion-stats-bars
-      %a.small-box-footer{:href => "#"}
-        More info
-        %i.fa.fa-arrow-circle-right
-  / ./col
-  .col-lg-3.col-xs-6
-    / small box
-    .small-box.bg-yellow
-      .inner
-        %h3 #{@total_visits}
-        %p Total
-        %p User visits
-      .icon
-        %i.ion.ion-person-add
-      %a.small-box-footer{:href => "#"}
-        More info
-        %i.fa.fa-arrow-circle-right
-  / ./col
 
-
-
-%br
 .row-fluid
-  .col-md-6
-    .box.box-danger
+  .col-md-12
+    .box.box-danger.collapsed-box
       .box-header.with-border
         %h3.box-title 
         Vists per Establishment (Vouchers redeemed per establishment)
         .box-tools.pull-right
           %button.btn.btn-box-tool{"data-widget" => "collapse", :type => "button"}
             %i.fa.fa-minus
-          %button.btn.btn-box-tool{"data-widget" => "remove", :type => "button"}
-            %i.fa.fa-times
+          / %button.btn.btn-box-tool{"data-widget" => "remove", :type => "button"}
+          /   %i.fa.fa-times
+      .box-body
+        .col-lg-3.col-xs-6
+          / small box
+          .small-box.bg-aqua
+            .inner
+              %h3 #{@total_visits}
+              %p Redeemed
+              %p vouchers
+            .icon
+              %i.ion.ion-bag
+            %a.small-box-footer{:href => "#"}
+              More info
+              %i.fa.fa-arrow-circle-right
+        / ./col
+        .col-lg-3.col-xs-6
+          / small box
+          .small-box.bg-green
+            .inner
+              %h3
+                #{@most_active[1]}
+                %sup{:style => "font-size: 20px"} redemptions
+              %p Most Active Est
+              %p #{@most_active[0]}
+            .icon
+              %i.ion.ion-stats-bars
+            %a.small-box-footer{:href => "#"}
+              More info
+              %i.fa.fa-arrow-circle-right
+        / ./col
+        .col-lg-3.col-xs-6
+          / small box
+          .small-box.bg-red
+            .inner
+              %h3
+                #{@least_active[1]}
+                %sup{:style => "font-size: 20px"} redemptions
+              %p Least Active Est
+              %p #{@least_active[0]}
+            .icon
+              %i.ion.ion-stats-bars
+            %a.small-box-footer{:href => "#"}
+              More info
+              %i.fa.fa-arrow-circle-right
+        / ./col
+        .col-lg-3.col-xs-6
+          / small box
+          .small-box.bg-yellow
+            .inner
+              %h3 #{@total_visits}
+              %p Total
+              %p User visits
+            .icon
+              %i.ion.ion-person-add
+            %a.small-box-footer{:href => "#"}
+              More info
+              %i.fa.fa-arrow-circle-right
+        / ./col
+
+
+
+
+%br
+.row-fluid
+  .col-md-6
+    .box.box-danger.collapsed-box
+      .box-header.with-border
+        %h3.box-title 
+        Vists per Establishment (Vouchers redeemed per establishment)
+        .box-tools.pull-right
+          %button.btn.btn-box-tool{"data-widget" => "collapse", :type => "button"}
+            %i.fa.fa-minus
+          / %button.btn.btn-box-tool{"data-widget" => "remove", :type => "button"}
+          /   %i.fa.fa-times
       .box-body
         = doughnut_chart @data , @options
 .row-fluid
   .col-md-6
-    .box.box-danger
+    .box.box-danger.collapsed-box
       .box-header.with-border
         %h3.box-title 
         Overall vists by month
         .box-tools.pull-right
           %button.btn.btn-box-tool{"data-widget" => "collapse", :type => "button"}
             %i.fa.fa-minus
-          %button.btn.btn-box-tool{"data-widget" => "remove", :type => "button"}
-            %i.fa.fa-times
+          / %button.btn.btn-box-tool{"data-widget" => "remove", :type => "button"}
+          /   %i.fa.fa-times
       .box-body
         = bar_chart @vists_data , @options1
 
 %br
-=render "admin/establishments/table", establishments: @establishments #the table that was previously here was extracted to the partial to be DRY. seems like I needed it more than I thought! :-)
+#partial 
+  =render "admin/establishments/table", establishments: @establishments #the table that was previously here was extracted to the partial to be DRY. seems like I needed it more than I thought! :-)
 
 %br
 -if current_admin && current_admin.is_admin?
