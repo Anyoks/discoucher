@@ -11,8 +11,23 @@
     %li.active Here
 
 %br
-=render "admin/books/chart", books: @books
-=render "admin/books/table", books: @books #the table that was previously here was extracted to the partial to be DRY. seems like I needed it more than I thought! :-)
+
+.row-fluid
+  .col-md-12
+    .box.box-danger.collapsed-box
+      .box-header.with-border
+        %h3.box-title 
+        Vists per Establishment (Vouchers redeemed per establishment)
+        .box-tools.pull-right
+          %button.btn.btn-box-tool{"data-widget" => "collapse", :type => "button"}
+            %i.fa.fa-minus
+          / %button.btn.btn-box-tool{"data-widget" => "remove", :type => "button"}
+          /   %i.fa.fa-times
+      .box-body
+        =render "admin/books/chart", books: @books
+
+#partial
+  =render "admin/books/table", books: @books #the table that was previously here was extracted to the partial to be DRY. seems like I needed it more than I thought! :-)
 
 -if current_admin && current_admin.is_admin?
   %p=link_to 'New Book', new_admin_book_path, class: "btn btn-primary"
