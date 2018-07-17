@@ -22,11 +22,17 @@
 //= require_tree .
 
 $(function() {
-  $("#partial th a, #partial .pagination a").live("click", function() {
+  $(".partial_page a, #partial_page th a, #partial_page .pagination a").live("click", function() {
     $.getScript(this.href);
     $.preventDefault();
     return false;
   });
+  $(".sidebar-menu a").live("click", function() {
+  	// $(".content").html("Page is loading...");
+  	$.getScript(this.href);
+  	return false;
+  });
+
   $("#products_search input").keyup(function() {
     $.get($("#products_search").attr("action"), $("#products_search").serialize(), null, "script");
     return false;
