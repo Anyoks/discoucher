@@ -1,7 +1,7 @@
 %section.content-header
   %h1
     DisCoucher Establishments
-    %small #{@establishments.count}
+    %small #{@category ? @category : @establishments.count }
   %h1
     / %small Most active establishement #{@most_active[0]}, with #{@most_active[1]} Voucher redemptions || Least active establishement #{@least_active[0]}, with #{@least_active[1]} Voucher redemptions
   %ol.breadcrumb

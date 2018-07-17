@@ -4,10 +4,18 @@ class Admin::EstablishmentsController < Admin::ApplicationController
   # GET /establishments
   # GET /establishments.json
   def index
-    @establishments = Establishment.all.order('name ASC').paginate(:page => params[:page], :per_page => 20)
+
+    if params[:category]
+      @establishments = Establishment.where(:establishment_type => params[:category]).order('name ASC').paginate(:page => params[:page], :per_page => 20)
+      @category = @establishments.first.type.name
+      # flash[:notice] = "There are <b>#{@category}</b> in this category".html_safe
+    else
+      @establishments = Establishment.all.order('name ASC').paginate(:page => params[:page], :per_page => 20)
+    end
+    
     @total_visits = Visit.all.count
 
-
+  
     @data = establisments_visits
     @options = {:height => "257px", :width => "514px"}
 
