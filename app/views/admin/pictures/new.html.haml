@@ -1,11 +1,10 @@
-.LoadingOverlay
-%h1 New admin_picture
+%section.content-header
+	%h1 
+		Adding new Images to #{@establishment.name}
 
-= render 'form'
+%section.content
+	= render 'form'
 
-.field
-    %input#selectAll{:type => "checkbox"}
-    test
 / = render 'admin/establishments/picform'
 
 / = link_to 'Back', admin_pictures_path
