@@ -55,7 +55,7 @@
                           = link_to 'Edit', edit_admin_establishment_path(establishment), class: "label label-default"
                           = link_to "Details", admin_establishment_path(establishment), class: "label label-warning"
                           = link_to 'Destroy', admin_establishment_path(establishment), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
-                          = link_to "Images", admin_establishment_pictures_path(establishment), class: "label label-warning"
+                          = link_to "Images", admin_establishment_pictures_path(establishment), class: "label label-success"
 
                 %tfoot
                   %tr
@@ -64,7 +64,6 @@
                     %th{:colspan => "1", :rowspan => "1"} Area
                     %th{:colspan => "1", :rowspan => "1"} Contact Phone
                     %th{:colspan => "1", :rowspan => "1"} Address
-                    %th{:colspan => "1", :rowspan => "1"} Logo
                     %th{:colspan => "1", :rowspan => "1"} Options
           .row
             .col-sm-5

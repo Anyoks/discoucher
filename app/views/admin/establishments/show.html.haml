@@ -1,36 +1,30 @@
 %section.content-header
   %h1
     #{@establishment.name} (#{@establishment.type.name})
-    %small Has a total of #{@establishment_visits.count} redeemed vouchers
+    %small #{ @establishment.vouchers.count < 1 ?  "Has 0 vouchers" : "Has a total of " + @establishment_visits.count.to_s + " redeemed vouchers" }  
   %ol.breadcrumb
     %li
       %a{:href => "#"}
         %i.fa.fa-dashboard
         Level
 %br
-/ %p
-/   %b Name:
-/   = @establishment.name
-/ %p
-/   %b Type:
-/   = @establishment.type.name unless @establishment.type.nil?
-/ %p
-/   %b Location:
-/   = @establishment.location
-/ %p
-/   %b Phone:
-/   = @establishment.phone
-/ %p
-/   %b Address:
-/   = @establishment.address
-/ %p
-/   %b Logo:
-/   = @establishment.logo
-/   = image_tag @establishment.logo.url(:medium)
 
-/ %p
-/ %p
-/ %p
+.row.fluid
+  
+  - @establishment.vouchers.each do |voucher|
+    .col-md-4
+      .info-box.bg-green
+        %span.info-box-icon
+          %i.ion.ion-ios-pricetag-outline
+        .info-box-content
+          %span.info-box-text #{voucher.code}
+          %span.info-box-number Used #{voucher.visits.count} times
+          .progress
+            .progress-bar{:style => "width: #{voucher.visits.count}%"}
+          %span.progress-description
+            #{voucher.visits.count} redemptions in 30 Days
+        / /.info-box-content
+
 
 .row-fluid
   .col-md-6
@@ -39,10 +33,10 @@
         %h3.box-title 
         Redeemed vouchers per user 
         .box-tools.pull-right
-          %button.btn.btn-box-tool{"data-widget" => "collapse", :type => "button"}
+          %button.btn.btn-box-tool{ "data-original-title" => "Minimize", "data-toggle" => "tooltip", :title => "", "data-widget" => "collapse", :type => "button"}
             %i.fa.fa-minus
-          %button.btn.btn-box-tool{"data-widget" => "remove", :type => "button"}
-            %i.fa.fa-times
+          / %button.btn.btn-box-tool{"data-widget" => "remove", :type => "button"}
+          /   %i.fa.fa-times
       .box-body
         = doughnut_chart @dates , @options1
 .row-fluid
@@ -52,45 +46,40 @@
         %h3.box-title 
         Voucher redemption by month
         .box-tools.pull-right
-          %button.btn.btn-box-tool{"data-widget" => "collapse", :type => "button"}
+          %button.btn.btn-box-tool{"data-original-title" => "Minimize", "data-toggle" => "tooltip", :title => "", "data-widget" => "collapse", :type => "button"}
             %i.fa.fa-minus
-          %button.btn.btn-box-tool{"data-widget" => "remove", :type => "button"}
-            %i.fa.fa-times
+          / %button.btn.btn-box-tool{"data-widget" => "remove", :type => "button"}
+          /   %i.fa.fa-times
       .box-body
         = bar_chart @data , @options
 .row.fluid
   .col-md-12
-    
-    %h3 Establishment Images
-    - if @establishment.pictures.present?
-      %div
-        - @establishment.pictures.each do |pic|
-          %a.example-image-link{"data-lightbox" => "example-set", "data-title" => "Click the right half of the image to move forward.", :href => "#{pic.image(:large)}"}
-            %img.example-image{:alt => "", :src => "#{pic.image(:medium)}"}/
+    .box.box-widget
+      .box-header.with-border
+        .user-block
+          %h3.box-title 
+          Establishment Images
+        / /.user-block
+        .box-tools
+          / %button.btn.btn-box-tool{"data-original-title" => "Mark as read", "data-toggle" => "tooltip", :title => "", :type => "button"}
+          /   %i.fa.fa-circle-o
+          %button.btn.btn-box-tool{ "data-original-title" => "Minimize", "data-toggle" => "tooltip", :title => "","data-widget" => "collapse", :type => "button"}
+            %i.fa.fa-minus
+          / %button.btn.btn-box-tool{"data-widget" => "remove", :type => "button"}
+          /   %i.fa.fa-times
+        / /.box-tools
+      / /.box-header
+      .box-body
+        - if @establishment.pictures.present?
+          .col-md-12
+            - @establishment.pictures.each do |pic|
+              .col-md-2
+                %a.example-image-link{"data-lightbox" => "example-set", "data-title" => "Click the right half of the image to move forward.", :href => "#{pic.image(:original)}"}
+                  %img.example-image{:alt => "", :src => "#{pic.image(:medium)}"}/
 
 
 
-%table.table.table-hover
-  %thead 
-    %tr
-      %th It is found in the following books
-    %tr
-      %th Book Code
-      %th Year
-      %th 
-      %th
 
-  %tbody
-    - @establishment.books.each do |book|
-      %tr
-        %td=book.code
-        %td=book.year
-        %td
-        %td
-          / -if current_admin && current_admin.is_admin?
-          /   = link_to 'Edit', edit_establishment_path(establishment), class: "label label-default"
-          /   = link_to "Show",establishment, class: "label label-warning"
-          /   = link_to 'Destroy', establishment, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
 
 
 = link_to 'Edit', edit_admin_establishment_path(@establishment)
