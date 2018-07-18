@@ -1,52 +1,88 @@
-= simple_form_for [:admin, @establishment], html: { multipart: true } do |f|
-  - if @establishment.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@establishment.errors.count, "error")} prohibited this establishment from being saved:"
-      %ul
-        - @establishment.errors.full_messages.each do |message|
-          %li= message
+.row
+  .col-md-12
+    .box.box-primary
+      .box-header.with-border
+        %h3.box-title Provide Establishment details
+      %form{:lpformnum => "1", :role => "form"}
+      = simple_form_for [:admin, @establishment], html: { multipart: true } do |f|
+        - if @establishment.errors.any?
+          #error_explanation
+            %h2= "#{pluralize(@establishment.errors.count, "error")} prohibited this establishment from being saved:"
+            %ul
+              - @establishment.errors.full_messages.each do |message|
+                %li= message
+        %form{:_lpchecked => "1", :lpformnum => "1", :role => "form"}
+          .box-body
+            .row
+              .col-md-6
+                .form-group
+                  %label{:for => "exampleInputEmail1"} Establishment Name
+                  / = f.label :name
+                  = f.text_field :name, class: "form-control", placeholder: "Enter email"
+              .col-md-6
+                .form-group
+                  %label{:for => "exampleInputPassword1"} Location
+                  = f.text_field :location, class: "form-control", placeholder: "Enter Location"
+            .row
+              .col-md-6
+                .form-group
+                  %label{:for => "exampleInputPassword1"} Phone Number
+                  = f.text_field :phone, class: "form-control", placeholder: "Phone Establishment Number"
+              .col-md-6
+                .form-group
+                  %label{:for => "exampleInputPassword1"} Address
+                  = f.text_field :address, class: "form-control", placeholder: "Enter Establishment Address"
 
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :type
-    = f.association :establishment_type, label_method: :name, value_method: :id, include_blank: false
-  .field
-    = f.label :location
-    = f.text_field :location
-  .field
-    = f.label :phone
-    = f.text_field :phone
-  .field
-    = f.label :address
-    = f.text_field :address
-  .field
-    = f.label :logo
-    = f.file_field :logo
+              .col-md-6
+                .form-group
+                  / %label{:for => "exampleInputFile"} Establishment Type
+                  = f.association :establishment_type, label_method: :name, value_method: :id, include_blank: false
+                  / %input#exampleInputFile{:type => "file"}
+                  %p.help-block Kindly confirm the Establishment type before saving
+            .row
+              .col-md-6
+                .form-group
+                  %label{:for => "exampleInputFile"} Logo file (Optional)
+                  %br
+                  = file_field :logo, type: :file, multiple: true
+                  %p.help-block Alternatively, you can drag and drop over the choose files button.
+              .col-md-6
+                .form-group
+                  %label{:for => "exampleInputFile"} Establishment Images (Optional)
+                  %br
+                  = file_field_tag "images[]", type: :file, multiple: true
+                  %p.help-block Alternatively, you can drag and drop over the choose files button.
 
-  .control-group
-    = f.label :pictures, :class => 'control-label'
-    .controls
-      = file_field_tag "images[]", type: :file, multiple: true
-
-  .field
-    %input#selectAll{:type => "checkbox", :value => "selectAll"}/
-    Mark all
-  .field
-    = f.collection_check_boxes(:book_ids, Book.all, :id, :book_code) do |cb|
-      .form-group
-        .form-check
-          %label.form-check-label
-            %table.table.table-hover
-              %thead
-                %tr
-                  %th= cb.text
-                  %th
-              %tbody
-                %tr
-                  %td= cb.check_box
-                  %td
-  
-  .actions
-    = f.submit 'Save'
+            .checkbox
+              %label
+                %input#selectAll{:type => "checkbox", :value => "selectAll" }
+                Add This establishment to all Books (#{Book.all.count} in Database)
+          / /.box-body
+          .box-footer
+            = f.submit class: "btn btn-primary"
+        %br
+        .box.box-info.collapsed-box
+          .box-header.with.border
+            %h3.box-title 
+            Select Which books this Establishment should be added to
+            .box-tools.pull-right
+              %button.btn.btn-box-tool{"data-widget" => "collapse", :type => "button"}
+                %i.fa.fa-plus
+              %button.btn.btn-box-tool{"data-widget" => "remove", :type => "button"}
+                %i.fa.fa-remove
+          .box-body
+            = f.collection_check_boxes(:book_ids, Book.all, :id, :book_code) do |cb|
+              .form-group
+                .form-check
+                  %label.form-check-label
+                    %table.table.table-hover
+                      %thead
+                        %tr
+                          %th= cb.text
+                          %th
+                      %tbody
+                        %tr
+                          %td= cb.check_box
+                          %td
+          .box-footer
+            = f.submit class: "btn btn-primary"
