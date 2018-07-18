@@ -1,28 +1,44 @@
-= simple_form_for [:admin , @voucher] do |f|
-  - if @voucher.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@voucher.errors.count, "error")} prohibited this voucher from being saved:"
-      %ul
-        - @voucher.errors.full_messages.each do |message|
-          %li= message
+.row
+  .col-md-12
+    .box.box-primary
+      .box-header.with-border
+        %h3.box-title Provide Voucher details
+      %form{:lpformnum => "1", :role => "form"}
+      = simple_form_for [:admin , @voucher] do |f|
+        - if @voucher.errors.any?
+          #error_explanation
+            %h2= "#{pluralize(@voucher.errors.count, "error")} prohibited this voucher from being saved:"
+            %ul
+              - @voucher.errors.full_messages.each do |message|
+                %li= message
 
-  .field
-    = f.label :code
-    = f.text_field :code
-  .field
-    = f.label :description
-    = f.text_area :description
-  .field
-    = f.label :condition
-    = f.text_area :condition
-  .field
-    / = f.label :year
-    / = f.text_field :year
-    = f.input :year
+        %form{:_lpchecked => "1", :lpformnum => "1", :role => "form"}
+          .box-body
+            .row
+              .col-md-6
+                .form-group
+                  %label{:for => "exampleInputEmail1"} Voucher Code
+                  / = f.label :name
+                  = f.text_field :code, class: "form-control", placeholder: "Enter Voucher code"
+              .col-md-6
+                .form-group
+                  %label{:for => "exampleInputPassword1"} Description
+                  = f.text_field :description, class: "form-control", placeholder: "Enter description"
+            .row
+              .col-md-6
+                .form-group
+                  %label{:for => "exampleInputPassword1"} Condition
+                  = f.text_field :condition, class: "form-control", placeholder: "Enter condition"
+              .col-md-6
+                .form-group
+                  %label{:for => "exampleInputPassword1"} Year
+                  = f.text_field :year, class: "form-control", placeholder: "Enter year"
 
-
-  .field
-    / = f.label :establishment
-    = f.association :establishment, label_method: :name, value_method: :id, include_blank: false
-  .actions
-    = f.submit 'Save'
+              .col-md-6
+                .form-group
+                  / %label{:for => "exampleInputFile"} Establishment Type
+                  = f.association :establishment, label_method: :name, value_method: :id, include_blank: false
+                  / %input#exampleInputFile{:type => "file"}
+                  %p.help-block Kindly confirm the Establishment type before saving
+          .box-footer
+            = f.submit class: "btn btn-primary"
