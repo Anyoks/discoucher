@@ -11,6 +11,6 @@
   %b Year:
   = @voucher.year
 
-= link_to 'Edit', edit_admin_voucher_path(@voucher)
+= link_to 'Edit', edit_admin_voucher_path(@voucher), class: "label label-default"
 \|
-= link_to 'Back', admin_vouchers_path
+= link_to 'Back', admin_vouchers_path, class: "label label-primary"
