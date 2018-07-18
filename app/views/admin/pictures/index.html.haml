@@ -2,11 +2,11 @@
 %h1 #{@establishment.name} Pictures
 .row
   .col-xs-12
-    = link_to 'New Picture', new_admin_establishment_picture_path, class: "btn btn-default"
     .box
       .box-header
-        %h3.box-title Establishment
-      / /.box-header
+        %h3.box-title Listing Images
+        .box-tools.pull-right
+          = link_to 'New Picture', new_admin_establishment_picture_path, class: "btn btn-default"
       .box-body
         #example1_wrapper.dataTables_wrapper.form-inline.dt-bootstrap
       .row
@@ -31,4 +31,4 @@
 
 %br
 
-= link_to 'New Picture', new_admin_establishment_picture_path, class: "btn btn-default"
+= link_to 'New Picture', new_admin_establishment_picture_path, class: "btn btn-primary"
