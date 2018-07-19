@@ -57,6 +57,9 @@ Rails.application.routes.draw do
       get '/establishments/restaurants'
       get '/establishments/spas'
 
+      get '/vouchers/all' #all vouchers
+      post '/vouchers/est', :to => 'vouchers#show_for_establishment' #for a particular establishment
+
       resources :sms, only: [:create]
       mount_devise_token_auth_for 'User', at: 'auth'
       # resources :users
