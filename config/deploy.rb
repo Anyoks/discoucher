@@ -21,7 +21,7 @@ set :deploy_to, "/home/discoucher/discoucher"
 # 
 set :bundle_binstubs, nil
 set :linked_files, %w{config/database.yml config/secrets.yml config/initializers/devise.rb}
-set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/images}
 
 # cap production deploy:upload_yml
 namespace :deploy do
