@@ -19,7 +19,7 @@ class  Api::V1::SerializableEstablishment < JSONAPI::Serializable::Resource
   end
   attribute :pictures do
     if @object.pic_urls.present?
-      @object.pic_urls.first
+      @object.pic_urls
     else
       [ActionController::Base.helpers.asset_path('discoucher_small.jpg')]
     end
