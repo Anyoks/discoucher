@@ -11,10 +11,18 @@ class  Api::V1::SerializableEstablishment < JSONAPI::Serializable::Resource
   	ApplicationController.helpers.asset_url(@object.logo.url(:small))
   end
   attribute :featured_image do
-    @object.pic_urls.first
+    if @object.pic_urls.present?
+      @object.pic_urls.first
+    else
+      ActionController::Base.helpers.asset_path('discoucher_small.jpg')
+    end
   end
   attribute :pictures do
-    @object.pic_urls
+    if @object.pic_urls.present?
+      @object.pic_urls.first
+    else
+      ActionController::Base.helpers.asset_path('discoucher_small.jpg')
+    end
   end
   # type of est, Rest, spas, hotels
 end
