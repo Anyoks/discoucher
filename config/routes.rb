@@ -56,6 +56,7 @@ Rails.application.routes.draw do
       get '/establishments/hotels'
       get '/establishments/restaurants'
       get '/establishments/spas'
+      post '/establishments/get_est'
 
       get '/vouchers/all' #all vouchers
       post '/vouchers/est', :to => 'vouchers#show_for_establishment' #for a particular establishment
