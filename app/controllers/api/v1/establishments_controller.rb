@@ -4,7 +4,7 @@ class Api::V1::EstablishmentsController < Api::V1::BaseController
 	
 	def est
 
-		@establishments = Establishment.all.paginate(:page => params[:page], :per_page => 20)
+		@establishments = Establishment.all.paginate(:page => params[:page], :per_page => 10)
    
 		
 		# render jsonapi: @establishments #, class: { Establishment: Api::V1::SerializableEstablishment }
@@ -14,21 +14,21 @@ class Api::V1::EstablishmentsController < Api::V1::BaseController
 
 	# return hotels
 	def hotels
-		@hotels = Establishment.hotels.paginate(:page => params[:page], :per_page => 20)
+		@hotels = Establishment.hotels.paginate(:page => params[:page], :per_page => 10)
 
 		render jsonapi: @hotels, class: { Establishment: Api::V1::SerializableEstablishment }
 	end
 
 	# return restaurants
 	def restaurants
-		@restaurants = Establishment.restaurants.paginate(:page => params[:page], :per_page => 20)
+		@restaurants = Establishment.restaurants.paginate(:page => params[:page], :per_page => 10)
 
 		render jsonapi: @restaurants, class: { Establishment: Api::V1::SerializableEstablishment }
 	end
 
 	# return spas and salons
 	def spas
-		@spas_and_salons = Establishment.spas_and_salons.paginate(:page => params[:page], :per_page => 20)
+		@spas_and_salons = Establishment.spas_and_salons.paginate(:page => params[:page], :per_page => 10)
 
 		render jsonapi: @spas_and_salons, class: { Establishment: Api::V1::SerializableEstablishment }
 	end
