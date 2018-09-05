@@ -4,7 +4,8 @@ class  Api::V1::SerializableVoucher < JSONAPI::Serializable::Resource
   attribute :code
   attribute :description
   attribute :condition
-  attribute :establishment do
+  attribute :establishment_id
+  attribute :establishment_name do
   	@object.establishment.name
   end
   attribute :est_image do
