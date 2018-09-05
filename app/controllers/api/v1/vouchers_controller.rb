@@ -3,7 +3,7 @@ class Api::V1::VouchersController < ApplicationController
 	before_action :ensure_est_id_exists, only: [:show_for_establishment]
 
 	def all
-		@vouchers = Voucher.all.paginate(:page => params[:page], :per_page => 20)
+		@vouchers = Voucher.all.paginate(:page => params[:page], :per_page => 10)
 		
 		render jsonapi: @vouchers, class: { Voucher: Api::V1::SerializableVoucher }
 	end
