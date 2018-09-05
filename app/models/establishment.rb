@@ -84,6 +84,12 @@ class Establishment < ApplicationRecord
 		return urls	
 	end
 
+	# setting the featured image
+	# Sjould be random in future. delete this when I acheive it.
+	def featured_image
+		self.pic_urls.first
+	end
+
 	# Incase there are not types in the database and a type has not been set 
 	# by the user.
 
