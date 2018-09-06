@@ -13,6 +13,6 @@ class  Api::V1::SerializableVoucher < JSONAPI::Serializable::Resource
   # end
   
   attribute :establishment do
-    Api::V1::EstablishmentSerializer.new(@object.establishment).serialized_json
+    Api::V1::EstablishmentSerializer.new(@object.establishment).serializable_hash
   end
 end
