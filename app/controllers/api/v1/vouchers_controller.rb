@@ -6,6 +6,7 @@ class Api::V1::VouchersController < ApplicationController
 		@vouchers = Voucher.all.paginate(:page => params[:page], :per_page => 10)
 		
 		render jsonapi: @vouchers, class: { Voucher: Api::V1::SerializableVoucher }
+		# render json: VoucherSerializer.new(@vouchers).serialized_json
 	end
 
 	def show_for_establishment
