@@ -16,6 +16,7 @@
 class Voucher < ApplicationRecord
 	belongs_to :establishment
 	has_many :visits
+	has_many :favourites
 
 	# including elastic search
 	# include Elasticsearch::Model

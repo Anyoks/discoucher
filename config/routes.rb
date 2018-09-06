@@ -62,6 +62,9 @@ Rails.application.routes.draw do
       post '/vouchers/est', :to => 'vouchers#show_for_establishment' #for a particular establishment
       get '/establishment_type/all'
 
+      post '/favourites/add', :to => 'profile#add_favourite'
+      get 'favourites', :to => 'profile#all' 
+
       resources :sms, only: [:create]
       mount_devise_token_auth_for 'User', at: 'auth'
       # resources :users

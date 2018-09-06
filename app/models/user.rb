@@ -43,6 +43,7 @@ class User < ApplicationRecord
 
   has_many :visits
   has_many :failed_redemptions
+  has_many :favourites
 
   # including elastic search
 	# include Elasticsearch::Model
@@ -112,6 +113,15 @@ class User < ApplicationRecord
 
 	def name
 		return self.first_name
+	end
+
+	def get_favourte_vouchers
+		array = []
+		self.favourites.each do |favourite|
+			array << favourite.voucher
+		end
+
+		return array
 	end
 
 
