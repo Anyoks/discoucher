@@ -1,5 +1,6 @@
 class Api::V1::BaseController < ActionController::API
 	 respond_to :json
+	 before_action :configure_permitted_parameters, if: :devise_controller?
 	include DeviseTokenAuth::Concerns::SetUserByToken
 	# skip_before_action :verify_authenticity_token
  	# before_action :authenticate_api_v1_user!
@@ -32,5 +33,9 @@ protected
 
       render json: Api::V1::ErrorSerializer.new(status, errors).as_json,
         status: status
+    end
+
+    def configure_permitted_parameters
+        devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name, :email, :password, :password_confirmation , :phone_number]) 
     end
 end
