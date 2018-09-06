@@ -1,4 +1,4 @@
-class Api::V1::ProfileController < Api::V1::ApplicationController
+class Api::V1::ProfileController < Api::V1::BaseController
 	before_action :authenticate_api_v1_user!
 	def profile
 		token = current_api_v1_user.first_name

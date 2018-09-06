@@ -1,4 +1,4 @@
-class Api::V1::VouchersController < ApplicationController
+class Api::V1::VouchersController < Api::V1::BaseController
 
 	before_action :ensure_est_id_exists, only: [:show_for_establishment]
 
