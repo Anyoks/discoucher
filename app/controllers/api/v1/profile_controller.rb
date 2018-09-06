@@ -14,7 +14,7 @@ class Api::V1::ProfileController < Api::V1::BaseController
 		user_id = user.id
 		voucher_id = params[:voucher_id]
 		fav = user.favourites.new(:user_id => user_id, :voucher_id => voucher_id)
-		byebug
+		
 		if fav.save
 			return successfully_added
 		else
