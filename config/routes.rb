@@ -65,6 +65,8 @@ Rails.application.routes.draw do
       post '/favourites/add', :to => 'profile#add_favourite'
       get 'favourites', :to => 'profile#all' 
 
+      post '/search/vouchers'
+
       resources :sms, only: [:create]
       mount_devise_token_auth_for 'User', at: 'auth'
       # resources :users
