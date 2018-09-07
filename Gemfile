@@ -92,6 +92,8 @@ gem 'jsonapi-rails'
 gem 'rake'
 # Pagination
 gem 'will_paginate', '~> 3.1.1'
+# api pagination
+gem 'api-pagination'
 #sending mails
 gem 'sidekiq'
 # API authentication

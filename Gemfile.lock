@@ -54,6 +54,7 @@ GEM
     annotate (2.7.2)
       activerecord (>= 3.2, < 6.0)
       rake (>= 10.4, < 13.0)
+    api-pagination (4.8.1)
     arel (8.0.0)
     autoprefixer-rails (7.2.5)
       execjs
@@ -372,6 +373,7 @@ PLATFORMS
 DEPENDENCIES
   adminlte2-rails
   annotate (~> 2.7, >= 2.7.2)
+  api-pagination
   bootstrap-sass
   byebug
   capistrano
