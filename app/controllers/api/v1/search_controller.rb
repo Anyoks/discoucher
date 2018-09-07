@@ -1,5 +1,6 @@
 class Api::V1::SearchController < Api::V1::BaseController
 	# before_action :authenticate_api_v1_user!
+	respond_to :json
 	before_action :ensure_search_query_exists, only: [:vouchers]
 	
 	def vouchers
@@ -10,7 +11,7 @@ class Api::V1::SearchController < Api::V1::BaseController
 			page: params[:page],
 			per_page: 15
 		}
-		@results = Voucher.search(params[:q], elastic_query)
+		@results = Voucher.search(params[:query], elastic_query)
 
 		render jsonapi: @results, class: { Voucher: Api::V1::SerializableVoucher }
 	end
@@ -18,7 +19,7 @@ class Api::V1::SearchController < Api::V1::BaseController
 	private
 
 		def ensure_search_query_exists
-			ensure_param_exists :q
+			ensure_param_exists :query
 		end
 
 		def ensure_param_exists(param)
