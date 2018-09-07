@@ -67,6 +67,10 @@ Rails.application.routes.draw do
 
       post '/search/vouchers'
 
+      get 'vouchers/hotels', :to => 'establishment_type#hotel_vouchers'
+      get 'vouchers/spas', :to => 'establishment_type#spa_vouchers'
+      get 'vouchers/restaurants', :to => 'establishment_type#restaurant_vouchers'
+
       resources :sms, only: [:create]
       mount_devise_token_auth_for 'User', at: 'auth'
       # resources :users
