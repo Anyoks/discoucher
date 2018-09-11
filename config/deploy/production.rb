@@ -1,7 +1,7 @@
 
 set :stage, :production
 set :rails_env, :production
-server '46.101.137.125', user: 'discoucher', roles: %w{web app db}
+server '159.89.103.53', user: 'discoucher', roles: %w{web app db}
 # server-based syntax
 # ======================
 # Defines a single server with a list of roles and multiple properties.

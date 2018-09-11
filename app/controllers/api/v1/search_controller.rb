@@ -9,14 +9,28 @@ class Api::V1::SearchController < Api::V1::BaseController
 			fields: [:code, :description, :condition, :establishment],
 			order: { _score: :desc },
 			page: params[:page],
-			per_page: 15
+			per_page: 30
 		}
 		@results = Voucher.search(params[:query], elastic_query)
+
+		if @results.count == 0
+			@results = search_establishments
+		end
 
 		render jsonapi: @results, class: { Voucher: Api::V1::SerializableVoucher }
 	end
 
 	private
+
+		def search_establishments
+			elastic_query = {
+				fields: [:name, :type, :location, :area, :phone],
+				order: { _score: :desc },
+				page: params[:page],
+				per_page: 30
+			}
+			@results = Establishment.search(params[:query], elastic_query)
+		end
 
 		def ensure_search_query_exists
 			ensure_param_exists :query
