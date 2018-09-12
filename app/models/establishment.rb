@@ -119,6 +119,17 @@ class Establishment < ApplicationRecord
 		 return spas_and_salons
 	end
 
+	def self.get_vouchers establishments
+
+		vouchers_collection = []
+		establishments.each do |est|
+			est.vouchers.each do |voucher|
+				vouchers_collection << voucher
+			end
+		end
+		return vouchers_collection
+	end
+
 protected
 
 	def self.set_default_type

@@ -1,4 +1,5 @@
 class Api::V1::SearchController < Api::V1::BaseController
+	require 'will_paginate/array'
 	# before_action :authenticate_api_v1_user!
 	respond_to :json
 	before_action :ensure_search_query_exists, only: [:vouchers]
@@ -11,12 +12,19 @@ class Api::V1::SearchController < Api::V1::BaseController
 			page: params[:page],
 			per_page: 30
 		}
-		@results = Voucher.search(params[:query], elastic_query)
+		
 
-		if @results.count == 0
-			@results = search_establishments
+		@raw_results = Voucher.search(params[:query], elastic_query)
+		# byebug
+		
+		if @raw_results.count == 0
+			@un_paginated_results = search_establishments
+			@results = paginate search_establishments, per_page: 30
+		else
+			@results = paginate @raw_results.results, per_page: 30
 		end
 
+		# byebug 
 		render jsonapi: @results, class: { Voucher: Api::V1::SerializableVoucher }
 	end
 
@@ -29,7 +37,8 @@ class Api::V1::SearchController < Api::V1::BaseController
 				page: params[:page],
 				per_page: 30
 			}
-			@results = Establishment.search(params[:query], elastic_query)
+			@raw = Establishment.search(params[:query], elastic_query)
+			@results = Establishment.get_vouchers @raw
 		end
 
 		def ensure_search_query_exists
