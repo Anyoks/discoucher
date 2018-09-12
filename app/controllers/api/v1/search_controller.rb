@@ -1,5 +1,5 @@
 class Api::V1::SearchController < Api::V1::BaseController
-	require 'will_paginate/array'
+	# require 'will_paginate/array'
 	# before_action :authenticate_api_v1_user!
 	respond_to :json
 	before_action :ensure_search_query_exists, only: [:vouchers]
