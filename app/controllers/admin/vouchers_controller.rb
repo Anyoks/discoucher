@@ -19,6 +19,8 @@ class Admin::VouchersController < Admin::ApplicationController
 
   # GET /vouchers/1/edit
   def edit
+
+    @tags = Tag.all
   end
 
   # POST /vouchers

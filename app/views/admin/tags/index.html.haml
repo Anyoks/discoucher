@@ -1,0 +1,39 @@
+/ %h1 Listing tags
+
+/ %table
+/   %thead
+/     %tr
+/       %th
+/       %th
+/       %th
+
+/   %tbody
+/     - @tags.each do |tag|
+/       %tr
+/         %td= link_to 'Show', admin_tag_path(tag)
+/         %td= link_to 'Edit', edit_admin_tag_path(tag)
+/         %td= link_to 'Destroy',admin_tag_path(tag), method: :delete, data: { confirm: 'Are you sure?' }
+
+/ %br
+%section.content-header
+  %h1
+    DisCoucher Tags
+    %small All Tags in the database
+  %ol.breadcrumb
+    %li
+      %a{:href => "#"}
+        %i.fa.fa-dashboard
+        Level
+    %li.active Here
+
+
+%br
+
+
+%br
+#partial_page
+  =render "admin/tags/table", tags: @tags #the table that was previously here was extracted to the partial to be DRY. seems like I needed it more than I thought! :-)
+
+%br
+-if current_admin && current_admin.is_admin?
+  %p=link_to 'New Tag', new_admin_tag_path, class: "btn btn-primary"

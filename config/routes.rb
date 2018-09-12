@@ -30,10 +30,14 @@ Rails.application.routes.draw do
     resources :establishments  do
       resources :pictures
     end
-    resources :vouchers
+    resources :vouchers do
+      resources :tags
+    end
+    resources :tags
     resources :books do 
       get '/search', :to => 'search#search'
     end
+
 
     resources :user do
       # get :make_moderator
