@@ -40,7 +40,8 @@
                   = f.association :establishment, label_method: :name, value_method: :id, include_blank: false
                   / %input#exampleInputFile{:type => "file"}
                   %p.help-block Kindly confirm the Establishment type before saving
-              .col-md-6
+            .row 
+              .col-md-12
                 .form-group
                   / %label{:for => "exampleInputFile"} Establishment Type
                   / = f.select 'tag_ids', options_for_select(Tag.all.collect{ |tg| [tg.name, tg.id]}), :multiple => true, include_blank: true
@@ -56,12 +57,10 @@
                             %tbody
                               %tr
                                 %td= cb.check_box
-                                %td
-
-                  = f.association :tags, label_method: :name, value_method: :id, include_blank: false
+                                %td  
+              
                   / %input#exampleInputFile{:type => "file"}
-                  %p.help-block Kindly confirm the Establishment type before saving
-
-
+                  
+       
           .box-footer
             = f.submit class: "btn btn-primary"
