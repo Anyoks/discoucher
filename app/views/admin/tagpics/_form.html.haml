@@ -1,0 +1,16 @@
+.row
+	.col-md-6
+		.box.box-primary
+			.box-header.with-border
+				%h3.box-title Select files
+			%form{:lpformnum => "1", :role => "form"}
+			= simple_form_for  @tagpic, :url =>  admin_tag_tagpics_path, html: { multipart: true } do |f|
+				= f.error_notification
+				.box-body
+					.form-group
+						%label{:for => "exampleInputFile"} You can select multiple Images
+						%br
+						= file_field_tag "images[]", type: :file, multiple: true
+						%p.help-block Alternatively, you can drag and drop over the choose files button.
+				.box-footer
+					= f.submit class: "btn btn-primary", value: "Save images"

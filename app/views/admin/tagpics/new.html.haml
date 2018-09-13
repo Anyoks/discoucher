@@ -1,0 +1,7 @@
+%section.content-header
+	%h1 Adding pictures to tag:  #{@tag.name}
+
+%section.content
+	= render 'form'
+
+= link_to 'Back', admin_tag_tagpics_path, class: "label label-default"
