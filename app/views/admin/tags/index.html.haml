@@ -1,20 +1,3 @@
-/ %h1 Listing tags
-
-/ %table
-/   %thead
-/     %tr
-/       %th
-/       %th
-/       %th
-
-/   %tbody
-/     - @tags.each do |tag|
-/       %tr
-/         %td= link_to 'Show', admin_tag_path(tag)
-/         %td= link_to 'Edit', edit_admin_tag_path(tag)
-/         %td= link_to 'Destroy',admin_tag_path(tag), method: :delete, data: { confirm: 'Are you sure?' }
-
-/ %br
 %section.content-header
   %h1
     DisCoucher Tags

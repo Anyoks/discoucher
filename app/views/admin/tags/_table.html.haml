@@ -2,7 +2,7 @@
   .col-xs-12
     .box
       .box-header
-        %h3.box-title tag
+        %h3.box-title Tags
         .box-tools.pull-right
           .digg_pagination
             = will_paginate tags 
@@ -17,10 +17,10 @@
                 %thead
                   %tr{:role => "row"}
                     %th.sorting_asc{"aria-controls" => "example1", "aria-label" => "Rendering engine: activate to sort column descending", "aria-sort" => "ascending", :colspan => "1", :rowspan => "1", :style => "width: 182px;", :tabindex => "0"} tag Name
-                    %th.sorting{"aria-controls" => "example1", "aria-label" => "Browser: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 100px;", :tabindex => "0"} Location
-                    %th.sorting{"aria-controls" => "example1", "aria-label" => "Platform(s): activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 80px;", :tabindex => "0"} Area
-                    %th.sorting{"aria-controls" => "example1", "aria-label" => "Engine version: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 156px;", :tabindex => "0"} Contact Phone
-                    %th.sorting{"aria-controls" => "example1", "aria-label" => "Engine version: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 80px;", :tabindex => "0"} Address
+                    %th.sorting{"aria-controls" => "example1", "aria-label" => "Browser: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 100px;", :tabindex => "0"} No. of Vouchers
+                    / %th.sorting{"aria-controls" => "example1", "aria-label" => "Platform(s): activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 80px;", :tabindex => "0"} Area
+                    / %th.sorting{"aria-controls" => "example1", "aria-label" => "Engine version: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 156px;", :tabindex => "0"} Contact Phone
+                    / %th.sorting{"aria-controls" => "example1", "aria-label" => "Engine version: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 80px;", :tabindex => "0"} Address
                     / %th.sorting{"aria-controls" => "example1", "aria-label" => "Engine version: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 156px;", :tabindex => "0"} Logo
                     %th.sorting{"aria-controls" => "example1", "aria-label" => "CSS grade: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 250px;", :tabindex => "0"} Options
                 %tbody
@@ -28,6 +28,7 @@
 
                     %tr{:class => "#{cycle('even', 'odd')}"}
                       %td.sorting_1= tag.name
+                      %td.sorting_1= tag.vouchers.count
                       / %td= tag.location
                       / %td= tag.area
                       / %td= tag.phone
@@ -38,15 +39,12 @@
                           = link_to 'Edit', edit_admin_tag_path(tag), class: "label label-default"
                           = link_to "Details", admin_tag_path(tag), class: "label label-warning"
                           = link_to 'Destroy', admin_tag_path(tag), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
-                          / = link_to "Images", admin_tag_pictures_path(tag), class: "label label-success"
+                          = link_to "Images", admin_tag_tagpics_path(tag), class: "label label-success"
 
                 %tfoot
                   %tr
                     %th{:colspan => "1", :rowspan => "1"} tag Name
-                    %th{:colspan => "1", :rowspan => "1"} Location
-                    %th{:colspan => "1", :rowspan => "1"} Area
-                    %th{:colspan => "1", :rowspan => "1"} Contact Phone
-                    %th{:colspan => "1", :rowspan => "1"} Address
+                    %th{:colspan => "1", :rowspan => "1"} No. of Vouchers
                     %th{:colspan => "1", :rowspan => "1"} Options
           .row
             .col-sm-5

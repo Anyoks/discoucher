@@ -60,7 +60,7 @@ class  Admin::TagsController < Admin::ApplicationController
   def update
     respond_to do |format|
       if @tag.update(tag_params)
-        byebug
+        # byebug
         format.html { redirect_to admin_tags_url(@tag), notice: 'Tag was successfully updated.' }
         format.json { render :show, status: :ok, location: @tag }
       else
