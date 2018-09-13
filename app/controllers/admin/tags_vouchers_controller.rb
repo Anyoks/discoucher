@@ -1,10 +1,11 @@
-class  Admin::TagsController < Admin::ApplicationController 
-  before_action :set_tag, only: [:show, :edit, :update, :destroy]
+class Admin::TagsVouchersController < ApplicationController
+  before_action :set_admin_tags_voucher, only: [:show, :edit, :update, :destroy]
 
-  # GET /admin/tags
-  # GET /admin/tags.json
-  def index
-     @tags =  Tag.all.paginate(:page => params[:page], :per_page => 20)
+  # GET /admin/tags_vouchers
+  # GET /admin/tags_vouchers.json
+   def index
+      @voucher = Voucher.find(params[:voucher_id])
+      @tags = @voucher.tags.paginate(:page => params[:page], :per_page => 20)
   end
 
   # def show_voucher_tags
@@ -21,6 +22,7 @@ class  Admin::TagsController < Admin::ApplicationController
   # GET /admin/tags/new
   def new
     @tag = Tag.new
+    @voucher = Voucher.find(params[:voucher_id])
   end
 
   # GET /admin/tags/1/edit
@@ -30,9 +32,14 @@ class  Admin::TagsController < Admin::ApplicationController
   # POST /admin/tags
   # POST /admin/tags.json
   def create
-
-    @tag =  Tag.new(tag_params)
-
+    
+    # if params[:voucher_ids]
+    # byebug
+      @voucher = Voucher.find(params[:tag][:voucher_ids])
+    # else
+      @tag =  Tag.new(tag_params)
+    # end
+     
     respond_to do |format|
       if  @tag.save
         
@@ -44,7 +51,7 @@ class  Admin::TagsController < Admin::ApplicationController
           }
         end
 
-        # @voucher.tags << @tag # populate the join table for the many to many relationship.
+        @voucher.tags << @tag # populate the join table for the many to many relationship.
 
         format.html { redirect_to  admin_tags_url(@tag), notice: 'Tag was successfully created.' }
         format.json { render :show, status: :created, location:  @tag }
@@ -60,7 +67,6 @@ class  Admin::TagsController < Admin::ApplicationController
   def update
     respond_to do |format|
       if @tag.update(tag_params)
-        byebug
         format.html { redirect_to admin_tags_url(@tag), notice: 'Tag was successfully updated.' }
         format.json { render :show, status: :ok, location: @tag }
       else

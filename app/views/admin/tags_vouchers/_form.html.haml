@@ -1,0 +1,27 @@
+.row
+	.col-md-6
+		.box.box-primary
+			.box-header.with-border
+				%h3.box-title Select files
+			%form{:lpformnum => "1", :role => "form"}
+			= simple_form_for  @tag, :url =>  admin_voucher_tags_vouchers_path, html: { multipart: true } do |f|
+				= f.error_notification
+				.box-body
+					.row
+						.col-md-6
+							.form-group
+								%label{:for => "exampleInputPassword1"} Tag Name
+								= f.text_field :name, class: "form-control", placeholder: "Enter Tag Name"
+						.col-md-6
+							.form-group
+								%label{:for => "exampleInputPassword1"} Voucher Code
+								= f.select :voucher_ids, :selected => params[:voucher_id]
+								/ = f.text_field :name, class: "form-control", placeholder: "Enter Tag Name"
+						.col-md-6
+							.form-group
+								%label{:for => "exampleInputFile"} You can select multiple Images
+								%br
+								= file_field_tag "images[]", type: :file, multiple: true
+								%p.help-block Alternatively, you can drag and drop over the choose files button.
+				.box-footer
+					= f.submit class: "btn btn-primary", value: "Save images"

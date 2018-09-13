@@ -1,0 +1,22 @@
+%section.content-header
+  %h1
+    DisCoucher Tags
+    %small All Tags For Voucher Code:::  #{@voucher.code}
+  %ol.breadcrumb
+    %li
+      %a{:href => "#"}
+        %i.fa.fa-dashboard
+        Level
+    %li.active Here
+
+
+%br
+
+
+%br
+#partial_page
+  =render "admin/tags/table", tags: @tags #the table that was previously here was extracted to the partial to be DRY. seems like I needed it more than I thought! :-)
+
+%br
+-if current_admin && current_admin.is_admin?
+  %p=link_to 'Add New Tag to this Voucher', new_admin_voucher_tags_voucher_path(@voucher.id), class: "btn btn-primary"
