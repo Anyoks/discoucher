@@ -31,9 +31,14 @@ Rails.application.routes.draw do
       resources :pictures
     end
     resources :vouchers do
-      resources :tags
+      resources :tags_vouchers
+      # get :show_voucher_tags, :to => 'tags#show_voucher_tags'
+      # get :create_voucher_tags, :to => 'tags#create_voucher_tags'
     end
     resources :tags
+    resources :tags do
+      resources :tagpics
+    end
     resources :books do 
       get '/search', :to => 'search#search'
     end
