@@ -1,8 +1,8 @@
 %section.content-header
 	%h1 
-		Editing voucher
+		Update Tags for___ #{@voucher.code}
 %section.content
-	= render 'form'
+	= render 'addtagform'
 
 = link_to 'Show', admin_voucher_path(@voucher), class: "label label-default"
 \|

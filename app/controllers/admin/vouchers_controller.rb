@@ -21,6 +21,11 @@ class Admin::VouchersController < Admin::ApplicationController
   def edit
 
     @tags = Tag.all
+    if params[:tag] == "add tags"
+      respond_to do |format|
+        format.html { render :template => "admin/vouchers/edit_tags" }
+      end
+    end
   end
 
   # POST /vouchers

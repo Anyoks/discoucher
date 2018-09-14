@@ -39,28 +39,6 @@
                   / %label{:for => "exampleInputFile"} Establishment Type
                   = f.association :establishment, label_method: :name, value_method: :id, include_blank: false
                   / %input#exampleInputFile{:type => "file"}
-                  %p.help-block Kindly confirm the Establishment type before saving
-            .row 
-              .col-md-12
-                .form-group
-                  / %label{:for => "exampleInputFile"} Establishment Type
-                  / = f.select 'tag_ids', options_for_select(Tag.all.collect{ |tg| [tg.name, tg.id]}), :multiple => true, include_blank: true
-                  = f.collection_check_boxes(:tag_ids, Tag.all, :id, :name) do |cb|
-                    .form-group
-                      .form-check
-                        %label.form-check-label
-                          %table.table.table-hover
-                            %thead
-                              %tr
-                                %th= cb.text
-                                %th
-                            %tbody
-                              %tr
-                                %td= cb.check_box
-                                %td  
-              
-                  / %input#exampleInputFile{:type => "file"}
-                  
-       
+                  %p.help-block Kindly confirm the Establishment type before saving       
           .box-footer
             = f.submit class: "btn btn-primary"

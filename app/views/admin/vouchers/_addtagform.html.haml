@@ -1,0 +1,66 @@
+.row
+  .col-md-12
+    .box.box-primary
+      .box-header.with-border
+        %h3.box-title Add or Remove Tags from Voucher
+      %form{:lpformnum => "1", :role => "form"}
+      = simple_form_for [:admin , @voucher] do |f|
+        - if @voucher.errors.any?
+          #error_explanation
+            %h2= "#{pluralize(@voucher.errors.count, "error")} prohibited this voucher from being saved:"
+            %ul
+              - @voucher.errors.full_messages.each do |message|
+                %li= message
+
+        %form{:_lpchecked => "1", :lpformnum => "1", :role => "form"}
+          .box-body
+            / .row
+            /   .col-md-6
+            /     .form-group
+            /       %label{:for => "exampleInputEmail1"} Voucher Code
+            /       / = f.label :name
+            /       = f.text_field :code, class: "form-control", placeholder: "Enter Voucher code"
+            /   .col-md-6
+            /     .form-group
+            /       %label{:for => "exampleInputPassword1"} Description
+            /       = f.text_field :description, class: "form-control", placeholder: "Enter description"
+            / .row
+            /   .col-md-6
+            /     .form-group
+            /       %label{:for => "exampleInputPassword1"} Condition
+            /       = f.text_field :condition, class: "form-control", placeholder: "Enter condition"
+            /   .col-md-6
+            /     .form-group
+            /       %label{:for => "exampleInputPassword1"} Year
+            /       = f.text_field :year, class: "form-control", placeholder: "Enter year"
+
+            /   .col-md-6
+            /     .form-group
+            /       / %label{:for => "exampleInputFile"} Establishment Type
+            /       = f.association :establishment, label_method: :name, value_method: :id, include_blank: false
+            /       / %input#exampleInputFile{:type => "file"}
+            /       %p.help-block Kindly confirm the Establishment type before saving
+            .row 
+              .col-md-12
+                .form-group
+                  / %label{:for => "exampleInputFile"} Establishment Type
+                  / = f.select 'tag_ids', options_for_select(Tag.all.collect{ |tg| [tg.name, tg.id]}), :multiple => true, include_blank: true
+                  = f.collection_check_boxes(:tag_ids, Tag.all, :id, :name) do |cb|
+                    .form-group
+                      .form-check
+                        %label.form-check-label
+                          %table.table.table-hover
+                            %thead
+                              %tr
+                                %th= cb.text
+                                %th
+                            %tbody
+                              %tr
+                                %td= cb.check_box
+                                %td  
+              
+                  / %input#exampleInputFile{:type => "file"}
+                  
+       
+          .box-footer
+            = f.submit class: "btn btn-primary", value: "Update Tags"

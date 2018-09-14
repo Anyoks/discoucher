@@ -16,11 +16,11 @@
               %table#example1.table.table-bordered.table-striped.dataTable{"aria-describedby" => "example1_info", :role => "grid"}
                 %thead
                   %tr{:role => "row"}
-                    %th.sorting_asc{"aria-controls" => "example1", "aria-label" => "Rendering engine: activate to sort column descending", "aria-sort" => "ascending", :colspan => "1", :rowspan => "1", :style => "width: 100px;", :tabindex => "0"} Code
+                    %th.sorting_asc{"aria-controls" => "example1", "aria-label" => "Rendering engine: activate to sort column descending", "aria-sort" => "ascending", :colspan => "1", :rowspan => "1", :style => "width: 60px;", :tabindex => "0"} Code
                     %th.sorting{"aria-controls" => "example1", "aria-label" => "Browser: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 100px;", :tabindex => "0"} Description
                     %th.sorting{"aria-controls" => "example1", "aria-label" => "Platform(s): activate to sort column ascending", :colspan => "", :rowspan => "1", :style => "width: 70px;", :tabindex => "0"} Condition
                     %th.sorting{"aria-controls" => "example1", "aria-label" => "Engine version: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 90px;", :tabindex => "0"} Establishment
-                    %th.sorting{"aria-controls" => "example1", "aria-label" => "Engine version: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 90px;", :tabindex => "0"} Year
+                    / %th.sorting{"aria-controls" => "example1", "aria-label" => "Engine version: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 90px;", :tabindex => "0"} Year
                     %th.sorting{"aria-controls" => "example1", "aria-label" => "CSS grade: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 113px;", :tabindex => "0"} Options
                 %tbody
                   - vouchers.each do |voucher|
@@ -30,12 +30,13 @@
                       %td= voucher.description
                       %td= voucher.condition
                       %td= voucher.establishment.name
-                      %td= voucher.year
+                      / %td= voucher.year
                       %td 
                         -if current_admin && current_admin.is_admin?
                           = link_to 'Edit', edit_admin_voucher_path(voucher), class: "label label-default"
+                          = link_to 'Update tags', edit_admin_voucher_path(voucher, :tag => 'add tags'), class: "label label-default"
                           = link_to "Show",admin_voucher_path(voucher), class: "label label-warning"
-                          = link_to "Tags",admin_voucher_tags_vouchers_path(voucher), class: "label label-warning"
+                          = link_to "Tags",admin_voucher_tags_vouchers_path(voucher), class: "label label-success"
                           = link_to 'Destroy', admin_voucher_path(voucher), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
 
                 %tfoot
