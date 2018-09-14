@@ -73,7 +73,7 @@ class Establishment < ApplicationRecord
 		if Rails.env == "development" 
 			root_url = "http://localhost:3000"
 		else
-			root_url = "http://46.101.137.125"
+			root_url = "http://159.89.103.53"
 		end
 
 		urls = []
