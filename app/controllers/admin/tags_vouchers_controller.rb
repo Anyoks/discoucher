@@ -79,16 +79,19 @@ class Admin::TagsVouchersController < ApplicationController
   # DELETE /admin/tags/1
   # DELETE /admin/tags/1.json
   def destroy
-     @tag.destroy
+    @voucher = Voucher.find(params[:voucher_id])
+
+    @voucher.tags.delete(@tag)
+     # @tag.destroy
     respond_to do |format|
-      format.html { redirect_to admin_tags_url, notice: 'Tag was successfully destroyed.' }
+      format.html { redirect_to admin_voucher_tags_vouchers_url, notice: 'Voucher was successfully untagged.' }
       format.json { head :no_content }
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_tag
+    def set_admin_tags_voucher
        @tag =  Tag.find(params[:id])
     end
 
