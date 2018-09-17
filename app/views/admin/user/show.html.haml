@@ -5,7 +5,7 @@
       / Add the bg color to the header using any of the bg-* classes
       .widget-user-header.bg-aqua-active
         %h3.widget-user-username #{@user.first_name} #{@user.last_name}
-        %h5.widget-user-desc Founder &amp; CEO
+        %h5.widget-user-desc #{@user.phone_number}
       .widget-user-image
         %img.img-circle{:alt => "User Avatar", :src => "/assets/user.jpg"}/
       .box-footer

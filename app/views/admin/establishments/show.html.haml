@@ -75,13 +75,13 @@
             - @establishment.pictures.each do |pic|
               .col-md-2
                 %a.example-image-link{"data-lightbox" => "example-set", "data-title" => "Click the right half of the image to move forward.", :href => "#{pic.image(:original)}"}
-                  %img.example-image{:alt => "", :src => "#{pic.image(:medium)}"}/
+                  %img.example-image{:alt => "", :src => "#{pic.image(:small)}"}/
 
 
 
 
 
 
-= link_to 'Edit', edit_admin_establishment_path(@establishment)
+= link_to 'Edit', edit_admin_establishment_path(@establishment), class: "btn btn-default"
 \|
-= link_to 'Back', admin_establishments_path
+= link_to 'Back', admin_establishments_path, class: "btn btn-primary"
