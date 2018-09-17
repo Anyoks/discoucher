@@ -15,7 +15,7 @@ class  Admin::TagsController < Admin::ApplicationController
   # GET /admin/tags/1
   # GET /admin/tags/1.json
   def show
-    
+    @vouchers = @tag.vouchers.paginate(:page => params[:page], :per_page => 20)
   end
 
   # GET /admin/tags/new

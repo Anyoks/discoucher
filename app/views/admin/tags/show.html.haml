@@ -1,7 +1,14 @@
 %p#notice= notice
 
-= @tag.name
+.row
+  .col-xs-12
+    .box
+      .box-header
+        %h3.box-title Vouchers tagged #{@tag.name}
 
-= link_to 'Edit', edit_admin_tag_path(@tag)
+
+
+=render "admin/vouchers/table", vouchers: @vouchers#the table that was previously here was extracted to the partial to be DRY. seems like 
+= link_to 'Edit', edit_admin_tag_path(@tag), class: "btn btn-default"
 \|
-= link_to 'Back', admin_tags_path
+= link_to 'Back', admin_tags_path, class: "btn btn-primary"
