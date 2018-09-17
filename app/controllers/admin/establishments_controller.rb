@@ -104,7 +104,7 @@ class Admin::EstablishmentsController < Admin::ApplicationController
     @establishment.logo.destroy 
     @establishment.logo.clear
     respond_to do |format|
-      format.html { redirect_to admin_establishment_url, notice: 'Establishment was successfully destroyed.' }
+      format.html { redirect_to admin_establishments_url, notice: 'Establishment was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
