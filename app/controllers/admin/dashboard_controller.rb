@@ -165,8 +165,16 @@ private
 
 	def most_active type
 	  most_and_least_active = get_most_least(type)
-	  most_active_name = get_active_name_by_class(most_and_least_active[1].first, type)
-	  most_active_count = most_and_least_active[1].size
+
+	  if most_and_least_active.any?
+	  	most_active_name = get_active_name_by_class(most_and_least_active[1].first, type)
+	  	most_active_count = most_and_least_active[1].size
+	  else
+	  	most_active_name = "none"
+	    most_active_count = 0
+	  end
+
+	  
 	  array = []
 
 	  array << most_active_name << most_active_count
@@ -185,8 +193,16 @@ private
 
 	def least_active type
 	  least_active_name = get_most_least(type)
-	  least_active_name = get_active_name_by_class(least_active_name[0].first, type)
-	  least_active_count = least_active_name[0].size
+
+	  if least_active_name.any?
+	  	least_active_name = get_active_name_by_class(least_active_name[0].first, type)
+	  	least_active_count = least_active_name[0].size
+	  else
+	  	least_active_name = "none"
+	  	least_active_count = 0
+	  end
+
+	  
 	  array = []
 
 	  array << least_active_name << least_active_count
