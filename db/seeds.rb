@@ -124,7 +124,7 @@ est_csv.each do |row|
 
 	# puts "#{name} => [ #{type}]"
 
-	establishment_type_id = EstablishmentType.where({name: "#{row['type']}" }).first_or_create.id
+	establishment_type_id = EstablishmentType.where({name: "#{type}" }).first_or_create.id
 
 
 
@@ -135,7 +135,7 @@ est_csv.each do |row|
 		# if more thatn one loop through and update details
 		if count > 1
 			puts "\n"
-			puts "Found #{count} establishments, looping ... ! "
+			puts "00000Found #{count} establishments, looping ... ! "
 			est.each do |establishment|
 				establishment.establishment_type_id = establishment_type_id
 				establishment.area 					= area
@@ -144,14 +144,14 @@ est_csv.each do |row|
 				establishment.email 				= email
 				establishment.website				= website
 				establishment.social_media			= social_media
-
-				puts "#{est.attributes } SAVED! "
+				est.save!
+				# puts "#{est.attributes } SAVED! "
 				puts "\n"
 			end
 
 		else
 			puts "\n"
-			puts "Found 1 establishments... ! "
+			puts "AAAAFound 1 establishments... ! "
 			puts "\n"
 			est = est.first
 			est.establishment_type_id 	= establishment_type_id
@@ -161,8 +161,8 @@ est_csv.each do |row|
 			est.email 					= email
 			est.website					= website
 			est.social_media			= social_media
-
-			puts "#{est.attributes } SAVED!"
+			est.save!
+			# puts "#{est.attributes } SAVED!"
 			puts "\n"
 		end
 		# if not update
@@ -173,16 +173,18 @@ est_csv.each do |row|
 		
 		if est.present?
 			puts "\n"
-			puts "Found 1 establishments without location ... ! "
+			puts "BBBBBFound 1 establishments without location ... ! "
 			puts "\n"
 			est.establishment_type_id 	= establishment_type_id
+			est.location 				= location
 			est.area 					= area
 			est.description 			= description
 			est.working_hours 			= working_hours
 			est.email 					= email
 			est.website					= website
 			est.social_media			= social_media
-			puts "#{est.attributes} "
+			# puts "#{est.attributes} "
+			est.save!
 			puts "\n"
 		else
 			puts "\n"
@@ -196,8 +198,8 @@ est_csv.each do |row|
 			est.email 					= email
 			est.website					= website
 			est.social_media			= social_media
-			puts "#{est.name}, #{est.area}, #{est.location}, #{est.establishment_type.name} } ERR:: Failed to Save! "
-
+			# puts "#{est.attributes} "
+			est.save!
 			puts "\n"
 			# puts "****Error****"
 			# puts "#{est.errors.messages}"
