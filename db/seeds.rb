@@ -103,96 +103,163 @@ require 'csv'
 # =begin
 # 	Seeding Establishment details from the csv file
 # =end
-# est_csv_text = File.read(Rails.root.join('lib', 'seeds', 'establishments.csv'))
-# est_csv = CSV.parse(est_csv_text, :headers => true, :encoding => 'ISO-8859-1')
+est_csv_text = File.read(Rails.root.join('lib', 'seeds', 'establishmentdetails.csv'))
+est_csv = CSV.parse(est_csv_text, :headers => true, :encoding => 'ISO-8859-1')
 
-# est_csv.each do |row|
-# 	puts row.to_hash
+est_csv.each do |row|
+	puts row.to_hash
 	
-# 	# add establishment type. create it if it does not exist
-# 	name = row['name']
-# 	area = row['area']
-# 	location = row['location']
+	# add establishment type. create it if it does not exist
+	name = row['Establishment']
+	type = row['Type']
+	area = row['Area']
+	location = row['Location']
+	address = row['Address']
+	description = row['Description']
+	working_hours = row['Opening hours']
+	phone_number = row['Phone']
+	email = row['Email']
+	website = row['Website']
+	social_media = row['Social media']
+
+	# puts "#{name} => [ #{type}]"
+
+	establishment_type_id = EstablishmentType.where({name: "#{row['type']}" }).first_or_create.id
 
 
-# 	establishment_type_id = EstablishmentType.find_or_create_by({name: "#{row['type']}" }).id
 
+	# check if the establishment is present
+	est = Establishment.where( name: "#{name}", location: "#{location}")
+	if est.present?
+		count = est.count
+		# if more thatn one loop through and update details
+		if count > 1
+			puts "\n"
+			puts "Found #{count} establishments, looping ... ! "
+			est.each do |establishment|
+				establishment.establishment_type_id = establishment_type_id
+				establishment.area 					= area
+				establishment.description 			= description
+				establishment.working_hours 		= working_hours
+				establishment.email 				= email
+				establishment.website				= website
+				establishment.social_media			= social_media
 
+				puts "#{est.attributes } SAVED! "
+				puts "\n"
+			end
 
-# 	# check if the establishment is present
-# 	if Establishment.find_by( name: "#{name}", area: "#{area}", location: "#{location}", establishment_type_id: "#{establishment_type_id}" ).present?
-# 		puts "ESTALISHMENT EXISTS code #{name}----------Skipping"
-# 	else
+		else
+			puts "\n"
+			puts "Found 1 establishments... ! "
+			puts "\n"
+			est = est.first
+			est.establishment_type_id 	= establishment_type_id
+			est.area 					= area
+			est.description 			= description
+			est.working_hours 			= working_hours
+			est.email 					= email
+			est.website					= website
+			est.social_media			= social_media
 
-# 		est = Establishment.find_or_create_by( name: "#{name}", area: "#{area}", location: "#{location}", establishment_type_id: "#{establishment_type_id}" )
+			puts "#{est.attributes } SAVED!"
+			puts "\n"
+		end
+		# if not update
+		# puts "ESTALISHMENT EXISTS: #{name}----------Skipping"
+	else 
+
+		est = Establishment.where( name: "#{name}").first
 		
-# 		if est
-# 			puts "#{est.name}, #{est.area}, #{est.location}, #{est.establishment_type.name} } SAVED! "
-# 		else
-# 			puts "#{est.name}, #{est.area}, #{est.location}, #{est.establishment_type.name} } ERR:: Failed to Save! "
+		if est.present?
+			puts "\n"
+			puts "Found 1 establishments without location ... ! "
+			puts "\n"
+			est.establishment_type_id 	= establishment_type_id
+			est.area 					= area
+			est.description 			= description
+			est.working_hours 			= working_hours
+			est.email 					= email
+			est.website					= website
+			est.social_media			= social_media
+			puts "#{est.attributes} "
+			puts "\n"
+		else
+			puts "\n"
+			puts "Creating  new establishments... ! "
+			est = Establishment.new
 
-# 			puts "\n"
-# 			puts "****Error****"
-# 			puts "#{est.errors.messages}"
-# 		end
-# 	end
-# 	puts "\n"
-# end
+			est.establishment_type_id 	= establishment_type_id
+			est.area 					= area
+			est.description 			= description
+			est.working_hours 			= working_hours
+			est.email 					= email
+			est.website					= website
+			est.social_media			= social_media
+			puts "#{est.name}, #{est.area}, #{est.location}, #{est.establishment_type.name} } ERR:: Failed to Save! "
+
+			puts "\n"
+			# puts "****Error****"
+			# puts "#{est.errors.messages}"
+		end
+	end
+	puts "\n"
+end
 
 =begin
 	Seeding Voucher tag details from the csv file
 =end
 
-tags_csv_text = File.read(Rails.root.join('lib', 'seeds', 'tagsvouchers.csv'))
-tags_csv = CSV.parse(tags_csv_text, :headers => true, :encoding => 'ISO-8859-1')
+# tags_csv_text = File.read(Rails.root.join('lib', 'seeds', 'tagsvouchers.csv'))
+# tags_csv = CSV.parse(tags_csv_text, :headers => true, :encoding => 'ISO-8859-1')
 
-tags_csv.each do |row|
-	# puts row.to_hash
+# tags_csv.each do |row|
+# 	# puts row.to_hash
 	
-	# add establishment type. create it if it does not exist
-	voucher_code = row['Voucher Code']
-	tags = row['Tags']
-	# get indivitual tag names
-	tag_names = tags.split(',')
-	tag_names = tag_names.reject { |e| e.to_s.empty?}
+# 	# add establishment type. create it if it does not exist
+# 	voucher_code = row['Voucher Code']
+# 	tags = row['Tags']
+# 	# get indivitual tag names
+# 	tag_names = tags.split(',')
+# 	tag_names = tag_names.reject { |e| e.to_s.empty?}
 
-	# remove spaces from tag names
-	tag_names.each do |tag|
-		tag.gsub!(/[[:space:]]/, '')
-	end
+# 	# remove spaces from tag names
+# 	tag_names.each do |tag|
+# 		tag.gsub!(/[[:space:]]/, '')
+# 	end
 
-	# puts "#{voucher_code} => TAGS::  #{tag_names}"
+# 	# puts "#{voucher_code} => TAGS::  #{tag_names}"
 
-	# find the voucher  by code
-	voucher_for_tag = Voucher.find_by(code: "#{voucher_code}")
+# 	# find the voucher  by code
+# 	voucher_for_tag = Voucher.find_by(code: "#{voucher_code}")
 
-	if voucher_for_tag
-		puts "Voucher Found #{voucher_for_tag.code}"
+# 	if voucher_for_tag
+# 		puts "Voucher Found #{voucher_for_tag.code}"
 
-		tag_names.size.times do |tag_index|
+# 		tag_names.size.times do |tag_index|
 
-			tag = Tag.find_by(name: "#{tag_names[tag_index]}")
+# 			tag = Tag.find_by(name: "#{tag_names[tag_index]}")
 
-			if tag.present?
-				# check if voucher is associated with the tag
-				if voucher_for_tag.tags.where(name: "#{tag_names[tag_index]}").first.present?
-					puts "SKIPPING:: Voucher Tag Found #{voucher_for_tag.code} <===> #{tag_names[tag_index]}"
-				else
-					puts "TAGGING:: #{voucher_for_tag.code} <===> #{tag.name}"
-					# associate voucher with tag
-					voucher_for_tag.tags << tag
+# 			if tag.present?
+# 				# check if voucher is associated with the tag
+# 				if voucher_for_tag.tags.where(name: "#{tag_names[tag_index]}").first.present?
+# 					puts "SKIPPING:: Voucher Tag Found #{voucher_for_tag.code} <===> #{tag_names[tag_index]}"
+# 				else
+# 					puts "TAGGING:: #{voucher_for_tag.code} <===> #{tag.name}"
+# 					# associate voucher with tag
+# 					voucher_for_tag.tags << tag
 					
-				end
-			else
-				puts "ADDING NEW TAG:: #{voucher_for_tag.code} <===> #{tag_names[tag_index]}"
-				# create a new tag & associate it with the voucher
-				tag = Tag.create!(name: "#{tag_names[tag_index]}")
-				voucher_for_tag.tags << tag
-			end
-		end
-	else
-		puts "\n"
-		puts "Voucher NOT Found #{voucher_code}"
-	end
+# 				end
+# 			else
+# 				puts "ADDING NEW TAG:: #{voucher_for_tag.code} <===> #{tag_names[tag_index]}"
+# 				# create a new tag & associate it with the voucher
+# 				tag = Tag.create!(name: "#{tag_names[tag_index]}")
+# 				voucher_for_tag.tags << tag
+# 			end
+# 		end
+# 	else
+# 		puts "\n"
+# 		puts "Voucher NOT Found #{voucher_code}"
+# 	end
 
-end
+# end
