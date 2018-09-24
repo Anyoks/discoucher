@@ -200,8 +200,15 @@ class Admin::UserController < Admin::ApplicationController
 
   def most_active
       most_and_least_active = get_most_least
-      most_active_name = most_and_least_active[1].first.user.first_name   
-      most_active_count = most_and_least_active[1].size
+
+      if most_and_least_active.any?
+        most_active_name = most_and_least_active[1].first.user.first_name   
+        most_active_count = most_and_least_active[1].size
+      else
+        most_active_name = "none"
+        most_active_count = 0
+      end
+
       array = []
 
       array << most_active_name << most_active_count
@@ -210,8 +217,16 @@ class Admin::UserController < Admin::ApplicationController
 
     def least_active
       least_active_name = get_most_least
-      least_active_name = least_active_name[0].first.user.name
-      least_active_count = least_active_name[0].size
+
+      if least_active_name.any?
+
+        least_active_name = least_active_name[0].first.user.name
+        least_active_count = least_active_name[0].size
+      else
+        least_active_name = "none"
+        least_active_count = 0
+      end
+      
       array = []
 
       array << least_active_name << least_active_count
