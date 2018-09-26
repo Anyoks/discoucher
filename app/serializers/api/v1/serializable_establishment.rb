@@ -7,6 +7,11 @@ class  Api::V1::SerializableEstablishment < JSONAPI::Serializable::Resource
   attribute :est_type do
   	@object.type.name
   end
+  attribute :address
+  attribute :phone
+  attribute :email
+  attribute :website
+  attribute :social_media
   attribute :logo do
   	ApplicationController.helpers.asset_url(@object.logo.url(:small))
   end

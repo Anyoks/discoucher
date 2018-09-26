@@ -5,6 +5,11 @@ class  Api::V1::EstablishmentSerializer
   attribute :name
   attribute :area
   attribute :location
+  attribute :address
+  attribute :phone
+  attribute :email
+  attribute :website
+  attribute :social_media
 
   # has_many :vouchers
 
