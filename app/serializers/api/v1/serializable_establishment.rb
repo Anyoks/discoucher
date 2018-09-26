@@ -12,6 +12,7 @@ class  Api::V1::SerializableEstablishment < JSONAPI::Serializable::Resource
   attribute :email
   attribute :website
   attribute :social_media
+  attribute :description
   attribute :logo do
   	ApplicationController.helpers.asset_url(@object.logo.url(:small))
   end
