@@ -57,7 +57,7 @@ class Api::V1::ProfileController < Api::V1::BaseController
 	protected
 
 	def book_codes books
-		render json:{ success: true, book_codes: "#{books}"}, status: :ok
+		render json:{ data: [success: true, book_codes: books ]}, status: :ok
 	end
 
 	def successfully_added
