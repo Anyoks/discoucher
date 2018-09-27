@@ -124,6 +124,20 @@ class User < ApplicationRecord
 		return array
 	end
 
+	def get_book_codes
+
+		book_codes = []
+		
+		unless self.register_books.nil?
+			self.register_books.each do |register_book|
+				book_codes << register_book.code
+			end
+		end
+		
+
+		return book_codes
+	end
+
 
 
 end
