@@ -59,7 +59,6 @@ Rails.application.routes.draw do
     namespace :v1 do
       # devise_for :users , path: 'users', controllers: { sessions: "users/sessions" }
       get '/sms', :to => 'sms#create'
-      get '/profile', :to => 'profile#profile'
       get '/establishments/est'
 
       get '/establishments/hotels'
@@ -81,6 +80,8 @@ Rails.application.routes.draw do
       get 'vouchers/restaurants', :to => 'establishment_type#restaurant_vouchers'
 
       get 'discover/tags'
+
+      get '/profile/books'
 
       resources :sms, only: [:create]
       mount_devise_token_auth_for 'User', at: 'auth'

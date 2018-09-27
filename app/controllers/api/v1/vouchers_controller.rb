@@ -4,6 +4,9 @@ class Api::V1::VouchersController < Api::V1::BaseController
 
 	def all
 		# @vouchers = Voucher.all.paginate(:page => params[:page], :per_page => 10)
+		# 
+		# in future when a user logs in, we should check if they have paid for a book then show them their vouchers
+		# and not all vouchers
 		@vouchers = paginate Voucher.all, per_page: 30
 
 		# movies = paginate Movie.all

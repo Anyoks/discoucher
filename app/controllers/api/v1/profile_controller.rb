@@ -31,7 +31,34 @@ class Api::V1::ProfileController < Api::V1::BaseController
 		render jsonapi: favs, class: { Voucher: Api::V1::SerializableVoucher }
 	end
 
+	def books
+		user = current_api_v1_user
+		return invalid_user unless  user
+
+		books = user.get_book_codes
+
+		return book_codes books
+	end
+
+	# def book_code
+	# 	user = current_api_v1_user
+	# 	return invalid_user unless  user
+
+	# 	voucher = Voucher.find(params[:voucher_id])
+
+
+	# 	book_code = voucher.establishment.register_books
+
+	# 	book = Book.find_by_code("236966")
+
+	# 	return book_codes books
+	# end
+
 	protected
+
+	def book_codes books
+		render json:{ success: true, book_codes: "#{books}"}, status: :ok
+	end
 
 	def successfully_added
 		render json:{ success: true, message: "Voucher marked as favourite"}, status: :ok
