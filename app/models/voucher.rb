@@ -84,7 +84,7 @@ class Voucher < ApplicationRecord
 			voucher_id = self.id
 			# byebug
 			#Check visit count for user in this establishement
-			count = check_user_visits_in_this_establishment(user_id, establishment_id)
+			count = check_user_visits_in_this_establishment(user_id, voucher_id)
 			#create a visit if the count is less than 2
 			if count < 1
 				visit_params = make_visit_params(user_id,register_book_id,establishment_id,voucher_id)
@@ -142,14 +142,14 @@ class Voucher < ApplicationRecord
 		self.update_attributes(redeem_status: false)
 	end
 
-	def check_user_visits_in_this_establishment user_id, establishment_id
+	def check_user_visits_in_this_establishment user_id, voucher_id
 		user = User.find("#{user_id}")
-		establishment = establishment_id
+		voucher = voucher_id
 
 		if user.is_admin?
 			return 0
 		else
-			return user.visits.where(establishment_id:"#{establishment}").count
+			return user.visits.where(voucher_id:"#{voucher_id}").count
 		end
 	end
 

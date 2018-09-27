@@ -53,6 +53,12 @@ class RegisterBook < ApplicationRecord
 		end
 	end
 
+	def code
+		self.book_code
+	end
+
+
+
 
 protected
 #  " Prepare ye the way of the Lord..."
