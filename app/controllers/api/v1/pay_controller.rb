@@ -1,6 +1,6 @@
 class Api::V1::PayController < Api::V1::BaseController
 	# before_action :authenticate_api_v1_user!
-	# before_action :ensure_est_id_exists, only: [:show_for_establishment]
+	before_action :ensure_req_id_exists, only: [:check_status]
 	# include PaymentModules::Mpesa
 
 	require "#{Rails.root}/mpesa.rb"
@@ -68,13 +68,6 @@ class Api::V1::PayController < Api::V1::BaseController
 
 		payment_req 		= PaymentRequest.where(CheckoutRequestID: checkoutRequestID).first
 
-		# payment_response  	= payment_req.build_payment_response
-
-		# json 		= JSON.parse(response)
-		
-	
-		
-		# payment_response.save
 
 		if response["Body"]["stkCallback"]["CallbackMetadata"]
 
@@ -83,7 +76,7 @@ class Api::V1::PayController < Api::V1::BaseController
 			payment_response.MerchantRequestID 	= response["Body"]["stkCallback"]["MerchantRequestID"]
 			payment_response.CheckoutRequestID 	= response["Body"]["stkCallback"]["CheckoutRequestID"]
 			payment_response.ResultCode		 	= response["Body"]["stkCallback"]["ResultCode"]
-			payment_response.ResultDescription	= response["Body"]["stkCallback"]["ResultDescription"]
+			payment_response.ResultDescription	= response["Body"]["stkCallback"]["ResultDesc"]
 
 			payment_response.Amount 			= response["Body"]["stkCallback"]["CallbackMetadata"]["Item"][0]["Value"]
 			payment_response.MpesaReceiptNumber = response["Body"]["stkCallback"]["CallbackMetadata"]["Item"][1]["Value"]
@@ -95,7 +88,7 @@ class Api::V1::PayController < Api::V1::BaseController
 			
 
 			# byebug
-			return successful_payment
+			return successful_payment "test"
 		else
 
 			failed_payment_response 					= payment_req.build_failed_payment_response
@@ -107,9 +100,27 @@ class Api::V1::PayController < Api::V1::BaseController
 
 			failed_payment_response.save
 
-			return failed_payment
+			return failed_payment "test"
 		end
 		
+	end
+
+	def check_status
+		# send payment_req_id//CheckoutRequestID to check status
+		
+		checkout_req_id = params[:checkout_req_id]
+		
+		payment_request = PaymentRequest.where(CheckoutRequestID: checkout_req_id).first
+
+		if payment_request.payment_response.present?
+			return successful_payment "Payment was successful"
+		elsif payment_request.failed_payment_response.present?
+			message = payment_request.failed_payment_response.ResultDescription
+			return failed_payment message
+		else
+			# payment does not exist
+			return failed_payment "Payment does not exist"
+		end
 	end
 
 
@@ -133,7 +144,7 @@ class Api::V1::PayController < Api::V1::BaseController
 		end
 
 		def successful_request customerMessage, checkoutRequestID
-			render json:{ success: true, message: "#{customerMessage}", payment_req_id: "#{checkoutRequestID}"}, status: :ok
+			render json:{ success: true, message: "#{customerMessage}", checkout_req_id: "#{checkoutRequestID}"}, status: :ok
 		end
 
 		def failed_request customerMessage
@@ -144,16 +155,20 @@ class Api::V1::PayController < Api::V1::BaseController
 			render json:{ success: false, error: "#{customerMessage}"}, status: :unprocessable_entity
 		end
 
-		def successful_payment
-			render json:{ success: true, message: "successful_payment"}, status: :ok
+		def successful_payment message
+			render json:{ success: true, message: "#{message}"}, status: :ok
 		end
 
-		def failed_payment
-			render json:{ success: false, error: "Failed Payment"}, status: :ok
+		def failed_payment message
+			render json:{ success: false, error: "#{message}"}, status: :unprocessable_entity
 		end
 
 		def ensure_est_id_exists
 			ensure_param_exists :establishment_id
+		end
+
+		def ensure_req_id_exists
+			ensure_param_exists :checkout_req_id
 		end
 
 		def ensure_param_exists(param)
