@@ -20,6 +20,7 @@ class RegisterBook < ApplicationRecord
 	has_many :vouchers, through: :book
 	has_many :visits
 	has_many :establishments, through: :book
+	after_commit :mark_book_as_registered, on: :create
  
  # "Blessed are they that do His commandments that they may have right to the tree of life"
 	
@@ -55,6 +56,14 @@ class RegisterBook < ApplicationRecord
 
 	def code
 		self.book_code
+	end
+
+	def self.make_registered_books_true
+
+		RegisterBook.all.each do |regBook|
+			regBook.book.update_attributes(registered: true)
+		end
+		
 	end
 
 
@@ -99,21 +108,30 @@ protected
 	end
 
 	def create_user
-		@user = User.new( first_name: "#{self.first_name}", last_name: "#{self.last_name}",
+		user = User.new( first_name: "#{self.first_name}", last_name: "#{self.last_name}",
 					 email: "#{self.email}", phone_number: "#{self.phone_number}",
 					 password: "#{self.book_code}", password_confirmation: "#{self.book_code}", uid: "#{self.email}",
 					 provider: "email")
-		byebug
-		if @user.save!
+		# byebug
+		if user.save!
 			# byebug
 			# return true
 			"User Has been crated!"
-			return @user.id
+			registeredBook = create_register_book_for_existing_user user
+			logger.debug "Created a book"
+			return registeredBook
 		else
 			
 			# return false
 			"Error creating user"
 			return false
 		end
+	end
+
+	# Mark a reistered book as registered true each time a book registration is done.
+	def mark_book_as_registered
+		book = self.book
+		book.update_attributes(registered: true)
+		logger.debug "Marked book as registered"
 	end
 end
