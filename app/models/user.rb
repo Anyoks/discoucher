@@ -44,6 +44,9 @@ class User < ApplicationRecord
   has_many :visits
   has_many :failed_redemptions
   has_many :favourites
+  has_many :payment_requests
+  has_many :payment_responses, through: :payment_requests
+  has_many :failed_payment_responses, through: :payment_requests
 
   # including elastic search
 	# include Elasticsearch::Model

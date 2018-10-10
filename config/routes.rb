@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   
+  namespace :admin do
+    resources :payment_responses
+  end
+  namespace :admin do
+    resources :payment_requests
+  end
   require 'sidekiq/web'
   
  
@@ -82,6 +88,9 @@ Rails.application.routes.draw do
       get 'discover/tags'
 
       get '/profile/books'
+
+      post '/pay/mobile'
+      post '/pay/from_mpesa'
 
       resources :sms, only: [:create]
       mount_devise_token_auth_for 'User', at: 'auth'

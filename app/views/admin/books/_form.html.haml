@@ -1,74 +1,72 @@
-.box
-  .box-header
-    %h1 
-      New book
-      %small Create a new book
-  .box-body
-    #example1_wrapper.dataTables_wrapper.form-inline.dt-bootstrap
-      .row
-        .col-sm-12
-          %table#example1.table.table-bordered.table-striped.dataTable{"aria-describedby" => "example1_info", :role => "grid"}
-            
-            .form-group
-              = simple_form_for [ :admin, @book] do |f|
-                - if @book.errors.any?
-                  #error_explanation
-                    %h2= "#{pluralize(@book.errors.count, "error")} prohibited this book from being saved:"
-                    %ul
-                      - @book.errors.full_messages.each do |message|
-                        %li= message
-                .field
-                  %table#example1.table.table-bordered.table-striped.dataTable{"aria-describedby" => "example1_info", :role => "grid"}
-                    %thead
-                      %tr{:role => "row"}
-                        %th{ :colspan => "1", :rowspan => "1", :style => "width: 182px;", :tabindex => "0"}#{f.label :code}
-                        %th{ :colspan => "1", :rowspan => "1", :style => "width: 182px;", :tabindex => "0"}#{f.label :year}
-                        %th{ :colspan => "1", :rowspan => "1", :style => "width: 182px;", :tabindex => "0"}#{f.label "You can mark all est"}
-                        %th{ :colspan => "1", :rowspan => "1", :style => "width: 182px;", :tabindex => "0"}#{f.label :Save}
-                      %tbody
-                        %tr{:class => "#{cycle('even', 'odd')}"}
-                          %td= f.text_field :code
-                          %td= f.text_field :year
-                          %td
-                            .icheckbox_line-green
-                              %input#selectAll{:type => "checkbox", :value => "selectAll"}/
-                              Mark all
-                          %td= f.submit 'Save', class: "btn btn-primary"
-                      %tfoot
-                        %tr
-                          %th{:colspan => "1", :rowspan => "1"}
-                            / %input#selectAll{:type => "checkbox", :value => "selectAll"}/
-                            / Mark all
-                          / %th{:colspan => "1", :rowspan => "1"} Location
-                          / %th{:colspan => "1", :rowspan => "1"} Area
-                          / %input#selectAll{:type => "checkbox", :value => "selectAll"}
-
-                %br/
-                %br/
-
-                .field
-                  %table#example1.table.table-bordered.table-striped.dataTable{"aria-describedby" => "example1_info", :role => "grid"}
-                    %thead
-                      %tr{:role => "row"}
-                        %th.sorting_asc{"aria-controls" => "example1", "aria-label" => "Rendering engine: activate to sort column descending", "aria-sort" => "ascending", :colspan => "1", :rowspan => "1", :style => "width: 182px;", :tabindex => "0"} Add Establishments to this book
-                        / = f.text_field :code
-                        
-                    %tbody
-                  = f.collection_check_boxes(:establishment_ids, Establishment.all, :id, :name, selected: @book.establishments) do |cb|
+.row
+  .col-md-12
+    .box.box-primary
+      .box-header.with-border
+        %h3.box-title Provide Establishment details
+      %form{:lpformnum => "1", :role => "form"}
+      = simple_form_for [ :admin, @book] do |f|
+        - if @book.errors.any?
+          #error_explanation
+            %h2= "#{pluralize(@book.errors.count, "error")} prohibited this book from being saved:"
+            %ul
+              - @book.errors.full_messages.each do |message|
+                %li= message
+        %form{:_lpchecked => "1", :lpformnum => "1", :role => "form"}
+          .box-body
+            .row
+              .col-md-12
+                .form-group
+                  .field
                     %table#example1.table.table-bordered.table-striped.dataTable{"aria-describedby" => "example1_info", :role => "grid"}
-                      / %thead
-                      /   %tr
-                      /     %th
-                      /     %th
-                      %tbody
-                        %tr{:class => "#{cycle('even', 'odd')}"}
-                          %td #{ cb.check_box } #{cb.text}
-                          / %td  #{cb.text}
-                  %tfoot
-                    %tr
-                      %th{:colspan => "1", :rowspan => "1"}
-                        = f.submit 'Save', class: "btn btn-primary"
-
-
-             
-                  
+                      %thead
+                        %tr{:role => "row"}
+                          %th{ :colspan => "1", :rowspan => "1", :style => "width: 182px;", :tabindex => "0"}#{f.label :code}
+                          %th{ :colspan => "1", :rowspan => "1", :style => "width: 182px;", :tabindex => "0"}#{f.label :year}
+                          %th{ :colspan => "1", :rowspan => "1", :style => "width: 182px;", :tabindex => "0"}#{f.label "You can mark all est"}
+                          %th{ :colspan => "1", :rowspan => "1", :style => "width: 182px;", :tabindex => "0"}#{f.label :Save}
+                        %tbody
+                          %tr{:class => "#{cycle('even', 'odd')}"}
+                            %td= f.text_field :code
+                            %td= f.text_field :year
+                            %td
+                              / 
+                                Mark all
+                            %td= f.submit 'Save', class: "btn btn-primary"
+                        %tfoot
+                          %tr
+                            %th{:colspan => "1", :rowspan => "1"}
+                              / %input#selectAll{:type => "checkbox", :value => "selectAll"}/
+                              / Mark all
+                            / %th{:colspan => "1", :rowspan => "1"} Location
+                            / %th{:colspan => "1", :rowspan => "1"} Area
+                            / %input#selectAll{:type => "checkbox", :value => "selectAll"}
+            .row
+            .checkbox
+              %label
+                %input#selectAll{:type => "checkbox", :value => "selectAll" }
+                Add This establishment to all Books (#{Book.all.count} in Database) OR
+            .box.box-info.collapsed-box
+              .box-header.with.border
+                %h3.box-title 
+                Select Which books this Establishment should be added to
+                .box-tools.pull-right
+                  %button.btn.btn-box-tool{"data-widget" => "collapse", :type => "button"}
+                    %i.fa.fa-plus
+                  %button.btn.btn-box-tool{"data-widget" => "remove", :type => "button"}
+                    %i.fa.fa-remove
+              .box-body
+                = f.collection_check_boxes(:establishment_ids, Establishment.all, :id, :name) do |cb|
+                  .form-group
+                    .form-check
+                      %label.form-check-label
+                        %table.table.table-hover
+                          %thead
+                            %tr
+                              %th= cb.text
+                              %th
+                          %tbody
+                            %tr
+                              %td= cb.check_box
+                              %td
+              .box-footer
+                = f.submit class: "btn btn-primary"

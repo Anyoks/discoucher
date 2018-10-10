@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Merchantrequestid:
+  = @admin_payment_request.MerchantRequestID
+%p
+  %b Checkoutrequestid:
+  = @admin_payment_request.CheckoutRequestID
+%p
+  %b Responsecode:
+  = @admin_payment_request.ResponseCode
+%p
+  %b Responsedescription:
+  = @admin_payment_request.ResponseDescription
+%p
+  %b Customermessage:
+  = @admin_payment_request.CustomerMessage
+
+= link_to 'Edit', edit_admin_payment_request_path(@admin_payment_request)
+\|
+= link_to 'Back', admin_payment_requests_path

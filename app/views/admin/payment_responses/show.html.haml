@@ -1,0 +1,33 @@
+%p#notice= notice
+
+%p
+  %b Merchantrequestid:
+  = @admin_payment_response.MerchantRequestID
+%p
+  %b Checkoutrequestid:
+  = @admin_payment_response.CheckoutRequestID
+%p
+  %b Resultcode:
+  = @admin_payment_response.ResultCode
+%p
+  %b Resultdescription:
+  = @admin_payment_response.ResultDescription
+%p
+  %b Amount:
+  = @admin_payment_response.Amount
+%p
+  %b Mpesareceiptnumber:
+  = @admin_payment_response.MpesaReceiptNumber
+%p
+  %b Balance:
+  = @admin_payment_response.Balance
+%p
+  %b Transactiondate:
+  = @admin_payment_response.TransactionDate
+%p
+  %b Phonenumber:
+  = @admin_payment_response.PhoneNumber
+
+= link_to 'Edit', edit_admin_payment_response_path(@admin_payment_response)
+\|
+= link_to 'Back', admin_payment_responses_path

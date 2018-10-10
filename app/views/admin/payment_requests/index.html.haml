@@ -1,0 +1,29 @@
+%h1 Listing admin_payment_requests
+
+%table
+  %thead
+    %tr
+      %th Merchantrequestid
+      %th Checkoutrequestid
+      %th Responsecode
+      %th Responsedescription
+      %th Customermessage
+      %th
+      %th
+      %th
+
+  %tbody
+    - @admin_payment_requests.each do |admin_payment_request|
+      %tr
+        %td= admin_payment_request.MerchantRequestID
+        %td= admin_payment_request.CheckoutRequestID
+        %td= admin_payment_request.ResponseCode
+        %td= admin_payment_request.ResponseDescription
+        %td= admin_payment_request.CustomerMessage
+        %td= link_to 'Show', admin_payment_request
+        %td= link_to 'Edit', edit_admin_payment_request_path(admin_payment_request)
+        %td= link_to 'Destroy', admin_payment_request, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Payment request', new_admin_payment_request_path

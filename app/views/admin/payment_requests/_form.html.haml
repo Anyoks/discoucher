@@ -1,0 +1,12 @@
+= simple_form_for(@admin_payment_request) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :MerchantRequestID
+    = f.input :CheckoutRequestID
+    = f.input :ResponseCode
+    = f.input :ResponseDescription
+    = f.input :CustomerMessage
+
+  .form-actions
+    = f.button :submit

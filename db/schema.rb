@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180919084341) do
+ActiveRecord::Schema.define(version: 20181009161026) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,6 +87,16 @@ ActiveRecord::Schema.define(version: 20180919084341) do
     t.string "phone_number"
   end
 
+  create_table "failed_payment_responses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "MerchantRequestID"
+    t.string "CheckoutRequestID"
+    t.string "ResultCode"
+    t.string "ResultDescription"
+    t.uuid "payment_request_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "failed_redemptions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id"
     t.uuid "establishment_id"
@@ -99,6 +109,32 @@ ActiveRecord::Schema.define(version: 20180919084341) do
   create_table "favourites", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id"
     t.uuid "voucher_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "payment_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "MerchantRequestID"
+    t.string "CheckoutRequestID"
+    t.string "ResponseCode"
+    t.string "ResponseDescription"
+    t.string "CustomerMessage"
+    t.uuid "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "payment_responses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "MerchantRequestID"
+    t.string "CheckoutRequestID"
+    t.string "ResultCode"
+    t.string "ResultDescription"
+    t.string "Amount"
+    t.string "MpesaReceiptNumber"
+    t.string "Balance"
+    t.datetime "TransactionDate"
+    t.string "PhoneNumber"
+    t.uuid "payment_request_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
