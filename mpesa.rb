@@ -143,7 +143,7 @@ class Mpesa
     request = Net::HTTP::Post.new(uri)
     request["accept"] = 'application/json'
     request["content-type"] = 'application/json'
-    request["authorization"] = "Bearer s#{token}" #'Bearer <KtZ9TVCVQRFwgyc243nbqk00rrFg>'
+    request["authorization"] = "Bearer #{token}" #'Bearer <KtZ9TVCVQRFwgyc243nbqk00rrFg>'
     request.body = "{\"BusinessShortCode\": \"#{SHORTCODE}\",
       \"Password\": \"#{PASSWORD}\",
       \"Timestamp\": \"#{TIMESTAMP}\",
