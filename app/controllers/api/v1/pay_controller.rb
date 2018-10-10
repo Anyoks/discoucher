@@ -68,7 +68,7 @@ class Api::V1::PayController < Api::V1::BaseController
 
 		payment_req 		= PaymentRequest.where(CheckoutRequestID: checkoutRequestID).first
 
-		payment_response  	= payment_req.build_payment_response
+		# payment_response  	= payment_req.build_payment_response
 
 		# json 		= JSON.parse(response)
 		
@@ -103,9 +103,9 @@ class Api::V1::PayController < Api::V1::BaseController
 			failed_payment_response.MerchantRequestID 	= response["Body"]["stkCallback"]["MerchantRequestID"]
 			failed_payment_response.CheckoutRequestID 	= response["Body"]["stkCallback"]["CheckoutRequestID"]
 			failed_payment_response.ResultCode		 	= response["Body"]["stkCallback"]["ResultCode"]
-			failed_payment_response.ResultDescription	= response["Body"]["stkCallback"]["ResultDescription"]
+			failed_payment_response.ResultDescription	= response["Body"]["stkCallback"]["ResultDesc"]
 
-			payment_response.save
+			failed_payment_response.save
 
 			return failed_payment
 		end
