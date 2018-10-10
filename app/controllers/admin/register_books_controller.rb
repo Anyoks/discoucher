@@ -1,7 +1,7 @@
 class Admin::RegisterBooksController < Admin::ApplicationController
-  # skip_before_action :authenticate_admin!, only: [:new, :create], raise: false
+  skip_before_action :authenticate_admin!, only: [:new, :create], raise: false
   # before_filter :authenticate_user!, except: [:index]
-  before_action :authenticate_admin!, except: [:new]
+  # before_action :authenticate_admin!, except: [:new]
   before_action :set_register_book, only: [:show, :edit, :update, :destroy]
 
   layout false
@@ -49,11 +49,11 @@ class Admin::RegisterBooksController < Admin::ApplicationController
         # send an email asynchronously
         RegisterMailer.registration_email(@user).deliver_later
 
-        format.html { redirect_to admin_register_book_path(@register_book), notice: 'Register book was successfully created.' }
+        format.html { redirect_to 'http://discoucher.com', notice: 'Register book was successfully created.' }
         format.json { render :show, status: :created, location: @register_book }
       else
        
-        format.html { render :new }
+        format.html { redirect_to '/register', notice: 'Book has already been registered.'}
         format.json { render json: @register_book.errors, status: :unprocessable_entity }
         @register_book = RegisterBook.new(register_book_params)
       end
