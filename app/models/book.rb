@@ -51,4 +51,16 @@ class Book < ApplicationRecord
 			return book
 		end
 	end
+
+	def self.get_unregistered_book_for_mobile_user
+		
+		book = Book.where(registered: false).first
+
+		if book
+			return book
+		else
+			return false
+		end
+		
+	end
 end
