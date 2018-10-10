@@ -141,6 +141,18 @@ class User < ApplicationRecord
 		return book_codes
 	end
 
+	def register_book_for_paying_mobile_user
+
+		book 			= Book.get_unregistered_book_for_mobile_user
+
+		# (:first_name, :last_name, :phone_number, :email, :book_code)
+		register_book 	= RegisterBook.new(:first_name => self.first_name, :last_name => self.last_name, :phone_number => self.phone_number, :email => self.email , :book_code => book.code)
+		
+		reg 			= register_book.find_book_by_code
+
+		return reg	
+	end
+
 
 
 end
