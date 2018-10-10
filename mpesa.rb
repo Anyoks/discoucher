@@ -152,7 +152,7 @@ class Mpesa
       \"PartyA\": \"#{phone_number}\",
       \"PartyB\": \"#{SHORTCODE}\",
       \"PhoneNumber\": \"#{phone_number}\",
-      \"CallBackURL\": \"https://a5d700b0.ngrok.io/api/v1/pay/from_mpesa\",
+      \"CallBackURL\": \"http://159.89.103.53/api/v1/pay/from_mpesa\",
       \"AccountReference\": \"kk\",
       \"TransactionDesc\": \"oo\"}"
 
