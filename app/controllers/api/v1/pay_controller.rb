@@ -10,9 +10,10 @@ class Api::V1::PayController < Api::V1::BaseController
 	def mobile
 		phone_number = params[:phone_number]
 		description  = params[:description]
-		amount		 = params[:amount]  # change this to 2000/- when system is ready.
+		amount		 = 1 #params[:amount]  # change this to 2000/- when system is ready.
+		uid 	     = params[:uid]#params[:user_id]
 
-		user_id 	 = User.where(email: "dennorina@gmail.com").first.id #params[:user_id]
+		user_id		 = User.where(email: uid).first.id
 
 		mpesa 				= Mpesa.new( phone_number, amount, description)
 		request 			= mpesa.request_mpesa_api
@@ -39,12 +40,6 @@ class Api::V1::PayController < Api::V1::BaseController
 				return failed_request json["CustomerMessage"]
 			end
 		end
-
-		
-
-
-		# render jsonapi: @vouchers, class: { Voucher: Api::V1::SerializableVoucher }
-		# render json: json
 		
 	end
 
