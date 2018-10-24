@@ -107,15 +107,20 @@ class Api::V1::PayController < Api::V1::BaseController
 		
 		payment_request = PaymentRequest.where(CheckoutRequestID: checkout_req_id).first
 
-		if payment_request.payment_response.present?
-			return successful_payment "Payment was successful"
-		elsif payment_request.failed_payment_response.present?
-			message = payment_request.failed_payment_response.ResultDescription
-			return failed_payment message
+		if payment_request.present?
+			if payment_request.payment_response.present?
+				return successful_payment "Payment was successful"
+			elsif payment_request.failed_payment_response.present?
+				message = payment_request.failed_payment_response.ResultDescription
+				return failed_payment message
+			else
+				# payment does not exist
+				return failed_payment "Payment does not exist"
+			end 
 		else
-			# payment does not exist
-			return failed_payment "Payment does not exist"
+			return failed_request "Invalid checkout_req_id"
 		end
+		
 	end
 
 
