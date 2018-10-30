@@ -5,7 +5,9 @@ class Api::V1::DiscoverController < Api::V1::BaseController
 		@tag = []
 
 		Tagpic.all.each do |tagpic| 
-		 	@tag << tagpic.tag 
+			if tagpic.tag.present?
+			 	@tag << tagpic.tag 
+			end
 		end
 
 
