@@ -4,7 +4,7 @@ class  Admin::TagsController < Admin::ApplicationController
   # GET /admin/tags
   # GET /admin/tags.json
   def index
-     @tags =  Tag.all.paginate(:page => params[:page], :per_page => 20)
+     @tags =  Tag.all.order('name ASC').paginate(:page => params[:page], :per_page => 20)
   end
 
   # def show_voucher_tags
