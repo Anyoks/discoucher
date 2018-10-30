@@ -47,7 +47,7 @@ class Voucher < ApplicationRecord
 						small_case_tag  = Tag.where(name: "#{tag.name.downcase}")
 						if small_case_tag.present?
 						# vouch.tags.delete(Tag.find(tag.id))
-							if !vouch.tags.find(small_case_tag.first.id).present?
+							if !vouch.tags.where(id: small_case_tag.first.id).first.present?
 								vouch.tags << small_case_tag.first
 								# puts "yes"
 								# vouch.tags.delete(Tag.find(tag.id))
