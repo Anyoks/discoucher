@@ -35,6 +35,35 @@ class Voucher < ApplicationRecord
 	  }
 	end
 
+	def self.dup
+		 v = []
+		 c = []
+		Voucher.all.each do |vouch|
+
+			if vouch.tags.count > 0
+				vouch.tags.each do |tag|
+					if tag.name != tag.name.downcase
+
+						small_case_tag  = Tag.where(name: "#{tag.name.downcase}")
+						if small_case_tag.present?
+						# vouch.tags.delete(Tag.find(tag.id))
+							if !vouch.tags.find(small_case_tag.first.id)
+								vouch.tags << small_case_tag.first
+								# vouch.tags.delete(Tag.find(tag.id))
+								# v << small_case_tag.first.name
+							end
+							vouch.tags.delete(Tag.find(tag.id))
+							# c << vouch.tags.count
+						end
+					end
+					
+				end
+			end
+		end
+
+		return v, c
+	end
+
 	# Check if the voucher is redeemed or not and return true or false
 	def redeemed?
 		if self.redeem_status == true
