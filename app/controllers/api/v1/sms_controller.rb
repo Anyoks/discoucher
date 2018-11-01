@@ -1,6 +1,5 @@
 class Api::V1::SmsController < Api::V1::BaseController
-	# skip_before_action :authenticate_user!
-	# skip_before_action :authenticate_admin!
+	# before_action :authenticate_api_v1_user!
 	# before_action :ensure_message_param_exists
 	# 
 	def create
