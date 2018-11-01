@@ -116,7 +116,7 @@ class Voucher < ApplicationRecord
 			voucher_id = self.id
 			# byebug
 			#Check visit count for user in this establishement
-			count = check_user_visits_in_this_establishment(user_id, voucher_id)
+			count = check_user_visits_in_this_establishment(user_id, voucher_id, register_book_id)
 			#create a visit if the count is less than 2
 			if count < 1
 				visit_params = make_visit_params(user_id,register_book_id,establishment_id,voucher_id)
@@ -154,7 +154,8 @@ class Voucher < ApplicationRecord
 
 	def check_if_book_is_registered book_code
 		code = book_code
-		registered_book = self.establishment.register_books.where(book_code: "#{code}").first
+		registered_book = Book.find_by_code(code).registered?
+		# registered_book = self.establishment.register_books.where(book_code: "#{code}").first
 		if registered_book.present?
 			# establishment.register_books.where(book_code: "#{r.book_code}").first
 			logger.debug "This Book is registered"
@@ -174,16 +175,53 @@ class Voucher < ApplicationRecord
 		self.update_attributes(redeem_status: false)
 	end
 
-	def check_user_visits_in_this_establishment user_id, voucher_id
+	def check_user_visits_in_this_establishment(user_id, voucher_id,register_book_id)
 		user = User.find("#{user_id}")
 		voucher = voucher_id
 
 		if user.is_admin?
 			return 0
 		else
-			return user.visits.where(voucher_id:"#{voucher_id}").count
+			return user.visits.where( register_book_id: register_book_id, voucher_id:"#{voucher_id}").count
 		end
 	end
+
+	private
+
+	# Redeem the voucher by passing the sms object so that the details can be extracted
+	def est_voucher_redemption book 
+		# first find the book
+		
+		# book = Book.where(code:"#{self.book_code}").first
+
+		# if book.present?
+			# find the voucher
+			voucher = book.vouchers.where(code: self.voucher_code).first
+			
+			if voucher.present?
+				
+				# pass in the book object, we'll need it because voucher are not unique. they appear in every book
+				result = voucher.redeem book
+				# byebug
+				if result.class != Array
+					logger.debug "Successful redemption"
+					return true, "This voucher is valid, allow discount."
+				else 
+					logger.debug "The voucher has already been used"
+					# we should have a better error message for this.
+					return false, result[1]
+				end
+			else
+				logger.debug "Error:: voucher does not exist for book #{book.code}"
+				# add to failed redemption process db (belongs to voucher)
+				return false, "Voucher code invalid, kindly try again."
+			end	
+		# else
+			# logger.debug "Book does not exist"
+			# return false, "Book/Card code not valid, kindly try again. "
+		# end
+	end
+
 
 	def make_visit_params user_id,register_book_id,establishment_id,voucher_id
 		data = []
