@@ -38,8 +38,8 @@ class Voucher < ApplicationRecord
 	end
 
 	def self.dup
-		 v = []
-		 c = []
+		v = []
+		c = []
 		Voucher.all.each do |vouch|
 
 			if vouch.tags.count > 0

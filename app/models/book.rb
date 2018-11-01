@@ -7,6 +7,7 @@
 #  year       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  registered :boolean          default(FALSE), not null
 #
 
 class Book < ApplicationRecord

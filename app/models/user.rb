@@ -19,6 +19,13 @@
 #  role_id                :integer
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  provider               :string           default(""), not null
+#  uid                    :string           default(""), not null
+#  allow_password_change  :boolean          default(FALSE)
+#  confirmation_token     :string
+#  confirmed_at           :datetime
+#  confirmation_sent_at   :datetime
+#  tokens                 :json
 #
 
 class User < ApplicationRecord
