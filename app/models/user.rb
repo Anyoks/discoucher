@@ -160,6 +160,30 @@ class User < ApplicationRecord
 		return reg	
 	end
 
+	def est_voucher_redemption(book,voucher)
+		
+		book_codes = self.get_book_codes
+
+		# make sure this book belongs to this user.
+		if book_codes.include? book.code
+
+
+			# pass in the book object, we'll need it because voucher are not unique. they appear in every book
+			result = voucher.redeem book
+			# byebug
+			if result.class != Array
+				logger.debug "Successful redemption"
+				return true, "This voucher is valid, allow discount."
+			else 
+				logger.debug "The voucher has already been used"
+				# we should have a better error message for this.
+				return false, result[1]
+			end
+		else
+			return false, "You don't own this book"
+		end
+	end
+
 
 
 end
