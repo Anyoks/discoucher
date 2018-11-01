@@ -25,6 +25,7 @@ class Voucher < ApplicationRecord
   	searchkick #using searchkick gem instead
 
   	scope :search_import, -> { includes(:establishment) }
+  	scope :search_import, -> { includes(:tags) }
 
   	# SearchKick 
 	def search_data
@@ -32,6 +33,7 @@ class Voucher < ApplicationRecord
 	  	description: description,
 	    condition: condition,
 	    establishment: establishment.name,
+	    tag_name: tags.map(&name)
 	  }
 	end
 

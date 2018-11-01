@@ -5,6 +5,14 @@ class Tag < ApplicationRecord
 	has_and_belongs_to_many :vouchers
 	before_save { |tag| tag.name = tag.name.downcase }
 
+	searchkick
+
+	def search_data
+	  { 
+	  	name: name
+	  }
+	end
+
 
 	def featured_image
 
@@ -25,6 +33,17 @@ class Tag < ApplicationRecord
 		
 		# image = root_url + tagpic
 		return image
+	end
+
+	def self.get_vouchers tags
+
+		vouchers_collection = []
+		tags.each do |tag|
+			tag.vouchers.each do |voucher|
+				vouchers_collection << voucher
+			end
+		end
+		return vouchers_collection
 	end
 
 
