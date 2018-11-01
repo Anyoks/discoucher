@@ -33,7 +33,7 @@ class Voucher < ApplicationRecord
 	  	description: description,
 	    condition: condition,
 	    establishment: establishment.name,
-	    tag_name: tags.map(&name)
+	    tags_name: tags.map(&:name)
 	  }
 	end
 
