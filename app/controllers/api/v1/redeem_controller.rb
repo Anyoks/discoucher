@@ -1,12 +1,11 @@
 class Api::V1::RedeemController < Api::V1::BaseController
-	# skip_before_action :authenticate_user!
-	# skip_before_action :authenticate_admin!
+	before_action :authenticate_api_v1_user!
 	before_action :ensure_voucher_params_exists, :ensure_uid_params_exists, :ensure_book_params_exists, :ensure_pin_param_exists
 	# 
 	def voucher
 
-		# user = current_api_v1_user
-		# return invalid_user unless  user
+		user = current_api_v1_user
+		return invalid_user unless  user
 
 
 		voucher_code = params[:voucher_code]
@@ -14,7 +13,7 @@ class Api::V1::RedeemController < Api::V1::BaseController
 		uid			 = params[:uid]
 		est_pin 	 = params[:est_pin]
 
-		user 		 = User.find_by_email(params[:uid])
+		# user 		 = User.find_by_email(params[:uid])
 
 
 		# find the book and see if it is regeistered
