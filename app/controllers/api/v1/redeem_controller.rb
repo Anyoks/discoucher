@@ -1,6 +1,6 @@
 class Api::V1::RedeemController < Api::V1::BaseController
 	before_action :authenticate_api_v1_user!
-	before_action :ensure_voucher_params_exists, :ensure_uid_params_exists, :ensure_book_params_exists, :ensure_pin_param_exists
+	before_action :ensure_voucher_params_exists, :ensure_book_params_exists, :ensure_pin_param_exists
 	# 
 	def voucher
 
@@ -10,7 +10,7 @@ class Api::V1::RedeemController < Api::V1::BaseController
 
 		voucher_code = params[:voucher_code]
 		book_code  	 = params[:book_code]
-		uid			 = params[:uid]
+		# uid			 = params[:uid]
 		est_pin 	 = params[:est_pin]
 
 		# user 		 = User.find_by_email(params[:uid])
