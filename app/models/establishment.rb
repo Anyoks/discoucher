@@ -136,6 +136,26 @@ class Establishment < ApplicationRecord
 		return vouchers_collection
 	end
 
+	def pin
+		arry_pin    = []
+		aplphabet  	= ('a'..'z').to_a
+		values 		= (1..26).to_a
+
+		hash 		= Hash[*aplphabet.zip(values).flatten]
+
+		# get the first word in the name of the establishment in lowercase
+		est_name 	= self.name.split[0].downcase
+
+		# itterate through each letter of the first word in the name and get the value for it
+		est_name.split('').each do |letter|
+			arry_pin << hash[letter]
+		end
+
+		# join that array to get the pin string
+		pin  = arry_pin.join
+		return pin
+	end
+
 protected
 
 	def self.set_default_type
