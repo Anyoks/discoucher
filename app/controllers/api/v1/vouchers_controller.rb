@@ -1,15 +1,14 @@
 class Api::V1::VouchersController < Api::V1::BaseController
-	# before_action :authenticate_api_v1_user!
+	before_action :authenticate_api_v1_user!, only: [:me]
 	before_action :ensure_est_id_exists, only: [:show_for_establishment]
 
 	def all
-		# @vouchers = Voucher.all.paginate(:page => params[:page], :per_page => 10)
-		# 
+		
 		# in future when a user logs in, we should check if they have paid for a book then show them their vouchers
 		# and not all vouchers
 		@vouchers = paginate Voucher.all, per_page: 30
 
-		# movies = paginate Movie.all
+		
 		
 		render jsonapi: @vouchers, class: { Voucher: Api::V1::SerializableVoucher }
 		# render json: VoucherSerializer.new(@vouchers).serialized_json
@@ -21,11 +20,22 @@ class Api::V1::VouchersController < Api::V1::BaseController
 		render jsonapi: @vouchers, class: { Voucher: Api::V1::SerializableVoucher }
 	end
 
+	def me
+		user = current_api_v1_user
+		return invalid_user unless  user
+
+		
+		
+	end
+
 
 
 
 	private
 
+		def invalid_user
+			render json: { success: false, message: "Error with your credentials"}, status: :unauthorized
+		end
 
 		def ensure_est_id_exists
 			ensure_param_exists :establishment_id

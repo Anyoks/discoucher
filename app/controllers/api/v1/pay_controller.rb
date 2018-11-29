@@ -81,8 +81,8 @@ class Api::V1::PayController < Api::V1::BaseController
 
 			payment_response.save
 			
-
-			# byebug
+			@book_assingment =  payment_response.create_registered_book_for_payed_user
+			byebug
 			return successful_payment "test"
 		else
 
@@ -99,6 +99,12 @@ class Api::V1::PayController < Api::V1::BaseController
 		end
 		
 	end
+
+	def check_book_assingment
+		val = @book_assingment
+		return book_assingment_status val
+	end
+	
 
 	def check_status
 		# send payment_req_id//CheckoutRequestID to check status
@@ -141,6 +147,14 @@ class Api::V1::PayController < Api::V1::BaseController
 			time = Time.new(year,month,day,hour,min,sec)
 
 			return time
+		end
+
+		def book_assingment_status val
+			if @book_assingment
+				render json:{ success: true, message: "#{@book_assingment}"}, status: :ok
+			else
+				render json:{ success: false, error: "#{@book_assingment}"}, status: :unprocessable_entity
+			end
 		end
 
 		def successful_request customerMessage, checkoutRequestID

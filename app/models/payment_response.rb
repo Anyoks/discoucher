@@ -21,7 +21,7 @@
 class PaymentResponse < ApplicationRecord
 
 	belongs_to :payment_request
-	after_commit :create_registered_book_for_payed_user, on: :create
+	# after_commit :create_registered_book_for_payed_user, on: :create
 	# after_commit :add_book_code, on: :update
 
 
@@ -31,7 +31,7 @@ class PaymentResponse < ApplicationRecord
 	end
 
 
-	private
+	# private
 
 	def create_registered_book_for_payed_user
 		user = self.user
@@ -43,7 +43,9 @@ class PaymentResponse < ApplicationRecord
 				logger.debug "Error creating registered Book for user"
 				return false
 			else
-				t = self.update_columns(book_code: reg.book_code)
+				# successful book assignment
+				self.update_attributes(book_code: reg.book_code)
+				# t = self.update_columns(book_code: reg.book_code)
 				return true
 			end
 		else

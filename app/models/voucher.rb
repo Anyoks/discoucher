@@ -68,15 +68,27 @@ class Voucher < ApplicationRecord
 	end
 
 	# Check if the voucher is redeemed or not and return true or false
-	def redeemed?
-		if self.redeem_status == true
-			"Voucher redeemed!!"
+	def redeemed reg_book
+		count = check_user_visits_for_voucher reg_book
+
+		if count > 0
 			return true
 		else
-			"Voucher NOT redeemed"
 			return false
 		end
 		
+	end
+
+	def check_user_visits_for_voucher(reg_book)
+		user = reg_book.user
+		# user = User.find("#{user_id}")
+		voucher = self
+
+		if user.is_admin?
+			return 0
+		else
+			return user.visits.where( register_book_id: reg_book.id, voucher_id: voucher.id).count
+		end
 	end
 
 	# Manually redeen a voucher if you have a code.

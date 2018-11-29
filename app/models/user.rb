@@ -125,6 +125,21 @@ class User < ApplicationRecord
 		return self.first_name
 	end
 
+	def vouchers
+
+		vouchers = []
+		if self.register_books.present?
+			self.register_books.each do |reg|
+
+				vouchers << reg.book.vouchers
+				
+			end
+		else
+		end
+
+		return vouchers
+	end
+
 	def get_favourte_vouchers
 		array = []
 		self.favourites.each do |favourite|
@@ -183,8 +198,5 @@ class User < ApplicationRecord
 			return false, "You don't own this book"
 		end
 	end
-
-
-
 end
 

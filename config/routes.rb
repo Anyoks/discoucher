@@ -91,9 +91,12 @@ Rails.application.routes.draw do
 
       post '/pay/mobile'
       post '/pay/from_mpesa'
+      get '/pay/from_mpesa'
       post '/pay/check_status'
 
       post 'redeem/voucher'
+
+      get '/pay/check_book_assingment'
 
       resources :sms, only: [:create]
       mount_devise_token_auth_for 'User', at: 'auth'

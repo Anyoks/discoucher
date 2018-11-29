@@ -43,8 +43,10 @@ class RegisterBook < ApplicationRecord
 				# byebug
 				if self.book_id.blank?
 					self.book_id = @book.id
+					# self.update_attributes(book_id: @book.id)
 				elsif self.user_id.blank?
 					self.user_id = @user.id 
+
 				end
 
 				return regbook
@@ -64,6 +66,10 @@ class RegisterBook < ApplicationRecord
 			regBook.book.update_attributes(registered: true)
 		end
 		
+	end
+
+	def vouchers
+		return self.book.vouchers
 	end
 
 
