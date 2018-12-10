@@ -255,7 +255,8 @@ class Voucher < ApplicationRecord
 				# get the free book here.
 				# see if the user has used the free book before.
 				free = RegisterBook.free_book.id
-				return user.visits.where( register_book_id: free, voucher_id:"#{voucher_id}").count
+				# byebug
+				return user.visits.where( register_book_id: free).count
 			end
 		end
 	end

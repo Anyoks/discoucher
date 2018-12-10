@@ -152,7 +152,7 @@ class User < ApplicationRecord
 		if self.is_admin?
 			return 10000
 		elsif bought_books == 0
-			#trying to figure out free vouchers
+			# None paying users are allowed only one visit.
 			return 1
 		else
 			return bought_books
@@ -211,6 +211,33 @@ class User < ApplicationRecord
 		return reg	
 	end
 
+	
+	def est_voucher_redemption_v2 voucher
+		
+		# book_codes = self.get_book_codes
+
+		# make sure this book belongs to this user.
+		# if book_codes.include? book.code
+
+
+			# pass in the book object, we'll need it because voucher are not unique. they appear in every book
+			result = voucher.redeem_without_book self.email
+			# byebug
+			if result.class != Array
+				logger.debug "Successful redemption"
+				return true, "This voucher is valid, allow discount."
+			else 
+				logger.debug "The voucher has already been used"
+				# we should have a better error message for this.
+				return false, result[1]
+			end
+		# else
+		# 	return false, "You don't own this book"
+		# end
+	end
+
+
+	# this will be deprecated
 	def est_voucher_redemption(book,voucher)
 		
 		book_codes = self.get_book_codes
