@@ -130,6 +130,9 @@ class Voucher < ApplicationRecord
 			#Check visit count for user in this establishement
 			count = check_user_visits_in_this_establishment(user_id, voucher_id, register_book_id)
 			#create a visit if the count is less than 2
+
+			#this is a bit deficient because the mobile app has to send the bookcode each time. with the user id this
+			#should know how many visits a user needs to make.
 			if count < 1
 				visit_params = make_visit_params(user_id,register_book_id,establishment_id,voucher_id)
 				@visit = Visit.new(visit_params)
@@ -155,6 +158,53 @@ class Voucher < ApplicationRecord
 			# Create failed Reg
 			return false, result_array[1]
 		end
+	end
+
+	# Voucher redemption process VERSION 2
+	def redeem_without_book uid
+		#uid == email
+		user = User.find_by_email("#{uid}")
+		#get user details from registred book
+		if user.present?
+			user_id = user.id
+			register_book_ids = user.get_reg_book_ids
+			establishment_id = self.establishment.id
+			voucher_id = self.id
+			# byebug
+			#Check visit count for user in this establishement
+			count = check_user_visits_in_this_establishment(user_id, voucher_id, register_book_ids)
+			
+			#check number of times the user is allowed to vist an est (redeem a voucher) based on the books bought
+			allowed_visits = user.allowed_visits
+
+			# replace the number 1 with allowed visits
+			# note that even users with 0 allowed visits will not be allowed to redeem. They'll get a multiple
+			# redemption error.
+			if  count < allowed_visits #count < 1
+				visit_params = make_visit_params(user_id,register_book_ids,establishment_id,voucher_id)
+				@visit = Visit.new(visit_params)
+				if @visit.save!
+
+					logger.debug "Voucher has been successfully redeemed"
+					return true
+				else
+					logger.debug "Error:: something went wrong Creating a new visit"
+					return false, "Error, Processing Request code: x00oERRZX5Y"
+				end
+				#if the visits are more than 2 then the redemption is invalid
+			else
+				logger.debug "Voucher You cannot redeem more than two vouchers from one book in one establishment"
+				#create a failed redemption for user, establishment.
+				# byebug
+				failed_redemptions = FailedRedemption.new(user_id: "#{user_id}", establishment_id: "#{establishment_id}")
+				failed_redemptions.save
+				return false, "Voucher code invalid, it has been used multiple times. Kindly try again."
+			end
+		else
+			logger.debug "User not found"
+			return "No such user"
+		end
+		
 	end
 
 	# attempt manual redemption from an already existing sms
@@ -187,14 +237,23 @@ class Voucher < ApplicationRecord
 		self.update_attributes(redeem_status: false)
 	end
 
-	def check_user_visits_in_this_establishment(user_id, voucher_id,register_book_id)
+	#register_book_ids is an array  of ids, or an empty array.
+	def check_user_visits_in_this_establishment(user_id, voucher_id,register_book_ids)
 		user = User.find("#{user_id}")
 		voucher = voucher_id
 
 		if user.is_admin?
 			return 0
 		else
-			return user.visits.where( register_book_id: register_book_id, voucher_id:"#{voucher_id}").count
+			# deal withe the array.
+			# RegisterBook.where(id: [2, 3, 5]) works!
+			if register_book_ids.size > 0
+				logger.debug "User has paid for at least 1 book"
+				return user.visits.where( register_book_id: register_book_ids, voucher_id:"#{voucher_id}").count
+			else
+				logger.debug "User does not own any book"
+				return 0
+			end
 		end
 	end
 
@@ -235,9 +294,23 @@ class Voucher < ApplicationRecord
 	end
 
 
-	def make_visit_params user_id,register_book_id,establishment_id,voucher_id
+	def make_visit_params user_id,register_book_ids,establishment_id,voucher_id
+
+		# check if registerbook && voucher_id combination exists, then try anoter 
+		# register_book_id && voucher_id combination changing the register_book_id
+		# because this combination must be unique. 
 		data = []
-		data << user_id << register_book_id << establishment_id << voucher_id
+		register_book_ids.each do |register_book_id|
+			if Visit.where(register_book_id: register_book_id, voucher_id: voucher_id ).present?
+				logger.debug "This Voucher has been used before"
+				next
+			else
+				data << user_id << register_book_id << establishment_id << voucher_id
+				break
+			end
+		end
+		
+		
 		name = ["user_id","register_book_id","establishment_id","voucher_id"] 
 		hash = Hash[*name.zip(data).flatten]
 		return hash
