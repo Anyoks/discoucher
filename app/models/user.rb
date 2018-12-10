@@ -140,6 +140,23 @@ class User < ApplicationRecord
 		return vouchers
 	end
 
+	#how many times a user is able to redeem one unique voucher depending on the number of books they have
+
+	def allowed_visits #per voucher
+		#registered books
+		bought_books = self.register_books.count
+		# one voucher == one visit : it can only be redeemed once.
+		# each book has two unique vouchers that can be redeemed in one establishment.
+		# allowed visits = bought_books.count
+		# so a user without any bought book has 0 allowed visits.
+		if self.is_admin?
+			return 10000
+		else
+			return bought_books
+		end
+	end
+	
+
 	def get_favourte_vouchers
 		array = []
 		self.favourites.each do |favourite|
@@ -148,6 +165,22 @@ class User < ApplicationRecord
 
 		return array
 	end
+
+	# get the ids for this users's registered (bought books)
+
+	def get_reg_book_ids
+		book_codes = self.get_book_codes
+		reg_book_ids = []
+
+		unless self.register_books.nil?
+			book_codes.each do |code|
+				reg_book_ids << RegisterBook.where(book_code: code).first.id
+			end
+		end
+
+		return reg_book_ids
+	end
+	
 
 	def get_book_codes
 
