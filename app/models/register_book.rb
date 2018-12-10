@@ -20,7 +20,7 @@ class RegisterBook < ApplicationRecord
 	has_many :vouchers, through: :book
 	has_many :visits
 	has_many :establishments, through: :book
-	after_commit :mark_book_as_registered, on: :create
+	# after_commit :mark_book_as_registered, on: :create
  
  # "Blessed are they that do His commandments that they may have right to the tree of life"
 	
@@ -105,6 +105,7 @@ protected
 		regBook.book_id = @book.id
 
 		if regBook.save!
+			# update the book as registered.
 			logger.debug "Created another Reg book for this user"
 			return regBook
 		else
