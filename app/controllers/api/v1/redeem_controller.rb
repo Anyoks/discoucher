@@ -14,13 +14,8 @@ class Api::V1::RedeemController < Api::V1::BaseController
 		est_pin 	 = params[:est_pin]
 
 		# user 		 = User.find_by_email(params[:uid])
-
-
 		# find the book and see if it is regeistered
-		
 		# book 		= Book.find_by_code(book_code)
-		
-
 		# return invalid_book unless book
 
 		voucher 	= Voucher.find_by_code(voucher_code)
