@@ -151,6 +151,9 @@ class User < ApplicationRecord
 		# so a user without any bought book has 0 allowed visits.
 		if self.is_admin?
 			return 10000
+		elsif bought_books == 0
+			#trying to figure out free vouchers
+			return 1
 		else
 			return bought_books
 		end

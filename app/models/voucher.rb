@@ -176,7 +176,7 @@ class Voucher < ApplicationRecord
 			
 			#check number of times the user is allowed to vist an est (redeem a voucher) based on the books bought
 			allowed_visits = user.allowed_visits
-
+			# byebug
 			# replace the number 1 with allowed visits
 			# note that even users with 0 allowed visits will not be allowed to redeem. They'll get a multiple
 			# redemption error.
@@ -251,8 +251,11 @@ class Voucher < ApplicationRecord
 				logger.debug "User has paid for at least 1 book"
 				return user.visits.where( register_book_id: register_book_ids, voucher_id:"#{voucher_id}").count
 			else
-				logger.debug "User does not own any book"
-				return 0
+				logger.debug "User does not own any book Applying free voucher."
+				# get the free book here.
+				# see if the user has used the free book before.
+				free = RegisterBook.free_book.id
+				return user.visits.where( register_book_id: free, voucher_id:"#{voucher_id}").count
 			end
 		end
 	end
@@ -300,14 +303,21 @@ class Voucher < ApplicationRecord
 		# register_book_id && voucher_id combination changing the register_book_id
 		# because this combination must be unique. 
 		data = []
-		register_book_ids.each do |register_book_id|
-			if Visit.where(register_book_id: register_book_id, voucher_id: voucher_id ).present?
-				logger.debug "This Voucher has been used before"
-				next
-			else
-				data << user_id << register_book_id << establishment_id << voucher_id
-				break
+
+		if register_book_ids.size > 0
+			register_book_ids.each do |register_book_id|
+				if Visit.where(register_book_id: register_book_id, voucher_id: voucher_id ).present?
+					logger.debug "This Voucher has been used before"
+					next
+				else
+					data << user_id << register_book_id << establishment_id << voucher_id
+					break
+				end
 			end
+		else
+			# Then this must be a user redeeming their free voucher, give them the free registered book
+			register_book_id = RegisterBook.free_book.id
+			data << user_id << register_book_id << establishment_id << voucher_id
 		end
 		
 		

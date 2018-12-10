@@ -14,13 +14,19 @@
 #  updated_at   :datetime         not null
 #
 
+# All Users prior to buying discoucher are entitle to one free voucher after they sign up.
+# To achieve this, a Book code:"DISCOUCHERFREEBOOK" has been created and registered to dennorina@gmai.com
+# that will be used by users to redeem one voucher. No user owns this book so that no one can use is multiple
+# times and Only users with no Owned book (Who have not paid for Discoucher) and no voucher redemptions (otherwise known as visits)
+# can redeem a voucher once using this book.
+
 class RegisterBook < ApplicationRecord
 	belongs_to :book
 	belongs_to :user
 	has_many :vouchers, through: :book
 	has_many :visits
 	has_many :establishments, through: :book
-	# after_commit :mark_book_as_registered, on: :create
+	after_commit :mark_book_as_registered, on: :create
  
  # "Blessed are they that do His commandments that they may have right to the tree of life"
 	
@@ -55,6 +61,13 @@ class RegisterBook < ApplicationRecord
 			end
 		end
 	end
+
+	def self.free_book
+		regbook = RegisterBook.find("d10f97b2-d353-4b7f-b95f-f462e78e517e")
+
+		return regbook
+	end
+	
 
 	def code
 		self.book_code
@@ -105,7 +118,7 @@ protected
 		regBook.book_id = @book.id
 
 		if regBook.save!
-			# update the book as registered.
+			# update the book as registered. that is done by the after commit callback.
 			logger.debug "Created another Reg book for this user"
 			return regBook
 		else
