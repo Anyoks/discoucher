@@ -1,6 +1,6 @@
 class Api::V1::RedeemController < Api::V1::BaseController
 	before_action :authenticate_api_v1_user!
-	before_action :ensure_voucher_params_exists, :ensure_book_params_exists, :ensure_pin_param_exists
+	before_action :ensure_voucher_params_exists, :ensure_pin_param_exists
 	# 
 	def voucher
 
@@ -9,7 +9,7 @@ class Api::V1::RedeemController < Api::V1::BaseController
 
 
 		voucher_code = params[:voucher_code]
-		book_code  	 = params[:book_code]
+		# book_code  	 = params[:book_code]
 		# uid			 = params[:uid]
 		est_pin 	 = params[:est_pin]
 
@@ -18,21 +18,21 @@ class Api::V1::RedeemController < Api::V1::BaseController
 
 		# find the book and see if it is regeistered
 		
-		book 		= Book.find_by_code(book_code)
+		# book 		= Book.find_by_code(book_code)
 		
 
-		return invalid_book unless book
+		# return invalid_book unless book
 
-		voucher 	= book.vouchers.find_by_code(voucher_code)
+		voucher 	= Voucher.find_by_code(voucher_code)
 
-		return invalid_voucher unless voucher
+		# return invalid_voucher unless voucher
 
 		# check est pin before redeemption
 		pin_check	= est_pin == voucher.establishment.pin
 
 		if pin_check
 
-			redeem 		= user.est_voucher_redemption(book, voucher)
+			redeem 		= user.est_voucher_redemption_v2(voucher)
 
 			if redeem[0]
 				render json:{ success: true, message: "#{redeem[1]}"}, status: :ok
