@@ -15,7 +15,24 @@
 #  	end
 # end
 
-require 'csv'
+#create an Admin book for free voucher redemption. no User owns this book
+Book.where(code: "DISCOUCHERFREEBOOK").first_or_create do |book|
+	book.year = "2030"
+	book.save
+
+	#build registerbook
+	book.build_register_book do |reg|
+		reg.first_name    = "Dennis"
+		reg.last_name     = "Orina"
+		reg.book_code     = book.code
+		reg.email         = "dennorina@gmail.com"
+		reg.phone_number  = "0711430817"
+		reg.user_id       = Admin.where(email: "dennorina@gmail.com").first.id
+		reg.book_id       = book.id
+
+		reg.save
+	end
+end
 
 ###############################################################################################################
 ######################                                         ################################################
@@ -213,69 +230,69 @@ require 'csv'
 ###############################################################################################################
 
 
-tags_csv_text = File.read(Rails.root.join('lib', 'seeds', 'missingtags.csv'))
-tags_csv = CSV.parse(tags_csv_text, :headers => true, :encoding => 'ISO-8859-1')
+# tags_csv_text = File.read(Rails.root.join('lib', 'seeds', 'missingtags.csv'))
+# tags_csv = CSV.parse(tags_csv_text, :headers => true, :encoding => 'ISO-8859-1')
 
-tags_csv.each do |row|
-	# puts row.to_hash
+# tags_csv.each do |row|
+# 	# puts row.to_hash
 	
-	# add establishment type. create it if it does not exist
-	voucher_code = row['Voucher code']
-	tags = row['Tags']
-	# get indivitual tag names
-	tag_names = tags.split(',')
-	tag_names = tag_names.reject { |e| e.to_s.blank?}
+# 	# add establishment type. create it if it does not exist
+# 	voucher_code = row['Voucher code']
+# 	tags = row['Tags']
+# 	# get indivitual tag names
+# 	tag_names = tags.split(',')
+# 	tag_names = tag_names.reject { |e| e.to_s.blank?}
 
-	# make everything lower case
-	tag_names.map(&:downcase!)
-	tag_names.map(&:strip!)
-	# remove spaces from tag names
-	# tag_names.each do |tag|
-	# 	tag.gsub!(/[[:space:]]/, '')
-	# end
+# 	# make everything lower case
+# 	tag_names.map(&:downcase!)
+# 	tag_names.map(&:strip!)
+# 	# remove spaces from tag names
+# 	# tag_names.each do |tag|
+# 	# 	tag.gsub!(/[[:space:]]/, '')
+# 	# end
 
-	# puts "#{voucher_code} => TAGS::  #{tag_names}"
+# 	# puts "#{voucher_code} => TAGS::  #{tag_names}"
 
-	# find the voucher  by code
-	voucher_for_tag = Voucher.find_by(code: "#{voucher_code}")
+# 	# find the voucher  by code
+# 	voucher_for_tag = Voucher.find_by(code: "#{voucher_code}")
 
-	if voucher_for_tag
-		puts "Voucher Found #{voucher_for_tag.code}"
+# 	if voucher_for_tag
+# 		puts "Voucher Found #{voucher_for_tag.code}"
 
-		tag_names.size.times do |tag_index|
+# 		tag_names.size.times do |tag_index|
 
-			tag = Tag.find_by(name: "#{tag_names[tag_index]}")
+# 			tag = Tag.find_by(name: "#{tag_names[tag_index]}")
 
-			if tag.present?
-				# check if voucher is associated with the tag
-				if voucher_for_tag.tags.where(name: "#{tag_names[tag_index]}").first.present?
-					puts "SKIPPING:: Voucher Tag Found #{voucher_for_tag.code} <===> #{tag_names[tag_index]}"
-				else
-					puts "TAGGING:: #{voucher_for_tag.code} <===> #{tag.name}"
-					# associate voucher with tag
-					voucher_for_tag.tags << tag
+# 			if tag.present?
+# 				# check if voucher is associated with the tag
+# 				if voucher_for_tag.tags.where(name: "#{tag_names[tag_index]}").first.present?
+# 					puts "SKIPPING:: Voucher Tag Found #{voucher_for_tag.code} <===> #{tag_names[tag_index]}"
+# 				else
+# 					puts "TAGGING:: #{voucher_for_tag.code} <===> #{tag.name}"
+# 					# associate voucher with tag
+# 					voucher_for_tag.tags << tag
 					
-				end
-			else
-				puts "ADDING NEW TAG:: #{voucher_for_tag.code} <===> #{tag_names[tag_index]}"
-				# create a new tag & associate it with the voucher
-				tag = Tag.create!(name: "#{tag_names[tag_index]}")
-				voucher_for_tag.tags << tag
-			end
-		end
-	else
-		puts "\n"
-		puts "Voucher NOT Found #{voucher_code}"
-	end
+# 				end
+# 			else
+# 				puts "ADDING NEW TAG:: #{voucher_for_tag.code} <===> #{tag_names[tag_index]}"
+# 				# create a new tag & associate it with the voucher
+# 				tag = Tag.create!(name: "#{tag_names[tag_index]}")
+# 				voucher_for_tag.tags << tag
+# 			end
+# 		end
+# 	else
+# 		puts "\n"
+# 		puts "Voucher NOT Found #{voucher_code}"
+# 	end
 
-end
+# end
 
 
 # 
 ###############################################################################################################
-###############################################################################################################
-###############################################################################################################
-###############################################################################################################
+###############################                          ######################################################
+############################### Uploading Images to tags ######################################################
+###############################                          ######################################################
 ###############################################################################################################
 ###############################################################################################################
 #
@@ -284,95 +301,95 @@ end
 # change DIr to the seed images Directory
 
 
-Dir.chdir(Rails.root.join("app/assets/images/seed"))
+# Dir.chdir(Rails.root.join("app/assets/images/seed"))
 
-#collect all the images
-
-
-
-@images = Dir.glob("*.jpg")
-
-@images.each do |img|
+# #collect all the images
 
 
-	image = img
-	image_name = img.split('.')
-	image_name = image_name[0]
-	first_word = image_name.split[0]
-	last_word = image_name.split[1]
-	third_word = image_name.split[3]
 
-	array = []
-	array << first_word << last_word << third_word
+# @images = Dir.glob("*.jpg")
 
-	array.reject! { |e| e.to_s.empty?}
+# @images.each do |img|
+
+
+# 	image = img
+# 	image_name = img.split('.')
+# 	image_name = image_name[0]
+# 	first_word = image_name.split[0]
+# 	last_word = image_name.split[1]
+# 	third_word = image_name.split[3]
+
+# 	array = []
+# 	array << first_word << last_word << third_word
+
+# 	array.reject! { |e| e.to_s.empty?}
 
 	
-	tag = Tag.where('lower(name) = ?', image_name.downcase)
+# 	tag = Tag.where('lower(name) = ?', image_name.downcase)
 
-	if tag.present?
-		file = File.open(image)
-		if tag.count > 1
-			puts "Found #{tag.count} tags"
-			tag.each do |tg|
+# 	if tag.present?
+# 		file = File.open(image)
+# 		if tag.count > 1
+# 			puts "Found #{tag.count} tags"
+# 			tag.each do |tg|
 				
-				unless tg.tagpics.where(image_file_name: "#{File.basename(file)}").present?
-					puts "No similar image found on tag..."
+# 				unless tg.tagpics.where(image_file_name: "#{File.basename(file)}").present?
+# 					puts "No similar image found on tag..."
 					
-					puts "Uploading: #{File.basename(file)} to tag: #{tg.name}"
-					# tg.tagpics.create(image: file)
-				end
-				puts "Image already Present..."
+# 					puts "Uploading: #{File.basename(file)} to tag: #{tg.name}"
+# 					# tg.tagpics.create(image: file)
+# 				end
+# 				puts "Image already Present..."
 				
-			end
-		else
-			puts "Found a Tag"
+# 			end
+# 		else
+# 			puts "Found a Tag"
 
-			unless tag.first.tagpics.where(image_file_name: "#{File.basename(file)}").present?
-				puts "No similar image found on tag..."
+# 			unless tag.first.tagpics.where(image_file_name: "#{File.basename(file)}").present?
+# 				puts "No similar image found on tag..."
 				
-				puts "Uploading: #{File.basename(file)} to tag: #{tag.name}"
-				# tag.first.tagpics.create(image: file)
-			end
-		end
-	else
-		puts "Tag not found with name ::: #{tag.name}"
-	end
+# 				puts "Uploading: #{File.basename(file)} to tag: #{tag.name}"
+# 				# tag.first.tagpics.create(image: file)
+# 			end
+# 		end
+# 	else
+# 		puts "Tag not found with name ::: #{tag.name}"
+# 	end
 
 
 	####array names
 
-	# array.each do |name|
-	# 	tag = Tag.where('lower(name) = ?', name.downcase)
+	## array.each do |name|
+	## 	tag = Tag.where('lower(name) = ?', name.downcase)
+#
+	## 	if tag.present?
+	## 		file = File.open(image)
+	## 		if tag.count > 1
+	## 			puts "Found #{tag.count} tags"
+	## 			tag.each do |tg|
+	#				
+	## 				unless tg.tagpics.where(image_file_name: "#{File.basename(file)}").present?
+	## 					puts "No similar image found on tag..."
+	#					
+	## 					puts "Uploading: #{File.basename(file)} to tag: #{tg.name}"
+	## 					# tg.tagpics.create(image: file)
+	## 				end
+	#				
+	## 			end
+	## 		else
+	## 			puts "Found a Tag"
+#
+	## 			unless tag.first.tagpics.where(image_file_name: "#{File.basename(file)}").present?
+	## 				puts "No similar image found on tag..."
+	#				
+	## 				puts "Uploading: #{File.basename(file)} to tag: #{name}"
+	## 				# tag.first.tagpics.create(image: file)
+	## 			end
+	## 		end
+	## 	else
+	## 		puts "Tag not found with name ::: #{name}"
+	## 	end
+	## end
 
-	# 	if tag.present?
-	# 		file = File.open(image)
-	# 		if tag.count > 1
-	# 			puts "Found #{tag.count} tags"
-	# 			tag.each do |tg|
-					
-	# 				unless tg.tagpics.where(image_file_name: "#{File.basename(file)}").present?
-	# 					puts "No similar image found on tag..."
-						
-	# 					puts "Uploading: #{File.basename(file)} to tag: #{tg.name}"
-	# 					# tg.tagpics.create(image: file)
-	# 				end
-					
-	# 			end
-	# 		else
-	# 			puts "Found a Tag"
 
-	# 			unless tag.first.tagpics.where(image_file_name: "#{File.basename(file)}").present?
-	# 				puts "No similar image found on tag..."
-					
-	# 				puts "Uploading: #{File.basename(file)} to tag: #{name}"
-	# 				# tag.first.tagpics.create(image: file)
-	# 			end
-	# 		end
-	# 	else
-	# 		puts "Tag not found with name ::: #{name}"
-	# 	end
-	# end
-
-
-end
+# end
