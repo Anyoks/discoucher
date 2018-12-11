@@ -126,7 +126,8 @@ class  Admin::BooksController < Admin::ApplicationController
   # POST /books.json
   def create
     @book = Book.new(book_params)
-
+    # est_ids = Establishment.all.pluck(:id) # adding all establishments automatically
+    @book.establishments << Establishment.all # not efficient code. later add a worker to do this
     respond_to do |format|
       if @book.save
         # update Establishments
@@ -145,6 +146,7 @@ class  Admin::BooksController < Admin::ApplicationController
   def update
     respond_to do |format|
       if @book.update(book_params)
+     
         format.html { redirect_to admin_book_url(@book), notice: 'Book was successfully updated.' }
         format.json { render :show, status: :ok, location: @book }
       else
@@ -191,6 +193,9 @@ class  Admin::BooksController < Admin::ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def book_params
+      est_ids = Establishment.all.pluck(:id) # adding all establishments automatically
+      
       params.require(:book).permit(:code, :year, {establishment_ids: []})
+      byebug
     end
 end

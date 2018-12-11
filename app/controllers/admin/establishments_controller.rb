@@ -55,7 +55,7 @@ class Admin::EstablishmentsController < Admin::ApplicationController
   # POST /establishments.json
   def create
     @establishment = Establishment.new(establishment_params)
-
+    @establishment.books << Book.all # not efficient code. later add a worker to do this
     respond_to do |format|
       if @establishment.save
         # check if some images have been uploaded.

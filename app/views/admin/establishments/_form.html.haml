@@ -18,7 +18,7 @@
                 .form-group
                   %label{:for => "exampleInputEmail1"} Establishment Name
                   / = f.label :name
-                  = f.text_field :name, class: "form-control", placeholder: "Enter email"
+                  = f.text_field :name, class: "form-control", placeholder: "Enter name"
               .col-md-6
                 .form-group
                   %label{:for => "exampleInputPassword1"} Location
@@ -53,35 +53,35 @@
                   = file_field_tag "images[]", type: :file, multiple: true
                   %p.help-block Alternatively, you can drag and drop over the choose files button.
 
-            .checkbox
-              %label
-                %input#selectAll{:type => "checkbox", :value => "selectAll" }
-                Add This establishment to all Books (#{Book.all.count} in Database) OR
-            .box.box-info.collapsed-box
-              .box-header.with.border
-                %h3.box-title 
-                Select Which books this Establishment should be added to
-                .box-tools.pull-right
-                  %button.btn.btn-box-tool{"data-widget" => "collapse", :type => "button"}
-                    %i.fa.fa-plus
-                  %button.btn.btn-box-tool{"data-widget" => "remove", :type => "button"}
-                    %i.fa.fa-remove
-              .box-body
-                = f.collection_check_boxes(:book_ids, Book.all, :id, :book_code) do |cb|
-                  .form-group
-                    .form-check
-                      %label.form-check-label
-                        %table.table.table-hover
-                          %thead
-                            %tr
-                              %th= cb.text
-                              %th
-                          %tbody
-                            %tr
-                              %td= cb.check_box
-                              %td
-              .box-footer
-                = f.submit class: "btn btn-primary"
+            -# .checkbox
+            -#   %label
+            -#     %input#selectAll{:type => "checkbox", :value => "selectAll" }
+            -#     Add This establishment to all Books (#{Book.all.count} in Database) OR
+            -# .box.box-info.collapsed-box
+            -#   .box-header.with.border
+            -#     %h3.box-title 
+            -#     Select Which books this Establishment should be added to
+            -#     .box-tools.pull-right
+            -#       %button.btn.btn-box-tool{"data-widget" => "collapse", :type => "button"}
+            -#         %i.fa.fa-plus
+            -#       %button.btn.btn-box-tool{"data-widget" => "remove", :type => "button"}
+            -#         %i.fa.fa-remove
+            -#   .box-body
+            -#     = f.collection_check_boxes(:book_ids, Book.all, :id, :book_code) do |cb|
+            -#       .form-group
+            -#         .form-check
+            -#           %label.form-check-label
+            -#             %table.table.table-hover
+            -#               %thead
+            -#                 %tr
+            -#                   %th= cb.text
+            -#                   %th
+            -#               %tbody
+            -#                 %tr
+            -#                   %td= cb.check_box
+            -#                   %td
+            -#   .box-footer
+            -#     = f.submit class: "btn btn-primary"
           / /.box-body
           .box-footer
             = f.submit class: "btn btn-primary"

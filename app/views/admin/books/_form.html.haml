@@ -40,33 +40,33 @@
                             / %th{:colspan => "1", :rowspan => "1"} Location
                             / %th{:colspan => "1", :rowspan => "1"} Area
                             / %input#selectAll{:type => "checkbox", :value => "selectAll"}
-            .row
-            .checkbox
-              %label
-                %input#selectAll{:type => "checkbox", :value => "selectAll" }
-                Add all establishments to this book (#{Establishment.all.count} in Database) OR
-            .box.box-info.collapsed-box
-              .box-header.with.border
-                %h3.box-title 
-                Select which establishments should be added to this book
-                .box-tools.pull-right
-                  %button.btn.btn-box-tool{"data-widget" => "collapse", :type => "button"}
-                    %i.fa.fa-plus
-                  %button.btn.btn-box-tool{"data-widget" => "remove", :type => "button"}
-                    %i.fa.fa-remove
-              .box-body
-                = f.collection_check_boxes(:establishment_ids, Establishment.all, :id, :name) do |cb|
-                  .form-group
-                    .form-check
-                      %label.form-check-label
-                        %table.table.table-hover
-                          %thead
-                            %tr
-                              %th= cb.text
-                              %th
-                          %tbody
-                            %tr
-                              %td= cb.check_box
-                              %td
+            -# .row
+            -# .checkbox
+            -#   %label
+            -#     %input#selectAll{:type => "checkbox", :value => "selectAll" }
+            -#     Add all establishments to this book (#{Establishment.all.count} in Database) OR
+            -# .box.box-info.collapsed-box
+            -#   .box-header.with.border
+            -#     %h3.box-title 
+            -#     Select which establishments should be added to this book
+            -#     .box-tools.pull-right
+            -#       %button.btn.btn-box-tool{"data-widget" => "collapse", :type => "button"}
+            -#         %i.fa.fa-plus
+            -#       %button.btn.btn-box-tool{"data-widget" => "remove", :type => "button"}
+            -#         %i.fa.fa-remove
+            -#   .box-body
+            -#     = f.collection_check_boxes(:establishment_ids, Establishment.all, :id, :name) do |cb|
+            -#       .form-group
+            -#         .form-check
+            -#           %label.form-check-label
+            -#             %table.table.table-hover
+            -#               %thead
+            -#                 %tr
+            -#                   %th= cb.text
+            -#                   %th
+            -#               %tbody
+            -#                 %tr
+            -#                   %td= cb.check_box
+            -#                   %td
               .box-footer
                 = f.submit class: "btn btn-primary"
