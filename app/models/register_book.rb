@@ -63,7 +63,7 @@ class RegisterBook < ApplicationRecord
 	end
 
 	def self.free_book
-		regbook = RegisterBook.where(code:"DISCOUCHERFREEBOOK").first
+		regbook = RegisterBook.where(book_code:"DISCOUCHERFREEBOOK").first
 
 		return regbook
 	end

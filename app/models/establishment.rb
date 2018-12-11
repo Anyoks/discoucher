@@ -138,21 +138,36 @@ class Establishment < ApplicationRecord
 
 	def pin
 		arry_pin    = []
+		
 		aplphabet  	= ('a'..'z').to_a
 		values 		= (1..26).to_a
 
 		hash 		= Hash[*aplphabet.zip(values).flatten]
 
 		# get the first word in the name of the establishment in lowercase
-		est_name 	= self.name.split[0].downcase
+		est_name 	    = self.name.split[0].downcase
+
+		# if the establishment doesn't have a second name, the first name will be the second name
+		est_name_last 	=  self.name.split[1].present? ?  self.name.split[1].downcase : est_name
 
 		# itterate through each letter of the first word in the name and get the value for it
 		est_name.split('').each do |letter|
 			arry_pin << hash[letter]
 		end
+		# do the same for the second name
+		est_name_last.split('').each do |letter|
+			arry_pin << hash[letter]
+		end
 
-		# join that array to get the pin string
-		pin  = arry_pin.join
+
+		# join that array to get the pin string of the first 5 letters. Note that the resulting string may contain more than 5 chars.
+		pin  = arry_pin[0..4].join
+
+		# Make it a 5 number pin if it's too long.
+		if pin.size > 5
+			pin = pin[0..4]
+		end
+		# make it a 5 letter pin
 		return pin
 	end
 
