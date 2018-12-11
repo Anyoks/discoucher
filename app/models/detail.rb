@@ -12,4 +12,6 @@
 class Detail < ApplicationRecord
 	belongs_to :establishment
 	belongs_to :book
+
+	validates_uniqueness_of :book_id, :scope => :establishment_id # ensure a book doesn't have double establishments
 end
