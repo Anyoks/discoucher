@@ -30,14 +30,14 @@ class Admin < ApplicationRecord
 
 before_create :set_default_role
 
-def is_admin?
-		if self.role.nil?
-			false
-		elsif self.role.name == "admin"
-			true
-		else
-			false
-		end
+	def is_admin?
+			if self.role.nil?
+				false
+			elsif self.role.name == "admin"
+				true
+			else
+				false
+			end
 	end
 # protected
 	# Making all users' role to be registered as they sign up.
@@ -50,21 +50,27 @@ def is_admin?
 	end
 
 	def make_admin
-		self.update_attributes :role_id => 4
+		role = 
+		self.update_attributes :role_id => Role.find_by_name('admin').id
+	end
+
+	def make_moderator
+		role = 
+		self.update_attributes :role_id => Role.find_by_name('moderator').id
 	end
 
 	def make_customer
-		self.update_attributes :role_id => 1
+		self.update_attributes :role_id => Role.find_by_name('customer').id
 	end
 
 	def show_admins
 		User.where(:role_id => 4 )
 	end
 
-	def is_admin?
+	def is_moderator?
 		if self.role.nil?
 			false
-		elsif self.role.name == "admin"
+		elsif self.role.name == "moderator"
 			true
 		else
 			false
@@ -80,4 +86,15 @@ def is_admin?
 			false
 		end
 	end
+
+	def is_previlaged?
+		if self.role.nil?
+			false
+		elsif self.role.name == "admin" || self.role.name == "moderator"
+			true
+		else
+			false
+		end
+	end
+	
 end
