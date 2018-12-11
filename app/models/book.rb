@@ -67,8 +67,7 @@ class Book < ApplicationRecord
 
 	# the ree book, owned by dennorina@gmail.com, used for the one free voucher.
 	def self.free_book
-		book = Book.find("ce006293-e851-47cc-b7b7-895df33ab104")
-
+		book = Book.where(code:"DISCOUCHERFREEBOOK").first
 		return book
 	end
 	

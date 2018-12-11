@@ -63,7 +63,7 @@ class RegisterBook < ApplicationRecord
 	end
 
 	def self.free_book
-		regbook = RegisterBook.find("d10f97b2-d353-4b7f-b95f-f462e78e517e")
+		regbook = RegisterBook.where(code:"DISCOUCHERFREEBOOK").first
 
 		return regbook
 	end
