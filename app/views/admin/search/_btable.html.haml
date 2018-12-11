@@ -44,7 +44,7 @@
                         %td.sorting_1= result.code
                         %td= result.year
                         %td 
-                          -if current_admin && current_admin.is_admin?
+                          -if current_admin && current_admin.is_previlaged?
                             = link_to "Details",admin_books_path(result.id), class: "label label-warning"
 
                 %tfoot

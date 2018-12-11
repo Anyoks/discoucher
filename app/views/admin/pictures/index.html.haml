@@ -24,11 +24,13 @@
                   %tr{:class => "#{cycle('even', 'odd')}"}
                     %td.sorting_1= image_tag est_picture.image.url(:small)
                     %td= est_picture.description
-                    %td
-                      -if current_admin && current_admin.is_admin?
+                    %td                      
+                      -if current_admin && current_admin.is_moderator?
+                        = link_to 'Add desc',edit_admin_establishment_picture_path(id: est_picture.id), class: "label label-default"
+                      -elsif current_admin && current_admin.is_admin?
                         = link_to 'Add desc',edit_admin_establishment_picture_path(id: est_picture.id), class: "label label-default"
                         = link_to 'Destroy', admin_establishment_picture_path(id: est_picture.id), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
 
 %br
-
-= link_to 'New Picture', new_admin_establishment_picture_path, class: "btn btn-primary"
+-if current_admin && current_admin.is_previlaged?
+  = link_to 'New Picture', new_admin_establishment_picture_path, class: "btn btn-primary"

@@ -31,5 +31,7 @@
 
 %br
 
+-if current_admin && current_admin.is_previlaged?
+  = link_to 'New Picture', new_admin_tag_tagpic_path, class: "btn btn-primary"
+
 = link_to 'Back', admin_tags_path, class: "btn btn-default"
-= link_to 'New Picture', new_admin_tag_tagpic_path, class: "btn btn-primary"

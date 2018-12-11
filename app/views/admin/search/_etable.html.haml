@@ -47,7 +47,7 @@
                         %td= result.area
                         %td= result.phone
                         %td 
-                          -if current_admin && current_admin.is_admin?
+                          -if current_admin && current_admin.is_previlaged?
                             = link_to "Details",admin_establishment_path(result.id), class: "label label-warning"
 
                 %tfoot

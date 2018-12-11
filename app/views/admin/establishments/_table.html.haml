@@ -34,7 +34,11 @@
                       %td= establishment.address
                       / %td= image_tag establishment.logo.url(:small)
                       %td 
-                        -if current_admin && current_admin.is_admin?
+                        -if current_admin && current_admin.is_moderator?
+                          = link_to 'Edit', edit_admin_establishment_path(establishment), class: "label label-default"
+                          = link_to "Details", admin_establishment_path(establishment), class: "label label-warning"                         
+                          = link_to "Images", admin_establishment_pictures_path(establishment), class: "label label-success"
+                        -elsif current_admin && current_admin.is_admin?
                           = link_to 'Edit', edit_admin_establishment_path(establishment), class: "label label-default"
                           = link_to "Details", admin_establishment_path(establishment), class: "label label-warning"
                           = link_to 'Destroy', admin_establishment_path(establishment), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"

@@ -32,7 +32,12 @@
                       %td= voucher.establishment.name
                       / %td= voucher.year
                       %td 
-                        -if current_admin && current_admin.is_admin?
+                        -if current_admin && current_admin.is_moderator?
+                          = link_to 'Edit', edit_admin_voucher_path(voucher), class: "label label-default"
+                          = link_to 'Update tags', edit_admin_voucher_path(voucher, :tag => 'add tags'), class: "label label-default"
+                          = link_to "Show",admin_voucher_path(voucher), class: "label label-warning"
+                          = link_to "Tags",admin_voucher_tags_vouchers_path(voucher), class: "label label-success"
+                        -elsif current_admin && current_admin.is_admin?
                           = link_to 'Edit', edit_admin_voucher_path(voucher), class: "label label-default"
                           = link_to 'Update tags', edit_admin_voucher_path(voucher, :tag => 'add tags'), class: "label label-default"
                           = link_to "Show",admin_voucher_path(voucher), class: "label label-warning"

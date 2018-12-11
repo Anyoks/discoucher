@@ -18,5 +18,5 @@
   =render "admin/vouchers/table", vouchers: @vouchers #the table that was previously here was extracted to the partial to be DRY. seems like I needed it more than I thought! :-)
 
 %br
--if current_admin && current_admin.is_admin?
+-if current_admin && current_admin.is_previlaged?
   %p=link_to 'New voucher', new_admin_voucher_path, class: "btn btn-primary"

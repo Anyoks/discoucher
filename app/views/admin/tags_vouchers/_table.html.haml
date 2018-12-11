@@ -34,7 +34,7 @@
                       / %td= tag.address
                       / %td= image_tag tag.logo.url(:small)
                       %td 
-                        -if current_admin && current_admin.is_admin?
+                        -if current_admin && current_admin.is_previs_previlaged?
                           = link_to 'Edit', edit_admin_tag_path(tag), class: "label label-default"
                           = link_to "Details", admin_tag_path(tag), class: "label label-warning"
                           = link_to 'Untag', admin_voucher_tags_voucher_path(:id => tag.id), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
