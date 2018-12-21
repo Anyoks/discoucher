@@ -54,6 +54,7 @@ class User < ApplicationRecord
   has_many :payment_requests
   has_many :payment_responses, through: :payment_requests
   has_many :failed_payment_responses, through: :payment_requests
+  has_many :vouchers, through: :register_books
 
   # including elastic search
 	# include Elasticsearch::Model
@@ -69,6 +70,39 @@ class User < ApplicationRecord
 			phone_number: phone_number,
 		}
 	end
+
+		# // return whether a user has valid vouchers or not.
+	def as_json(options={})
+		super(options).merge({vouchers: "#{self.voucher_status}"})
+	end
+
+	# get total user vouchers
+	def total_vouchers
+		vouchers = 0
+		self.register_books.each do |reg_book|
+			vouchers +=reg_book.vouchers.count
+		end
+
+		return vouchers
+	end
+	
+	#  does this user have vouchers to redeem?
+	def voucher_status
+		if self.register_books.count > 0
+			if self.visits.count < self.total_vouchers
+				return 'valid'
+			else
+				return 'depleted'
+			end	
+		else
+			if self.visits.count > 0
+				return 'none'
+			else
+				return 'free'
+			end
+		end
+	end
+	
 
 	def is_admin?
 		if self.role.nil?
