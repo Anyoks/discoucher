@@ -98,6 +98,8 @@ Rails.application.routes.draw do
 
       get '/pay/check_book_assingment'
 
+      post '/check', :to => 'social_login#check'
+
       resources :sms, only: [:create]
       mount_devise_token_auth_for 'User', at: 'auth'
       # resources :users
