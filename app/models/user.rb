@@ -259,7 +259,7 @@ class User < ApplicationRecord
 			# byebug
 			if result.class != Array
 				logger.debug "Successful redemption"
-				return true, "This voucher is valid, allow discount."
+				return true, "This voucher is valid, allow discount.", self.voucher_status
 			else 
 				logger.debug "The voucher has already been used"
 				# we should have a better error message for this.

@@ -30,7 +30,7 @@ class Api::V1::RedeemController < Api::V1::BaseController
 			redeem 		= user.est_voucher_redemption_v2(voucher)
 
 			if redeem[0]
-				render json:{ success: true, message: "#{redeem[1]}"}, status: :ok
+				render json:{ success: true, message: "#{redeem[1]}", vouchers: redeem[2]}, status: :ok
 			else
 				render json:{ success: false, error: "#{redeem[1]}"}, status: :unprocessable_entity
 			end
