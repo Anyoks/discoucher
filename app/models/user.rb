@@ -102,6 +102,12 @@ class User < ApplicationRecord
 			end
 		end
 	end
+
+	# checks if this voucher is redeemed by this user
+	def voucher_redeemed(id)
+		self.visits.where(voucher_id: id).present?
+	end
+	
 	
 
 	def is_admin?
