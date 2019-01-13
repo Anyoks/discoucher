@@ -13,7 +13,7 @@ class  Api::V1::VoucherResource < JSONAPI::Resource
 
       def redeemed
           if context[:user] == nil
-            false
+            "false"
           else
             context[:user].voucher_redeemed @model.id
           end   
@@ -21,7 +21,7 @@ class  Api::V1::VoucherResource < JSONAPI::Resource
 
       def favourite
         if context[:user] == nil
-            false
+            "false"
           else
             context[:user].is_favourite_voucher @model.id
           end   
