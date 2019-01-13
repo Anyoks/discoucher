@@ -105,11 +105,19 @@ class User < ApplicationRecord
 
 	# checks if this voucher is redeemed by this user
 	def voucher_redeemed(id)
-		self.visits.where(voucher_id: id).present?
+		 if self.visits.where(voucher_id: id).present?
+			'true'
+		 else
+			'false'
+		 end
 	end
 
 	def is_favourite_voucher(id)
-		self.favourites.where(voucher_id: id).present?
+		if self.favourites.where(voucher_id: id).present?
+			'true'
+		else
+			'false'
+		end
 	end
 	
 	
