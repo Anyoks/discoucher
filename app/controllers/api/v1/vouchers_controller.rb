@@ -1,6 +1,8 @@
 class Api::V1::VouchersController < Api::V1::BaseController
 	before_action :authenticate_api_v1_user!, only: [:me]
 	before_action :ensure_est_id_exists, only: [:show_for_establishment]
+	include JSONAPI::ActsAsResourceController
+	
 
 	def all
 		
@@ -8,10 +10,15 @@ class Api::V1::VouchersController < Api::V1::BaseController
 		# and not all vouchers
 		@vouchers = paginate Voucher.all, per_page: 30
 
-		
-		
-		render jsonapi: @vouchers, class: { Voucher: Api::V1::SerializableVoucher }
-		# render json: VoucherSerializer.new(@vouchers).serialized_json
+		context = { user: current_api_v1_user}
+		@voucher_resources = @vouchers.map { |voucher| Api::V1::VoucherResource.new(voucher, context) }
+		# if current_api_v1_user == nil
+			# render json: JSONAPI::ResourceSerializer.new(Api::V1::VoucherResource).serialize_to_hash(@voucher_resources)
+			# render jsonapi: @vouchers, class: { Voucher: Api::V1::SerializableVoucher } 
+		# else
+			
+			render json: JSONAPI::ResourceSerializer.new(Api::V1::VoucherResource).serialize_to_hash(@voucher_resources)
+		# end
 	end
 
 	def show_for_establishment
