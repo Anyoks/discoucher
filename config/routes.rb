@@ -103,6 +103,8 @@ Rails.application.routes.draw do
       resources :sms, only: [:create]
       mount_devise_token_auth_for 'User', at: 'auth'
       # resources :users
+
+      jsonapi_resources :vouchers 
     end
   end
 
