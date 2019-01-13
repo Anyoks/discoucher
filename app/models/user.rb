@@ -107,6 +107,11 @@ class User < ApplicationRecord
 	def voucher_redeemed(id)
 		self.visits.where(voucher_id: id).present?
 	end
+
+	def is_favourite_voucher(id)
+		self.favourites.where(voucher_id: id).present?
+	end
+	
 	
 	
 

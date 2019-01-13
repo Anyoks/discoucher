@@ -1,5 +1,5 @@
 class  Api::V1::VoucherResource < JSONAPI::Resource
-    attributes :code, :description, :condition, :redeemed
+    attributes :code, :description, :condition, :redeemed, :favourite
     # belongs_to :establishment
 
     attribute :establishment 
@@ -18,6 +18,15 @@ class  Api::V1::VoucherResource < JSONAPI::Resource
             context[:user].voucher_redeemed @model.id
           end   
       end
+
+      def favourite
+        if context[:user] == nil
+            false
+          else
+            context[:user].is_favourite_voucher @model.id
+          end   
+      end
+      
 
       def custom_links(options)
         {self: nil}
