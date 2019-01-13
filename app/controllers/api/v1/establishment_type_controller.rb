@@ -28,12 +28,12 @@ class Api::V1::EstablishmentTypeController < Api::V1::BaseController
 
 		hotel_vouchers = paginate hotel.vouchers, per_page: 30
 
-		render jsonapi: hotel_vouchers, class: { Voucher: Api::V1::SerializableVoucher }
+		# render jsonapi: hotel_vouchers, class: { Voucher: Api::V1::SerializableVoucher }
 
-		# context = { user: current_api_v1_user}
-		# @voucher_resources = hotel_vouchers.map { |voucher| Api::V1::VoucherResource.new(voucher, context) }
+		context = { user: current_api_v1_user}
+		@voucher_resources = hotel_vouchers.map { |voucher| Api::V1::VoucherResource.new(voucher, context) }
 
-		# render json: JSONAPI::ResourceSerializer.new(Api::V1::VoucherResource).serialize_to_hash(@voucher_resources)
+		render json: JSONAPI::ResourceSerializer.new(Api::V1::VoucherResource).serialize_to_hash(@voucher_resources)
 	end
 
 	def restaurant_vouchers
