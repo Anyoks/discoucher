@@ -15,17 +15,15 @@ class Api::V1::SearchController < Api::V1::BaseController
 		
 
 		@raw_results = Voucher.search(params[:query])#, elastic_query)
-		# byebug
 		
-		# if @raw_results.count == 0
-			# @un_paginated_results = search_establishments
-			# @results = paginate search_establishments, per_page: 30
-		# else
-			@results = paginate @raw_results.results, per_page: 30
-		# end
+		@results = paginate @raw_results.results.shuffle, per_page: 30
+		
+		# render jsonapi: @results, class: { Voucher: Api::V1::SerializableVoucher }
 
-		# byebug 
-		render jsonapi: @results, class: { Voucher: Api::V1::SerializableVoucher }
+		context = { user: current_api_v1_user}
+		@voucher_resources = @results.map { |voucher| Api::V1::VoucherResource.new(voucher, context) }
+
+		render json: JSONAPI::ResourceSerializer.new(Api::V1::VoucherResource).serialize_to_hash(@voucher_resources)
 	end
 
 	private
