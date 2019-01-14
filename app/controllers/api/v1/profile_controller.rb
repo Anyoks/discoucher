@@ -13,13 +13,27 @@ class Api::V1::ProfileController < Api::V1::BaseController
 		
 		user_id = user.id
 		voucher_id = params[:voucher_id]
-		fav = user.favourites.new(:user_id => user_id, :voucher_id => voucher_id)
-		
-		if fav.save
-			return successfully_added
+
+		check_for_voucher = user.favourites.where(voucher_id: voucher_id).first
+
+		if check_for_voucher.present?
+			# remove fav
+			if check_for_voucher.destroy
+				return successfully_removed
+			else
+				return error_removing_favourite
+			end
+
 		else
-			return error_adding_favourite
-		end		
+			# creat fav
+			fav = user.favourites.new(:user_id => user_id, :voucher_id => voucher_id)
+			if fav.save
+				return successfully_added
+			else
+				return error_adding_favourite
+			end		
+		end
+		
 	end
 
 	def all
@@ -73,9 +87,18 @@ class Api::V1::ProfileController < Api::V1::BaseController
 		render json:{ success: true, message: "Voucher marked as favourite"}, status: :ok
 	end
 
+	def successfully_removed
+		render json:{ success: true, message: "Voucher removed from favourites"}, status: :ok
+	end
+
 	def error_adding_favourite
 		render json: { success: false, message: "Error adding favourites"}, status: :unauthorized
 	end
+
+	def error_removing_favourite
+		render json: { success: false, message: "Error adding favourites"}, status: :unauthorized
+	end
+	
 
 	def ensure_voucher_id_exists
 		ensure_param_exists :voucher_id
