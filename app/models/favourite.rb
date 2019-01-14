@@ -12,5 +12,5 @@
 class Favourite < ApplicationRecord
 	belongs_to :user
 	belongs_to :voucher
-
+	validates_uniqueness_of :voucher_id, :scope => :user_id # ensure a book doesn't have double establishments
 end
