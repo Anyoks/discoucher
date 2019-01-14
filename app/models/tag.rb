@@ -15,7 +15,7 @@
 class Tag < ApplicationRecord
 
 
-	has_many :tagpics
+	has_many :tagpics, dependent: :destroy
 	has_and_belongs_to_many :vouchers
 	before_save { |tag| tag.name = tag.name.downcase }
 

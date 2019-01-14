@@ -24,9 +24,10 @@ class RegisterBook < ApplicationRecord
 	belongs_to :book
 	belongs_to :user
 	has_many :vouchers, through: :book
-	has_many :visits
+	has_many :visits, dependent: :destroy
 	has_many :establishments, through: :book
 	after_commit :mark_book_as_registered, on: :create
+	before_destroy :de_register_book
  
  # "Blessed are they that do His commandments that they may have right to the tree of life"
 	
@@ -153,5 +154,12 @@ protected
 		book = self.book
 		book.update_attributes(registered: true)
 		logger.debug "Marked book as registered"
+	end
+	
+	# Unregister a book when a register book is deleted
+	def de_register_book
+		book = self.book
+		book.update_attributes(registered: false)
+		logger.debug "Book unregistered"
 	end
 end

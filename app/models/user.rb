@@ -46,12 +46,12 @@ class User < ApplicationRecord
 
   # reduced password length to four to accomdate users using their bank cards as book codes
   before_create :set_default_role
-  has_many :register_books
+  has_many :register_books, dependent: :destroy
 
-  has_many :visits
-  has_many :failed_redemptions
-  has_many :favourites
-  has_many :payment_requests
+  has_many :visits, dependent: :destroy
+  has_many :failed_redemptions, dependent: :destroy
+  has_many :favourites, dependent: :destroy
+  has_many :payment_requests, dependent: :destroy
   has_many :payment_responses, through: :payment_requests
   has_many :failed_payment_responses, through: :payment_requests
   has_many :vouchers, through: :register_books

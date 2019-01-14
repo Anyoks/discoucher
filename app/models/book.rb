@@ -12,7 +12,7 @@
 
 class Book < ApplicationRecord
 	has_one  :register_book
-	has_many :details
+	has_many :details, dependent: :destroy
 	has_many :establishments, through: :details
 	has_many :vouchers, through: :establishments
 
@@ -32,6 +32,14 @@ class Book < ApplicationRecord
 	def registered?
 		if self.register_book
 			return self.register_book
+		else
+			return false
+		end
+	end
+
+	def registered_already?
+		if self.register_book.present?
+			return true
 		else
 			return false
 		end

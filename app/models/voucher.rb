@@ -15,8 +15,8 @@
 
 class Voucher < ApplicationRecord
 	belongs_to :establishment
-	has_many :visits
-	has_many :favourites
+	has_many :visits, dependent: :destroy
+	has_many :favourites, dependent: :destroy
 	has_and_belongs_to_many :tags
 
 	# including elastic search

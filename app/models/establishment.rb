@@ -35,15 +35,15 @@ class Establishment < ApplicationRecord
 
 	# belongs_to :register_book
 	has_many :vouchers, :dependent => :destroy
-	has_many :visits
+	has_many :visits, dependent: :destroy
 	has_many :failed_redemptions
-	has_many :details
+	has_many :details, dependent: :destroy
 	has_many :books, through: :details
 	has_many :register_books, through: :books
 	# belongs_to :book
 	belongs_to :establishment_type
-	has_many :visits
-	has_many :failed_redemptions
+	# has_many :visits
+	has_many :failed_redemptions, dependent: :destroy
 	has_many :pictures, :dependent => :destroy
 
 	# including elastic search
