@@ -252,7 +252,7 @@ class Admin::UserController < Admin::ApplicationController
   	@user = User.find(params[:id])
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to user_index_path, notice:  " #{@user.first_name} was successfully destroyed." }
+      format.html { redirect_to admin_user_index_path, notice:  " #{@user.first_name} was successfully destroyed." }
       format.json { head :no_content }
     end
   end
