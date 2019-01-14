@@ -244,6 +244,8 @@ GEM
       cocaine (~> 0.5.5)
       mime-types
       mimemagic (~> 0.3.0)
+    paranoia (2.4.1)
+      activerecord (>= 4.0, < 5.3)
     pg (0.18.4)
     public_suffix (3.0.1)
     puma (3.11.2)
@@ -408,6 +410,7 @@ DEPENDENCIES
   oj
   omniauth-google-oauth2
   paperclip
+  paranoia (~> 2.2)
   pg (~> 0.18.4)
   puma (~> 3.7)
   rails (~> 5.1.4)

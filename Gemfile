@@ -114,3 +114,5 @@ gem 'oj'
 gem 'fast_jsonapi'
 # Resources
 gem 'jsonapi-resources' #, :git => 'https://github.com/cerebris/jsonapi-resources.git'
+# soft delete
+gem "paranoia", "~> 2.2"
