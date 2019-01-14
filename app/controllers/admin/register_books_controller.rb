@@ -5,7 +5,7 @@ class Admin::RegisterBooksController < Admin::ApplicationController
   before_action :set_register_book, only: [:show, :edit, :update, :destroy]
 
   layout false
-  layout 'admin_lte_2', :except => :view, except: [:new, :create]
+  layout 'admin_lte_2', except: [:new, :create]
   # layout 'new'
   # layout :resolve_layout
 
