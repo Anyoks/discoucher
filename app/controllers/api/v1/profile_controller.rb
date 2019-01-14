@@ -28,7 +28,16 @@ class Api::V1::ProfileController < Api::V1::BaseController
 
 		favs = user.get_favourte_vouchers
 
-		render jsonapi: favs, class: { Voucher: Api::V1::SerializableVoucher }
+		# render jsonapi: favs, class: { Voucher: Api::V1::SerializableVoucher }
+
+		context = { user: current_api_v1_user}
+		@voucher_resources = favs.map { |voucher| Api::V1::VoucherResource.new(voucher, context) }
+		# if current_api_v1_user == nil
+			# render json: JSONAPI::ResourceSerializer.new(Api::V1::VoucherResource).serialize_to_hash(@voucher_resources)
+			# render jsonapi: @vouchers, class: { Voucher: Api::V1::SerializableVoucher } 
+		# else
+			
+			render json: JSONAPI::ResourceSerializer.new(Api::V1::VoucherResource).serialize_to_hash(@voucher_resources)
 	end
 
 	def books
