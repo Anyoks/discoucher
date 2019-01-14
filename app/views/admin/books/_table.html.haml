@@ -29,8 +29,10 @@
                       %td= book.year
                       %td= book.establishments.count
                       %td
-                        -if book.registered?
+                        -if book.registered_already?
                           = link_to 'registered', '#', class: "label label-success"
+                        -else
+                          = link_to 'unregistered', '#', class: "label label-default"
                       %td 
                         -if current_admin && current_admin.is_admin?
                           = link_to 'Edit', edit_admin_book_path(book), class: "label label-default"
