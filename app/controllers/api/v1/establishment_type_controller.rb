@@ -12,7 +12,7 @@ class Api::V1::EstablishmentTypeController < Api::V1::BaseController
 	def hotel_vouchers
 		hotel = EstablishmentType.where(name: "Hotel").first
 
-		hotel_vouchers = paginate hotel.vouchers, per_page: 30
+		hotel_vouchers = paginate hotel.vouchers.order("RANDOM()"), per_page: 30
 
 		# render jsonapi: hotel_vouchers, class: { Voucher: Api::V1::SerializableVoucher }
 
@@ -26,7 +26,7 @@ class Api::V1::EstablishmentTypeController < Api::V1::BaseController
 	def spa_vouchers
 		hotel = EstablishmentType.where(name: "Spas and Salons").first
 
-		hotel_vouchers = paginate hotel.vouchers, per_page: 30
+		hotel_vouchers = paginate hotel.vouchers.order("RANDOM()"), per_page: 30
 
 		# render jsonapi: hotel_vouchers, class: { Voucher: Api::V1::SerializableVoucher }
 
@@ -39,7 +39,7 @@ class Api::V1::EstablishmentTypeController < Api::V1::BaseController
 	def restaurant_vouchers
 		hotel = EstablishmentType.where( name: "Restaurant").first
 
-		hotel_vouchers = paginate hotel.vouchers, per_page: 30
+		hotel_vouchers = paginate hotel.vouchers.order("RANDOM()"), per_page: 30
 
 		# render jsonapi: hotel_vouchers, class: { Voucher: Api::V1::SerializableVoucher }
 		context = { user: current_api_v1_user}

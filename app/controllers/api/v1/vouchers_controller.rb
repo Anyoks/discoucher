@@ -8,7 +8,7 @@ class Api::V1::VouchersController < Api::V1::BaseController
 		
 		# in future when a user logs in, we should check if they have paid for a book then show them their vouchers
 		# and not all vouchers
-		@vouchers = paginate Voucher.all, per_page: 30
+		@vouchers = paginate Voucher.all.order("RANDOM()"), per_page: 30
 
 		context = { user: current_api_v1_user}
 		@voucher_resources = @vouchers.map { |voucher| Api::V1::VoucherResource.new(voucher, context) }

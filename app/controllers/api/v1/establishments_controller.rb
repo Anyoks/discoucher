@@ -6,7 +6,7 @@ class Api::V1::EstablishmentsController < Api::V1::BaseController
 	def est
 
 		
-		@establishments = paginate Establishment.all, per_page: 30
+		@establishments = paginate Establishment.all.order("RANDOM()"), per_page: 30
 		
 		# render jsonapi: @establishments #, class: { Establishment: Api::V1::SerializableEstablishment }
 		render jsonapi: @establishments, class: { Establishment: Api::V1::SerializableEstablishment }
