@@ -15,24 +15,24 @@
 #  	end
 # end
 
-#create an Admin book for free voucher redemption. no User owns this book
-Book.where(code: "DISCOUCHERFREEBOOK").first_or_create do |book|
-	book.year = "2030"
-	book.save
+# #create an Admin book for free voucher redemption. no User owns this book
+# Book.where(code: "DISCOUCHERFREEBOOK").first_or_create do |book|
+# 	book.year = "2030"
+# 	book.save
 
-	#build registerbook
-	book.build_register_book do |reg|
-		reg.first_name    = "Dennis"
-		reg.last_name     = "Orina"
-		reg.book_code     = book.code
-		reg.email         = "dennorina@gmail.com"
-		reg.phone_number  = "0711430817"
-		reg.user_id       = Admin.where(email: "dennorina@gmail.com").first.id
-		reg.book_id       = book.id
+# 	#build registerbook
+# 	book.build_register_book do |reg|
+# 		reg.first_name    = "Dennis"
+# 		reg.last_name     = "Orina"
+# 		reg.book_code     = book.code
+# 		reg.email         = "dennorina@gmail.com"
+# 		reg.phone_number  = "0711430817"
+# 		reg.user_id       = Admin.where(email: "dennorina@gmail.com").first.id
+# 		reg.book_id       = book.id
 
-		reg.save
-	end
-end
+# 		reg.save
+# 	end
+# end
 
 ###############################################################################################################
 ######################                                         ################################################
@@ -393,3 +393,52 @@ end
 
 
 # end
+
+###############################################################################################################
+##########################                                                     ################################
+##########################  CREATE TAGS FOR VOUCHERS THAT ARE IN THE DATABASE  ################################
+##########################                                                     ################################
+###############################################################################################################
+###############################################################################################################
+
+
+tags_csv_text = File.read(Rails.root.join('lib', 'seeds', 'preorders.csv'))
+tags_csv = CSV.parse(tags_csv_text, :headers => true, :encoding => 'ISO-8859-1')
+
+tags_csv.each do |row|
+	# puts row.to_hash
+	
+	# add establishment type. create it if it does not exist
+	first_name      = row['First Name']
+	last_name       = row['Last Name']
+	email           = row['Email']
+	phone_number    = row['Mobile Number']
+	mpesa           = row['MPESA']
+
+	role_id = Role.where(name: "customer").first.id
+
+
+	if User.where(email: email, phone_number: phone_number).present?
+		puts "USER EXISTS SKIPPING"
+	else
+		# puts "IN HERE"
+		user = User.new( first_name: first_name, last_name: last_name, email: email, phone_number: phone_number, password: phone_number , password_confirmation: phone_number, uid: email, provider: "email", role_id: role_id)
+		# puts "#{user.first_name} #{user.last_name} #{user.email} #{user.phone_number} #{mpesa}"
+
+		if user.save
+			puts "#{user.first_name} #{user.last_name} #{user.email} #{user.phone_number} #{mpesa}"
+
+			# byebug
+			reg = user.register_book_for_paying_mobile_user
+			# puts "#{reg}"
+			if reg == false
+				puts "ERROR ADDING BOOK #{reg}"
+			else
+				puts "#{user.first_name} Got a Book"
+			end
+			# puts "YaaaaaY"
+		else
+			puts "ERROR SAVING USER #{user.errors.messages}"
+		end
+	end
+end
