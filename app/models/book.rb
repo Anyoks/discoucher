@@ -63,7 +63,7 @@ class Book < ApplicationRecord
 
 	def self.get_unregistered_book_for_mobile_user
 		
-		book = Book.where(registered: false).first
+		book = Book.where(registered: false).order("RANDOM()").first
 
 		if book
 			return book
