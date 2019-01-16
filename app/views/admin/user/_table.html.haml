@@ -35,6 +35,7 @@
                     %th.sorting{"aria-controls" => "example1", "aria-label" => "Platform(s): activate to sort column ascending", :colspan => "", :rowspan => "1", :style => "width: 70px;", :tabindex => "0"} Email
                     %th.sorting{"aria-controls" => "example1", "aria-label" => "Engine version: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 90px;", :tabindex => "0"} Phone Number
                     %th.sorting{"aria-controls" => "example1", "aria-label" => "Engine version: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 106px;", :tabindex => "0"} Customer Role
+                    %th.sorting{"aria-controls" => "example1", "aria-label" => "Engine version: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 106px;", :tabindex => "0"} Paid User
                     %th.sorting{"aria-controls" => "example1", "aria-label" => "CSS grade: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 113px;", :tabindex => "0"} Options
                 %tbody
                   - users.each do |user|
@@ -45,6 +46,11 @@
                       %td= user.email
                       %td= user.phone_number
                       %td= user.role.name
+                      %td
+                        - if user.paid
+                          %span.pull-right.badge.bg-green paid
+                        -else
+                          %span.pull-right.badge.bg-grey unpaid
                       %td 
                         -if current_admin && current_admin.is_admin? 
                           = link_to 'Show Details',  admin_user_path(user), class: "label label-warning"
