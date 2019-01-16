@@ -82,7 +82,7 @@ class Api::V1::PayController < Api::V1::BaseController
 			payment_response.save
 			
 			@book_assingment =  payment_response.create_registered_book_for_payed_user
-			byebug
+			# byebug
 			return successful_payment "test"
 		else
 
