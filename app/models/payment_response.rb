@@ -43,6 +43,7 @@ class PaymentResponse < ApplicationRecord
 				logger.debug "Error creating registered Book for user"
 				return false
 			else
+				# byebug
 				# successful book assignment
 				self.update_attributes(book_code: reg.book_code)
 				# t = self.update_columns(book_code: reg.book_code)
