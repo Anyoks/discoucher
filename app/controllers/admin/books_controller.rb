@@ -196,6 +196,6 @@ class  Admin::BooksController < Admin::ApplicationController
       est_ids = Establishment.all.pluck(:id) # adding all establishments automatically
       
       params.require(:book).permit(:code, :year, {establishment_ids: []})
-      byebug
+      # byebug
     end
 end
