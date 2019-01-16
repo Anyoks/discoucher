@@ -211,6 +211,14 @@ class User < ApplicationRecord
 			return bought_books
 		end
 	end
+
+	def paid
+		if self.register_books.count > 0
+			return true
+		else
+			return false
+		end
+	end
 	
 
 	def get_favourte_vouchers
@@ -255,12 +263,12 @@ class User < ApplicationRecord
 	def register_book_for_paying_mobile_user
 
 		book 			= Book.get_unregistered_book_for_mobile_user
-
+		# byebug
 		# (:first_name, :last_name, :phone_number, :email, :book_code)
 		register_book 	= RegisterBook.new(:first_name => self.first_name, :last_name => self.last_name, :phone_number => self.phone_number, :email => self.email , :book_code => book.code)
 		
 		reg 			= register_book.find_book_by_code
-
+		# byebug
 		return reg	
 	end
 
