@@ -63,6 +63,20 @@ class Api::V1::ProfileController < Api::V1::BaseController
 		return book_codes books
 	end
 
+	def redeemed_offers
+		user = current_api_v1_user
+		return invalid_user unless  user
+
+		redeemed = []
+		user.visits.each { |visit| redeemed << visit.voucher}
+
+		context = { user: current_api_v1_user}
+		@voucher_resources = redeemed.map { |voucher| Api::V1::VoucherResource.new(voucher, context) }
+
+			
+		render json: JSONAPI::ResourceSerializer.new(Api::V1::VoucherResource).serialize_to_hash(@voucher_resources)
+	end
+
 	# def book_code
 	# 	user = current_api_v1_user
 	# 	return invalid_user unless  user

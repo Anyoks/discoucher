@@ -89,6 +89,7 @@ Rails.application.routes.draw do
       get 'discover/tags'
 
       get '/profile/books'
+      get '/profile/redeemed_offers'
 
       post '/pay/mobile'
       post '/pay/from_mpesa'
