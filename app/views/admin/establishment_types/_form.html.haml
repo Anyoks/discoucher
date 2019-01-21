@@ -1,0 +1,38 @@
+-# = simple_form_for(@admin_establishment_type) do |f|
+-#   = f.error_notification
+
+-#   .form-inputs
+
+-#   .form-actions
+-#     = f.button :submit
+
+
+.row
+  .col-md-12
+    .box.box-primary
+      .box-header.with-border
+        %h3.box-title Provide Establishment Type details
+      %form{:lpformnum => "1", :role => "form"}
+      = simple_form_for [:admin, @admin_establishment_type] do |f|
+        - if @admin_establishment_type.errors.any?
+          #error_explanation
+            %h2= "#{pluralize(@admin_establishment_type.errors.count, "error")} prohibited this from being saved:"
+            %ul
+              - @admin_establishment_type.errors.full_messages.each do |message|
+                %li= message
+        %form{:_lpchecked => "1", :lpformnum => "1", :role => "form"}
+          .box-body
+            .row
+              .col-md-6
+                .form-group
+                  %label{:for => "exampleInputEmail1"} Name
+                  / = f.label :name
+                  = f.text_field :name, class: "form-control", placeholder: "Enter name"
+              .col-md-6
+                .form-group
+                  %label{:for => "exampleInputPassword1"} Description
+                  = f.text_field :description, class: "form-control", placeholder: "Enter Description"
+            .row
+          / /.box-body
+          .box-footer
+            = f.submit class: "btn btn-primary"

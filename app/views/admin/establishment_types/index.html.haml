@@ -1,0 +1,19 @@
+%section.content-header
+  %h1
+    DisCoucher Establishment Types
+    %small #{@category ? @category : @admin_establishment_types.count }
+  %ol.breadcrumb
+    %li
+      %a{:href => "#"}
+        %i.fa.fa-dashboard
+        Level
+    %li.active Here
+%br
+
+%br
+#partial_page
+  =render "admin/establishment_types/table", types: @admin_establishment_types #the table that was previously here was extracted to the partial to be DRY. seems like I needed it more than I thought! :-)
+
+%br
+-if current_admin && current_admin.is_previlaged?
+  %p=link_to 'New Type', new_admin_establishment_type_path, class: "btn btn-primary"

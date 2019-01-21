@@ -39,15 +39,19 @@
       <li class="treeview">
         <a href="/admin/establishments" ><i class='fa fa-th'></i> <span>Manage Esablishments</span><i class="fa fa-angle-left pull-right"></i></a>
           <ul class="treeview-menu">
-            <li><a href="/admin/establishments" ><i class='fa fa-circle-o text-red'></i><span>All</span></a></li>
-            <li><a href="/admin/establishments?category=1" ><i class='fa fa-circle-o text-red'></i><span>Restaurants</span></a></li>
-            <li><a href="/admin/establishments?category=3"><i class='fa fa-circle-o text-yellow'></i><span>Spas</span></a></li>
-            <li><a href="/admin/establishments?category=2"><i class='fa fa-circle-o text-aqua'></i><span>Hotels</span></a></li>
+             <li><a href="/admin/establishments" ><i class='fa fa-circle-o text-red'></i><span>All</span></a></li>
+             <li>
+            <% EstablishmentType.all.each  do  |type| %>
+              <%= link_to "#{type.name}", "/admin/establishments?category=#{type.id}" %>
+              
+            <% end %>
+            </li>
           </ul>
       </li>
       <li><a href="/admin/user" ><i class='fa fa-laptop'></i> <span>Manage Users</span></a></li>
       <li><a href="/admin/vouchers" "><i class='fa fa-files-o'></i> <span>Manage Vouchers</span></a></li>
       <li><a href="/admin/tags" "><i class='fa fa-files-o'></i> <span>Manage Tags</span></a></li>
+      <li><a href="/admin/establishment_types" "><i class='fa fa-files-o'></i> <span>Manage Categories</span></a></li>
       <li class="treeview">
         <a href="#"><i class='fa fa-link'></i> <span>Create New...</span> <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">

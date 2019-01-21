@@ -10,4 +10,6 @@
 class EstablishmentType < ApplicationRecord
 	has_many :establishments
 	has_many :vouchers, through: :establishments
+
+	validates_presence_of :name, :description
 end

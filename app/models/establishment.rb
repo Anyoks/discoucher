@@ -46,6 +46,8 @@ class Establishment < ApplicationRecord
 	has_many :failed_redemptions, dependent: :destroy
 	has_many :pictures, :dependent => :destroy
 
+	validates_presence_of :name, :establishment_type
+
 	# including elastic search
 		# include Elasticsearch::Model
 	    # include Elasticsearch::Model::Callbacks
