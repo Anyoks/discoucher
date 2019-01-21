@@ -30,11 +30,11 @@
                         -if current_admin && current_admin.is_moderator?
                           = link_to 'Edit', edit_admin_establishment_type_path(type), class: "label label-default"
                           = link_to "Details", admin_establishment_type_path(type), class: "label label-warning"                         
-                          = link_to 'Destroy', admin_establishment_path(type), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
+                          = link_to 'Destroy', admin_establishment_path(type), :method => :delete, :data => { :confirm => 'Deleting will destroy associated Establishments, Are you sure?' }, class: "label label-danger"
                         -elsif current_admin && current_admin.is_admin?
                           = link_to 'Edit', edit_admin_establishment_type_path(type), class: "label label-default"
                           = link_to "Details", admin_establishment_type_path(type), class: "label label-warning"
-                          = link_to 'Destroy', admin_establishment_type_path(type), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
+                          = link_to 'Destroy', admin_establishment_type_path(type), :method => :delete, :data => { :confirm => 'Deleting will destroy associated Establishments, Are you sure?' }, class: "label label-danger"
 
                 %tfoot
                   %tr

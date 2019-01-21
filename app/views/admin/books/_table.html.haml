@@ -37,7 +37,7 @@
                         -if current_admin && current_admin.is_admin?
                           = link_to 'Edit', edit_admin_book_path(book), class: "label label-default"
                           = link_to "Show",admin_book_path(book), class: "label label-warning"
-                          = link_to 'Destroy', admin_book_path(book), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
+                          = link_to 'Destroy', admin_book_path(book), :method => :delete, :data => { :confirm => 'This will destroy associated models, Are you sure?' }, class: "label label-danger"
 
                 %tfoot
                   %tr
