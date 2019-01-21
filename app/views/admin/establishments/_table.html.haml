@@ -24,27 +24,30 @@
                     / %th.sorting{"aria-controls" => "example1", "aria-label" => "Engine version: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 156px;", :tabindex => "0"} Logo
                     %th.sorting{"aria-controls" => "example1", "aria-label" => "CSS grade: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 250px;", :tabindex => "0"} Options
                 %tbody
-                  - establishments.each do |establishment|
+                  - if establishments.present?
+                    - establishments.each do |establishment|
 
+                      %tr{:class => "#{cycle('even', 'odd')}"}
+                        %td.sorting_1= establishment.name
+                        %td= establishment.location
+                        %td= establishment.area
+                        %td= establishment.phone
+                        %td= establishment.address
+                        / %td= image_tag establishment.logo.url(:small)
+                        %td 
+                          -if current_admin && current_admin.is_moderator?
+                            = link_to 'Edit', edit_admin_establishment_path(establishment), class: "label label-default"
+                            = link_to "Details", admin_establishment_path(establishment), class: "label label-warning"                         
+                            = link_to "Images", admin_establishment_pictures_path(establishment), class: "label label-success"
+                            = link_to 'Destroy', admin_establishment_path(establishment), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
+                          -elsif current_admin && current_admin.is_admin?
+                            = link_to 'Edit', edit_admin_establishment_path(establishment), class: "label label-default"
+                            = link_to "Details", admin_establishment_path(establishment), class: "label label-warning"
+                            = link_to 'Destroy', admin_establishment_path(establishment), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
+                            = link_to "Images", admin_establishment_pictures_path(establishment), class: "label label-success"
+                  - else
                     %tr{:class => "#{cycle('even', 'odd')}"}
-                      %td.sorting_1= establishment.name
-                      %td= establishment.location
-                      %td= establishment.area
-                      %td= establishment.phone
-                      %td= establishment.address
-                      / %td= image_tag establishment.logo.url(:small)
-                      %td 
-                        -if current_admin && current_admin.is_moderator?
-                          = link_to 'Edit', edit_admin_establishment_path(establishment), class: "label label-default"
-                          = link_to "Details", admin_establishment_path(establishment), class: "label label-warning"                         
-                          = link_to "Images", admin_establishment_pictures_path(establishment), class: "label label-success"
-                          = link_to 'Destroy', admin_establishment_path(establishment), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
-                        -elsif current_admin && current_admin.is_admin?
-                          = link_to 'Edit', edit_admin_establishment_path(establishment), class: "label label-default"
-                          = link_to "Details", admin_establishment_path(establishment), class: "label label-warning"
-                          = link_to 'Destroy', admin_establishment_path(establishment), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
-                          = link_to "Images", admin_establishment_pictures_path(establishment), class: "label label-success"
-
+                      %td.sorting_1= "No estatblisments"
                 %tfoot
                   %tr
                     %th{:colspan => "1", :rowspan => "1"} Establishment Name
