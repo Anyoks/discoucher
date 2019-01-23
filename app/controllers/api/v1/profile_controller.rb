@@ -52,8 +52,8 @@ class Api::V1::ProfileController < Api::V1::BaseController
 
 	def rate
 		user = current_api_v1_user
-		voucher_id = params[:voucher_id]
-		comment    = params[:comment]
+		voucher_id = Voucher.where( code: params[:voucher_code].strip).first.id
+		comment    = params[:comment].downcase
 		rating     = params[:rating]
 
 		rate 	   = user.reviews.new( comment: comment, voucher_id: voucher_id, rating: rating)
@@ -114,11 +114,12 @@ class Api::V1::ProfileController < Api::V1::BaseController
 	end
 
 	def error_rating rate
-		full_messages = []
+		full_messages = ""
 		rate.errors.full_messages.each do |err|
-			full_messages << err + ','
+			full_messages =  full_messages + err + ','
+			logger.debug "ERRR #{err}"
 		end
-		render json: { success: false, message: "Error adding favourites"}, status: :unauthorized
+		render json: { success: false, message: full_messages}, status: :unauthorized
 	end
 
 	def successfully_added
