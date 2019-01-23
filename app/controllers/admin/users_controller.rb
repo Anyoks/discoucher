@@ -17,7 +17,8 @@ class Admin::UsersController < Admin::ApplicationController
   end
 
   def show
-  	@user = User.find(params[:id])
+    @user = User.find(params[:id])
+    @reviews = @user.reviews
     @user_visits = @user.visits #how many establishments did you visit?
     @data = user_activities @user
 
