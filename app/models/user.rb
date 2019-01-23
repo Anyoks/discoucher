@@ -56,6 +56,8 @@ class User < ApplicationRecord
   has_many :failed_payment_responses, through: :payment_requests
   has_many :vouchers, through: :register_books
 
+  validates_presence_of :first_name, :last_name
+
   # including elastic search
 	# include Elasticsearch::Model
 	# include Elasticsearch::Model::Callbacks
