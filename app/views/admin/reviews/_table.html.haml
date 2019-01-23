@@ -17,28 +17,35 @@
                 %thead
                   %tr{:role => "row"}
                     %th.sorting_asc{"aria-controls" => "example1", "aria-label" => "Rendering engine: activate to sort column descending", "aria-sort" => "ascending", :colspan => "1", :rowspan => "1", :style => "width: 100px;", :tabindex => "0"} Establishment Name
-                    %th.sorting{"aria-controls" => "example1", "aria-label" => "Browser: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 180px;", :tabindex => "0"} User Comments
+                    %th.sorting{"aria-controls" => "example1", "aria-label" => "Browser: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 80px;", :tabindex => "0"} Voucer Code
+                    %th.sorting{"aria-controls" => "example1", "aria-label" => "Browser: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 200px;", :tabindex => "0"} User Comments
                     %th.sorting{"aria-controls" => "example1", "aria-label" => "Platform(s): activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 80px;", :tabindex => "0"} Customer
                     %th.sorting{"aria-controls" => "example1", "aria-label" => "Engine version: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 50px;", :tabindex => "0"} Rating
-                    %th.sorting{"aria-controls" => "example1", "aria-label" => "CSS grade: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 250px;", :tabindex => "0"} Options
+                    -# %th.sorting{"aria-controls" => "example1", "aria-label" => "CSS grade: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 50px;", :tabindex => "0"} Options
                 %tbody
                   - if reviews.present?
                     - reviews.each do |review|
 
                       %tr{:class => "#{cycle('even', 'odd')}"}
                         %td.sorting_1= review.voucher.establishment.name
-                        -# %td= review.voucher.establishment.name
+                        %td= review.voucher.code
                         %td= review.comment
                         %td= review.user.full_names
-                        %td= review.rating
-                        / %td= image_tag review.logo.url(:small)
                         %td 
-                          -if current_admin && current_admin.is_moderator?
-                            -# = link_to "Details", admin_review_path(review), class: "label label-warning"
-                            = link_to 'Destroy', admin_review_path(review), :method => :delete, :data => { :confirm => 'This will destroy associated models, Are you sure?' }, class: "label label-danger"
-                          -elsif current_admin && current_admin.is_admin?                            
-                            -# = link_to "Details", admin_review_path(review), class: "label label-warning"
-                            = link_to 'Destroy', admin_review_path(review), :method => :delete, :data => { :confirm => 'This will destroy associated models, Are you sure?' }, class: "label label-danger"
+                          - review.rating.to_i.times do
+                            %span.glyphicon.glyphicon-star.text-success
+                          - review.blank_stars.to_i.times do
+                            %span.glyphicon.glyphicon-star-empty.text-success
+
+
+                        / %td= image_tag review.logo.url(:small)
+                        -# %td 
+                        -#   -if current_admin && current_admin.is_moderator?
+                        -#     -# = link_to "Details", admin_review_path(review), class: "label label-warning"
+                        -#     = link_to 'Destroy', admin_review_path(review), :method => :delete, :data => { :confirm => 'This will destroy associated models, Are you sure?' }, class: "label label-danger"
+                        -#   -elsif current_admin && current_admin.is_admin?                            
+                        -#     -# = link_to "Details", admin_review_path(review), class: "label label-warning"
+                        -#     = link_to 'Destroy', admin_review_path(review), :method => :delete, :data => { :confirm => 'This will destroy associated models, Are you sure?' }, class: "label label-danger"
                             
                   - else
                     %tr{:class => "#{cycle('even', 'odd')}"}
@@ -46,10 +53,11 @@
                 %tfoot
                   %tr
                     %th{:colspan => "1", :rowspan => "1"} Establishment Name
+                    %th{:colspan => "1", :rowspan => "1"} Voucher Code
                     %th{:colspan => "1", :rowspan => "1"} Comments
                     %th{:colspan => "1", :rowspan => "1"} Customer
                     %th{:colspan => "1", :rowspan => "1"} Rating            
-                    %th{:colspan => "1", :rowspan => "1"} Options
+                    -# %th{:colspan => "1", :rowspan => "1"} Options
           .row
             .col-sm-5
               .page_info

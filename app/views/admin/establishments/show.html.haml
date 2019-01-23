@@ -52,36 +52,43 @@
           /   %i.fa.fa-times
       .box-body
         = bar_chart @data , @options
-.row.fluid
-  .col-md-12
-    .box.box-widget
-      .box-header.with-border
-        .user-block
-          %h3.box-title 
-          Establishment Images
-        / /.user-block
-        .box-tools
-          / %button.btn.btn-box-tool{"data-original-title" => "Mark as read", "data-toggle" => "tooltip", :title => "", :type => "button"}
-          /   %i.fa.fa-circle-o
-          %button.btn.btn-box-tool{ "data-original-title" => "Minimize", "data-toggle" => "tooltip", :title => "","data-widget" => "collapse", :type => "button"}
-            %i.fa.fa-minus
-          / %button.btn.btn-box-tool{"data-widget" => "remove", :type => "button"}
-          /   %i.fa.fa-times
-        / /.box-tools
-      / /.box-header
-      .box-body
-        - if @establishment.pictures.present?
-          .col-md-12
-            - @establishment.pictures.each do |pic|
-              .col-md-2
-                %a.example-image-link{"data-lightbox" => "example-set", "data-title" => "Click the right half of the image to move forward.", :href => "#{pic.image(:original)}"}
-                  %img.example-image{:alt => "", :src => "#{pic.image(:small)}"}/
+
+
+%br
+-# reuser the reviews partial! how awesome
+#partial_page
+  =render "admin/reviews/table", reviews: @reviews
+
+-# .row.fluid
+-#   .col-md-12
+-#     .box.box-widget
+-#       .box-header.with-border
+-#         .user-block
+-#           %h3.box-title 
+-#           Establishment Images
+-#         / /.user-block
+-#         .box-tools
+-#           / %button.btn.btn-box-tool{"data-original-title" => "Mark as read", "data-toggle" => "tooltip", :title => "", :type => "button"}
+-#           /   %i.fa.fa-circle-o
+-#           %button.btn.btn-box-tool{ "data-original-title" => "Minimize", "data-toggle" => "tooltip", :title => "","data-widget" => "collapse", :type => "button"}
+-#             %i.fa.fa-minus
+-#           / %button.btn.btn-box-tool{"data-widget" => "remove", :type => "button"}
+-#           /   %i.fa.fa-times
+-#         / /.box-tools
+-#       / /.box-header
+-#       .box-body
+-#         - if @establishment.pictures.present?
+-#           .col-md-12
+-#             - @establishment.pictures.each do |pic|
+-#               .col-md-2
+-#                 %a.example-image-link{"data-lightbox" => "example-set", "data-title" => "Click the right half of the image to move forward.", :href => "#{pic.image(:original)}"}
+-#                   %img.example-image{:alt => "", :src => "#{pic.image(:small)}"}/
 
 
 
 
 
 
-= link_to 'Edit', edit_admin_establishment_path(@establishment), class: "btn btn-default"
+= link_to 'Edit Establishment', edit_admin_establishment_path(@establishment), class: "btn btn-default"
 \|
 = link_to 'Back', admin_establishments_path, class: "btn btn-primary"

@@ -32,6 +32,7 @@ class Admin::EstablishmentsController < Admin::ApplicationController
   # GET /establishments/1.json
   def show
     @establishment = Establishment.find(params[:id])
+    @reviews       = @establishment.reviews.paginate(:page => params[:page], :per_page => 10)
     @establishment_visits = @establishment.visits #how many establishments did you visit?
     @data = establishment_activities @establishment
 
