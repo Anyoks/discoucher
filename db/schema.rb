@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190114171156) do
+ActiveRecord::Schema.define(version: 20190123130344) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -167,6 +167,17 @@ ActiveRecord::Schema.define(version: 20190114171156) do
     t.datetime "updated_at", null: false
     t.index ["book_id"], name: "index_register_books_on_book_id", unique: true
     t.index ["user_id"], name: "index_register_books_on_user_id"
+  end
+
+  create_table "reviews", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "comment"
+    t.float "rating"
+    t.uuid "user_id"
+    t.uuid "voucher_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_reviews_on_user_id"
+    t.index ["voucher_id"], name: "index_reviews_on_voucher_id"
   end
 
   create_table "roles", id: :serial, force: :cascade do |t|

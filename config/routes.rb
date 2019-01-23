@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  
   namespace :admin do
     resources :payment_responses
   end
@@ -36,6 +37,7 @@ Rails.application.routes.draw do
     resources :establishments  do
       resources :pictures
     end
+    resources :reviews
     resources :establishment_types
     resources :vouchers do
       resources :tags_vouchers
@@ -87,6 +89,7 @@ Rails.application.routes.draw do
       get 'discover/tags'
 
       get '/profile/books'
+      post 'profile/rate'
 
       post '/pay/mobile'
       post '/pay/from_mpesa'

@@ -36,6 +36,7 @@ class Api::V1::ProfileController < Api::V1::BaseController
 		
 	end
 
+	# show all favourite vouchers
 	def all
 		user = current_api_v1_user
 		return invalid_user unless  user
@@ -45,13 +46,24 @@ class Api::V1::ProfileController < Api::V1::BaseController
 		# render jsonapi: favs, class: { Voucher: Api::V1::SerializableVoucher }
 
 		context = { user: current_api_v1_user}
-		@voucher_resources = favs.map { |voucher| Api::V1::VoucherResource.new(voucher, context) }
-		# if current_api_v1_user == nil
-			# render json: JSONAPI::ResourceSerializer.new(Api::V1::VoucherResource).serialize_to_hash(@voucher_resources)
-			# render jsonapi: @vouchers, class: { Voucher: Api::V1::SerializableVoucher } 
-		# else
-			
-			render json: JSONAPI::ResourceSerializer.new(Api::V1::VoucherResource).serialize_to_hash(@voucher_resources)
+		@voucher_resources = favs.map { |voucher| Api::V1::VoucherResource.new(voucher, context) }			
+		render json: JSONAPI::ResourceSerializer.new(Api::V1::VoucherResource).serialize_to_hash(@voucher_resources)
+	end
+
+	def rate
+		user = current_api_v1_user
+		voucher_id = params[:voucher_id]
+		comment    = params[:comment]
+		rating     = params[:rating]
+
+		rate 	   = user.reviews.new( comment: comment, voucher_id: voucher_id, rating: rating)
+
+		if rate.save
+			return successfully_rated
+		else
+			return error_rating rate
+		end
+
 	end
 
 	def books
@@ -81,6 +93,18 @@ class Api::V1::ProfileController < Api::V1::BaseController
 
 	def book_codes books
 		render json:{ data: [success: true, book_codes: books ]}, status: :ok
+	end
+
+	def successfully_rated
+		render json:{ success: true, message: "Voucher has been successfully rated"}, status: :ok
+	end
+
+	def error_rating rate
+		full_messages = []
+		rate.errors.full_messages.each do |err|
+			full_messages << err + ','
+		end
+		render json: { success: false, message: "Error adding favourites"}, status: :unauthorized
 	end
 
 	def successfully_added
