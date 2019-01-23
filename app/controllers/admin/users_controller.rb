@@ -1,6 +1,7 @@
-class Admin::UserController < Admin::ApplicationController
+class Admin::UsersController < Admin::ApplicationController
+  before_action :set_admin_user, only: [:show, :edit, :update, :destroy]
   def index
-  	@users = User.all.order(created_at: :desc)
+  	@users = User.all.order(created_at: :desc).paginate(:page => params[:page], :per_page => 20)
 
     # Bar chart
     @vists_data = overal_visits_by_month
@@ -48,6 +49,38 @@ class Admin::UserController < Admin::ApplicationController
       
       return total
    end
+  end
+
+  def new
+    @user = User.new
+    
+  end
+
+  def create
+    @user = User.new(user_params)
+    @user.uid = @user.email
+    @user.provider = "email"
+    @user.role_id = Role.where(name: "customer").first.id
+    respond_to do |format|
+      if @user.save
+        # register give the book
+        reg = @user.register_book_for_paying_mobile_user
+        
+        if reg == false
+          logger.debug "ERROR ADDING BOOK #{reg}"
+          # format.html { render :new }
+          # format.json { render json: @user.errors, status: :unprocessable_entity }
+        else
+          logger.debug "#{@user.first_name} Got a Book"
+        end
+
+        format.html { redirect_to admin_user_url(@user), notice: 'User was successfully created and Marked as paid.' }
+        format.json { render :show, status: :created, location: @user }
+      else
+        format.html { render :new }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # def make_moderator
@@ -249,11 +282,18 @@ class Admin::UserController < Admin::ApplicationController
 
 
   def destroy
-  	@user = User.find(params[:id])
+  	# @user = User.find(params[:id])
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to admin_user_index_path, notice:  " #{@user.first_name} was successfully destroyed." }
+      format.html { redirect_to admin_users_path, notice:  "User was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+  def set_admin_user
+    @user =  User.find(params[:id])
+  end
+
+  def user_params
+    params.require(:user).permit(:first_name, :last_name,  :email , :phone_number, :password , :password_confirmation)
   end
 end

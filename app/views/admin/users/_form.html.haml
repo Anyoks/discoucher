@@ -1,0 +1,46 @@
+.row
+  .col-md-12
+    .box.box-danger
+      .box-header.with-border
+        %h3.box-title Provide User details
+      %form{:lpformnum => "1", :role => "form"}
+      = simple_form_for [ :admin, @user] do |f|
+        - if @user.errors.any?
+          #error_explanation
+            %h2= "#{pluralize(@user.errors.count, "error")} prohibited this from being saved:"
+            %ul
+              - @user.errors.full_messages.each do |message|
+                %li= message
+        %form{:_lpchecked => "1", :lpformnum => "1", :role => "form"}
+          .box-body
+            .row
+              .col-md-3
+                .form-group
+                  %label{:for => "exampleInputEmail1"} First Name
+                  / = f.label :name
+                  = f.text_field :first_name, class: "form-control", placeholder: "First Name"
+              .col-md-3
+                .form-group
+                  %label{:for => "exampleInputPassword1"} Last Name
+                  = f.text_field :last_name, class: "form-control", placeholder: "Last Name"
+              .col-md-3
+                .form-group
+                  %label{:for => "exampleInputPassword1"} Phone Number
+                  = f.text_field :phone_number, class: "form-control", placeholder: "0700123123"
+            .row
+              .col-md-3
+                .form-group
+                  %label{:for => "exampleInputEmail1"} User Email
+                  / = f.label :name
+                  = f.text_field :email, class: "form-control", placeholder: "Email"
+              .col-md-3
+                .form-group
+                  %label{:for => "exampleInputPassword1"} Password
+                  = f.password_field :password, class: "form-control", placeholder: "Password"
+              .col-md-3
+                .form-group
+                  %label{:for => "exampleInputPassword1"} Password confirmation
+                  = f.password_field :password_confirmation, class: "form-control", placeholder: "Password confirmation"
+          / /.box-body
+          .box-footer
+            = f.submit class: "btn btn-danger", :data => { :confirm => 'This action will create a Paid User, Are you sure?' }
