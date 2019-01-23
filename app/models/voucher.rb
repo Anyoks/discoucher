@@ -18,6 +18,7 @@ class Voucher < ApplicationRecord
 	has_many :visits, dependent: :destroy
 	has_many :favourites, dependent: :destroy
 	has_and_belongs_to_many :tags
+	has_many :reviews, dependent: :destroy
 
 	# including elastic search
 	# include Elasticsearch::Model

@@ -37,18 +37,18 @@
         %h3.box-title Progress bars
       / /.box-header
       .box-body
-        %p Voucher Redemption progress
+        -# %p Voucher Redemption progress
         .progress.progress-sm.active
           .progress-bar.progress-bar-success.progress-bar-striped{"aria-valuemax" => "#{@total}", "aria-valuemin" => "0", "aria-valuenow" => "40", :role => "progressbar", :style => "width: #{@so_far}%"}
             %span.sr-only 40% Complete (success)
         %p 
-          used #{@so_far} of #{@total}
+          used #{@so_far} vouchers of #{@total}
           %span.pull-right.badge.bg-aqua #{@so_far}
         .progress.progress-sm.active
           .progress-bar.progress-bar-success.progress-bar-striped{"aria-valuemax" => "#{@total}", "aria-valuemin" => "0", "aria-valuenow" => "40", :role => "progressbar", :style => "width: #{@so_far}%"}
             %span.sr-only 40% Complete (success)
         %p 
-          used #{@so_far} of #{@total}
+          Has #{@reviews.count} reviews
           %span.pull-right.badge.bg-aqua #{@so_far}
 
   .col-md-4

@@ -55,6 +55,8 @@ class User < ApplicationRecord
   has_many :payment_responses, through: :payment_requests
   has_many :failed_payment_responses, through: :payment_requests
   has_many :vouchers, through: :register_books
+  has_many :reviews, dependent: :destroy
+  validates_presence_of :first_name, :last_name
 
   # including elastic search
 	# include Elasticsearch::Model
@@ -74,6 +76,10 @@ class User < ApplicationRecord
 		# // return whether a user has valid vouchers or not.
 	def as_json(options={})
 		super(options).merge({vouchers: "#{self.voucher_status}"})
+	end
+
+	def full_names
+		"#{self.first_name} #{self.last_name}"
 	end
 
 	# get total user vouchers

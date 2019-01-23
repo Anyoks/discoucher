@@ -101,4 +101,7 @@
 
 %br
 #partial_page
-  =render "admin/user/table", users: @users
+  =render "admin/users/table", users: @users
+%br
+-if current_admin && current_admin.is_previlaged?
+  %p=link_to 'New Paid user', new_admin_user_path, class: "btn btn-danger"

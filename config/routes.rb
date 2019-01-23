@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  
   namespace :admin do
     resources :payment_responses
   end
@@ -36,6 +37,7 @@ Rails.application.routes.draw do
     resources :establishments  do
       resources :pictures
     end
+    resources :reviews
     resources :establishment_types
     resources :vouchers do
       resources :tags_vouchers
@@ -49,14 +51,12 @@ Rails.application.routes.draw do
     resources :books do 
       get '/search', :to => 'search#search'
     end
-
-
-    resources :user do
-      # get :make_moderator
-      # get :make_normal_user
-      delete 'user/:id' => 'user#destroy', :via => :delete #, :as => :admin_destroy_user
-      get 'user/:id' => 'user#show', as: :user
-    end
+   
+    resources :users #do
+      # member do
+      #   get '/admin/user/new', :to => 'user#new', as: :user
+      # end
+    # end
   end
   get '/register', :to => "admin/register_books#new"
   
@@ -90,6 +90,8 @@ Rails.application.routes.draw do
 
       get '/profile/books'
       get '/profile/redeemed_offers'
+      post 'profile/rate'
+
 
       post '/pay/mobile'
       post '/pay/from_mpesa'

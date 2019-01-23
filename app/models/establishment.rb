@@ -35,6 +35,7 @@ class Establishment < ApplicationRecord
 
 	# belongs_to :register_book
 	has_many :vouchers, :dependent => :destroy
+	has_many :reviews, through: :vouchers
 	has_many :visits, dependent: :destroy
 	has_many :failed_redemptions
 	has_many :details, dependent: :destroy

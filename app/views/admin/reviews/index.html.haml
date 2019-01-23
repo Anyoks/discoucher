@@ -1,0 +1,15 @@
+%section.content-header
+  %h1
+    User Reviews
+    %small All Reviews in the database #{@reviews.all.count}
+  %h1
+
+  %ol.breadcrumb
+    %li
+      %a{:href => "#"}
+        %i.fa.fa-dashboard
+        Level
+    %li.active Here
+%br
+#partial_page
+  =render "admin/reviews/table", reviews: @reviews

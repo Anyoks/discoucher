@@ -1,0 +1,17 @@
+%p#notice= notice
+
+%p
+  %b Comment:
+  = @review.comment
+%p
+  %b Rating:
+  = @review.rating
+%p
+  %b User:
+  = @review.user_id
+%p
+  %b Voucher:
+  = @review.voucher_id
+
+-# = link_to 'Edit', edit_review_path(@review)
+= link_to 'Back', admin_reviews_path, class: "btn btn-default"
