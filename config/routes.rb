@@ -52,11 +52,9 @@ Rails.application.routes.draw do
       get '/search', :to => 'search#search'
     end
    
-    resources :users #do
-      # member do
-      #   get '/admin/user/new', :to => 'user#new', as: :user
-      # end
-    # end
+    resources :users do
+      get :mark_as_paid
+    end
   end
   get '/register', :to => "admin/register_books#new"
   

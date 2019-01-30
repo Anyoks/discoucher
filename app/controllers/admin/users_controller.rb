@@ -18,6 +18,7 @@ class Admin::UsersController < Admin::ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @reg  = @user.register_books.count
     @reviews = @user.reviews
     @user_visits = @user.visits #how many establishments did you visit?
     @data = user_activities @user
@@ -30,6 +31,20 @@ class Admin::UsersController < Admin::ApplicationController
     
     @options = {:height => "257px", :width => "514px"}
     @options1 = {:height => "257px", :width => "514px"}
+  end
+
+  def mark_as_paid
+    @user = User.find(params[:user_id])
+    register = @user.register_book_for_paying_mobile_user
+    respond_to do |format|
+      if register == false
+        format.html { redirect_to admin_user_url(@user), alert: 'Sorry, something went wrong!' }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      else
+        format.html { redirect_to admin_user_url(@user), notice: 'User was successfully Marked as paid.'}
+        format.json { render :show, status: :created, location: @user }
+      end
+    end
   end
 
   def progress user

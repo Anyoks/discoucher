@@ -24,7 +24,7 @@ class RegisterBook < ApplicationRecord
 	belongs_to :book
 	belongs_to :user
 	has_many :vouchers, through: :book
-	has_many :visits, dependent: :destroy
+	has_many :visits, dependent: :destroy  #// i THINK IT'LL BE WISE TO KEEP USER VISIT DATA.
 	has_many :establishments, through: :book
 	after_commit :mark_book_as_registered, on: :create
 	before_destroy :de_register_book

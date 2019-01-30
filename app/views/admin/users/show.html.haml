@@ -12,8 +12,8 @@
         .row
           .col-sm-4.border-right
             .description-block
-              %h5.description-header #{@user_visits.count}
-              %span.description-text Visits
+              %h5.description-header #{@reg}
+              %span.description-text Registred books
             / /.description-block
           / /.col
           .col-sm-4.border-right
@@ -24,8 +24,8 @@
           / /.col
           .col-sm-4
             .description-block
-              %h5.description-header #{@user_visits.count}
-              %span.description-text Visits
+              %h5.description-header #{@reviews.count}
+              %span.description-text Reviews
             / /.description-block
           / /.col
         / /.row
@@ -52,6 +52,20 @@
           %span.pull-right.badge.bg-aqua #{@so_far}
 
   .col-md-4
+    .box.box-solid
+      .box-header.with-border
+        %h3.box-title Manage User
+      / /.box-header
+      .box-body
+        %p You can manually purchase a book for this user. If the user has a book, this action will give the user the equivalent of another Discoucher book.
+        %p 
+
+        -if current_admin && current_admin.is_previlaged?
+          -if @reg < 1
+            = link_to 'Mark as paid', admin_user_mark_as_paid_path(@user.id), class: "btn btn-primary"     
+          -else 
+            = link_to '+ Another Book', admin_user_mark_as_paid_path(@user.id), class: "btn btn-primary"     
+
 
 .row
   .col-md-6
