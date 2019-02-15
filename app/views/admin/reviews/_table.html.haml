@@ -36,20 +36,9 @@
                             %span.glyphicon.glyphicon-star.text-success
                           - review.blank_stars.to_i.times do
                             %span.glyphicon.glyphicon-star-empty.text-success
-
-
-                        / %td= image_tag review.logo.url(:small)
-                        -# %td 
-                        -#   -if current_admin && current_admin.is_moderator?
-                        -#     -# = link_to "Details", admin_review_path(review), class: "label label-warning"
-                        -#     = link_to 'Destroy', admin_review_path(review), :method => :delete, :data => { :confirm => 'This will destroy associated models, Are you sure?' }, class: "label label-danger"
-                        -#   -elsif current_admin && current_admin.is_admin?                            
-                        -#     -# = link_to "Details", admin_review_path(review), class: "label label-warning"
-                        -#     = link_to 'Destroy', admin_review_path(review), :method => :delete, :data => { :confirm => 'This will destroy associated models, Are you sure?' }, class: "label label-danger"
-                            
                   - else
                     %tr{:class => "#{cycle('even', 'odd')}"}
-                      %td.sorting_1= "No estatblisments"
+                      %td.sorting_1= "No reviews"
                 %tfoot
                   %tr
                     %th{:colspan => "1", :rowspan => "1"} Establishment Name
