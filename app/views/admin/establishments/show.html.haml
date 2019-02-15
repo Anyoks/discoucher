@@ -9,6 +9,21 @@
         Level
 %br
 
+.row-fluid
+  .col-md-6
+    .box.box-primary
+      .box-header.with-border
+        %h3.box-title 
+        Establishment Desc
+        .box-tools.pull-right
+          %button.btn.btn-box-tool{"data-original-title" => "Minimize", "data-toggle" => "tooltip", :title => "", "data-widget" => "collapse", :type => "button"}
+            %i.fa.fa-minus
+          / %button.btn.btn-box-tool{"data-widget" => "remove", :type => "button"}
+          /   %i.fa.fa-times
+      .box-body
+        %p #{@establishment.description}
+
+
 .row.fluid
   
   - @establishment.vouchers.each do |voucher|
@@ -52,7 +67,6 @@
           /   %i.fa.fa-times
       .box-body
         = bar_chart @data , @options
-
 
 %br
 -# reuser the reviews partial! how awesome
