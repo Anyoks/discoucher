@@ -19,7 +19,7 @@ class Admin::UsersController < Admin::ApplicationController
   def show
     @user = User.find(params[:id])
     @reg  = @user.register_books.count
-    @reviews = @user.reviews
+    @reviews = @user.reviews.paginate(:page => params[:page], :per_page => 10)
     @user_visits = @user.visits #how many establishments did you visit?
     @data = user_activities @user
 
