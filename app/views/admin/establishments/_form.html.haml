@@ -39,6 +39,10 @@
                   = f.association :establishment_type, label_method: :name, value_method: :id, include_blank: false
                   / %input#exampleInputFile{:type => "file"}
                   %p.help-block Kindly confirm the Establishment type before saving
+              .col-md-6
+                .form-group
+                  %label{:for => "exampleInputFile"} Description
+                  = f.text_area :description, class: "form-control", placeholder: "Enter Establishment description"
             .row
               .col-md-6
                 .form-group
