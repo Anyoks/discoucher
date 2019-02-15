@@ -42,7 +42,7 @@
                           = link_to 'Update tags', edit_admin_voucher_path(voucher, :tag => 'add tags'), class: "label label-default"
                           = link_to "Show",admin_voucher_path(voucher), class: "label label-warning"
                           = link_to "Tags",admin_voucher_tags_vouchers_path(voucher), class: "label label-success"
-                          = link_to 'Destroy', admin_voucher_path(voucher), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
+                          = link_to 'Delete', admin_voucher_path(voucher), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
 
                 %tfoot
                   %tr

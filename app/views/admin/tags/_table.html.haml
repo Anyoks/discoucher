@@ -42,7 +42,7 @@
                         -elsif current_admin && current_admin.is_admin?
                           = link_to 'Edit', edit_admin_tag_path(tag), class: "label label-default"
                           = link_to "Details", admin_tag_path(tag), class: "label label-warning"
-                          = link_to 'Destroy', admin_tag_path(tag), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
+                          = link_to 'Delete', admin_tag_path(tag), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
                           = link_to "Images", admin_tag_tagpics_path(tag), class: "label label-success"
 
                 %tfoot

@@ -55,7 +55,7 @@
                         -if current_admin && current_admin.is_admin? 
                           = link_to 'Show Details',  admin_user_path(user), class: "label label-warning"
                           -unless current_admin == user
-                            = link_to 'Destroy', admin_user_path(user), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
+                            = link_to 'Delete', admin_user_path(user), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
                         -elsif current_admin && current_admin.is_previlaged?
                           = link_to 'Show Details',  admin_user_path(user), class: "label label-warning"
                           = link_to 'Delete', admin_user_path(user), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"

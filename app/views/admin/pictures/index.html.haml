@@ -29,7 +29,7 @@
                         = link_to 'Add desc',edit_admin_establishment_picture_path(id: est_picture.id), class: "label label-default"
                       -elsif current_admin && current_admin.is_admin?
                         = link_to 'Add desc',edit_admin_establishment_picture_path(id: est_picture.id), class: "label label-default"
-                        = link_to 'Destroy', admin_establishment_picture_path(id: est_picture.id), :method => :delete, :data => { :confirm => 'This will destroy associated models, Are you sure?' }, class: "label label-danger"
+                        = link_to 'Delete', admin_establishment_picture_path(id: est_picture.id), :method => :delete, :data => { :confirm => 'This will destroy associated models, Are you sure?' }, class: "label label-danger"
 
 %br
 -if current_admin && current_admin.is_previlaged?

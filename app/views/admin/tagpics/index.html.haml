@@ -27,7 +27,7 @@
                     %td
                       -if current_admin && current_admin.is_admin?
                         / = link_to 'Add desc',edit_admin_tag_tagpic_path(id: tag_tagpic.id), class: "label label-default"
-                        = link_to 'Destroy', admin_tag_tagpic_path(id: tag_tagpic.id), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
+                        = link_to 'Delete', admin_tag_tagpic_path(id: tag_tagpic.id), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "label label-danger"
 
 %br
 
