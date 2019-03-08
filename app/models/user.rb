@@ -145,15 +145,15 @@ class User < ApplicationRecord
 	end
 
 	def make_corporate
-		self.update_attributes :role_id => 2		# self.role ||= Role.find_by_name('moderator') 
+		self.update_attributes :role_id => Role.find_by_name('corporate').id
 	end
 
 	def make_admin
-		self.update_attributes :role_id => 4
+		self.update_attributes :role_id => Role.find_by_name('admin').id
 	end
 
 	def make_customer
-		self.update_attributes :role_id => 1
+		self.update_attributes :role_id => Role.find_by_name('customer').id
 	end
 
 	def show_admins

@@ -21,9 +21,14 @@
                   = f.text_field :name, class: "form-control", placeholder: "Enter name"
               .col-md-6
                 .form-group
+                  %label{:for => "exampleInputPassword1"} Area
+                  = f.text_field :area, class: "form-control", placeholder: "Enter Area"
+
+              .col-md-6
+                .form-group
                   %label{:for => "exampleInputPassword1"} Location
                   = f.text_field :location, class: "form-control", placeholder: "Enter Location"
-            .row
+            
               .col-md-6
                 .form-group
                   %label{:for => "exampleInputPassword1"} Phone Number

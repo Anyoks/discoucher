@@ -55,7 +55,7 @@ before_create :set_default_role
 	end
 
 	def make_moderator
-		role = 
+		# role = 
 		self.update_attributes :role_id => Role.find_by_name('moderator').id
 	end
 
