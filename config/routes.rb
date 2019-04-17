@@ -54,6 +54,7 @@ Rails.application.routes.draw do
    
     resources :users do
       get :mark_as_paid
+      get :mark_as_unpaid
     end
   end
   get '/register', :to => "admin/register_books#new"

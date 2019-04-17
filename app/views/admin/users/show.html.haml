@@ -57,14 +57,15 @@
         %h3.box-title Manage User
       / /.box-header
       .box-body
-        %p You can manually purchase a book for this user. If the user has a book, this action will give the user the equivalent of another Discoucher book.
+        %p You can manually purchase a book for this user. If the user has a book, this action will give the user the equivalent of another Discoucher book. The red button deregisters a user removes one book at a time
         %p 
 
         -if current_admin && current_admin.is_previlaged?
           -if @reg < 1
             = link_to 'Mark as paid', admin_user_mark_as_paid_path(@user.id), class: "btn btn-primary"     
           -else 
-            = link_to '+ Another Book', admin_user_mark_as_paid_path(@user.id), class: "btn btn-primary"     
+            = link_to '+ Another subscription', admin_user_mark_as_paid_path(@user.id), class: "btn btn-primary"     
+            = link_to '- One subscription', admin_user_mark_as_unpaid_path(@user.id), class: "btn btn-danger" 
 
 
 .row

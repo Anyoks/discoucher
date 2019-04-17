@@ -47,6 +47,20 @@ class Admin::UsersController < Admin::ApplicationController
     end
   end
 
+  def mark_as_unpaid
+    @user = User.find(params[:user_id])
+    unregister_book = @user.unregister_book_from_paid_user
+    respond_to do |format|
+      if unregister_book == false
+        format.html { redirect_to admin_user_url(@user), alert: 'Sorry, something went wrong!' }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      else
+        format.html { redirect_to admin_user_url(@user), notice: 'One subscription has been successfully removed.'}
+        format.json { render :show, status: :created, location: @user }
+      end
+    end
+  end
+
   def progress user
 
     user = user

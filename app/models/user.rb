@@ -278,6 +278,19 @@ class User < ApplicationRecord
 		return reg	
 	end
 
+	# this method removes one registered book at a time.
+	def unregister_book_from_paid_user
+		# first check if the user is paid
+		if self.paid
+			# then remove the first register book 
+			reg_book_to_destroy = self.register_books.first
+			reg_book_to_destroy.destroy
+			logger.debug "User has been marked as unpaid successfully"
+			return true
+		else
+			return false
+		end 
+	end
 	
 	def est_voucher_redemption_v2 voucher
 		
