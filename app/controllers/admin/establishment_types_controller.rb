@@ -42,7 +42,7 @@ class Admin::EstablishmentTypesController < ApplicationController
   def update
     respond_to do |format|
       if @admin_establishment_type.update(admin_establishment_type_params)
-        format.html { redirect_to @admin_establishment_type, notice: 'Establishment type was successfully updated.' }
+        format.html { redirect_to admin_establishment_types_url, notice: 'Establishment type was successfully updated.' }
         format.json { render :show, status: :ok, location: @admin_establishment_type }
       else
         format.html { render :edit }
