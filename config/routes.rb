@@ -88,6 +88,7 @@ Rails.application.routes.draw do
       get 'vouchers/hotels', :to => 'establishment_type#hotel_vouchers'
       get 'vouchers/spas', :to => 'establishment_type#spa_vouchers'
       get 'vouchers/restaurants', :to => 'establishment_type#restaurant_vouchers'
+      post 'vouchers/category', :to => 'establishment_type#type'
 
       get 'discover/tags'
 

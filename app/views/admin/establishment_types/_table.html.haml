@@ -24,7 +24,7 @@
                   - types.each do |type|
 
                     %tr{:class => "#{cycle('even', 'odd')}"}
-                      %td.sorting_1= type.name
+                      %td.sorting_1= type.name.camelize
                       
                       %td= type.description
                       %td
