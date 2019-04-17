@@ -61,6 +61,22 @@ class Admin::EstablishmentTypesController < ApplicationController
     end
   end
 
+  def activate_deactivate_type
+
+    @type = EstablishmentType.find(params[:establishment_type_id])
+    activate = @type.activate_deactivate_est_availablity
+    respond_to do |format|
+      if activate == false
+        format.html { redirect_to admin_establishment_types_url, alert: 'Sorry, something went wrong!' }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      else
+        format.html { redirect_to admin_establishment_types_url, notice: 'This type is now available to users.'}
+        format.json { render :show, status: :created, location: @user }
+      end
+    end
+    
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_admin_establishment_type

@@ -38,7 +38,9 @@ Rails.application.routes.draw do
       resources :pictures
     end
     resources :reviews
-    resources :establishment_types
+    resources :establishment_types do
+      get :activate_deactivate_type
+    end
     resources :vouchers do
       resources :tags_vouchers
       # get :show_voucher_tags, :to => 'tags#show_voucher_tags'

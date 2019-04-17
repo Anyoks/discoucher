@@ -12,5 +12,34 @@ class EstablishmentType < ApplicationRecord
 	has_many :vouchers, through: :establishments
 
 	validates_presence_of :name, :description
+
+
+	def activate_deactivate_est_availablity
+
+		if self.available
+			# make unavailble
+			if self.description == nil
+				self.update_attributes(available: false, description: '.')
+				logger.debug "Establishment Type unavailable"
+				return true
+			else
+				self.update_attributes(available: false)
+				logger.debug "Establishment Type unavailable"
+				return true
+			end
+		else
+			# make available
+			if self.description == nil
+				self.update_attributes(available: true, description: '.')
+				logger.debug "Establishment Type available"
+				return true
+			else
+				self.update_attributes(available: true)
+				logger.debug "Establishment Type available"
+				return true
+			end
+			
+		end
+	end
 	
 end

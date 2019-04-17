@@ -18,6 +18,7 @@
                   %tr{:role => "row"}
                     %th.sorting_asc{"aria-controls" => "example1", "aria-label" => "Rendering engine: activate to sort column descending", "aria-sort" => "ascending", :colspan => "1", :rowspan => "1", :style => "width: 182px;", :tabindex => "0"} Name
                     %th.sorting{"aria-controls" => "example1", "aria-label" => "Browser: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 100px;", :tabindex => "0"} Description
+                    %th.sorting{"aria-controls" => "example1", "aria-label" => "Browser: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 100px;", :tabindex => "0"} App Availability
                     %th.sorting{"aria-controls" => "example1", "aria-label" => "CSS grade: activate to sort column ascending", :colspan => "1", :rowspan => "1", :style => "width: 250px;", :tabindex => "0"} Options
                 %tbody
                   - types.each do |type|
@@ -26,6 +27,12 @@
                       %td.sorting_1= type.name
                       
                       %td= type.description
+                      %td
+                        - if type.available
+                          %span.pull-left.badge.bg-green available to users
+                        -else
+                          %span.pull-right.badge.bg-grey unavailable
+                       
                       %td 
                         -if current_admin && current_admin.is_moderator?
                           = link_to 'Edit', edit_admin_establishment_type_path(type), class: "label label-default"
@@ -35,11 +42,16 @@
                           = link_to 'Edit', edit_admin_establishment_type_path(type), class: "label label-default"
                           = link_to "Details", admin_establishment_type_path(type), class: "label label-warning"
                           = link_to 'Delete', admin_establishment_type_path(type), :method => :delete, :data => { :confirm => 'Deleting will destroy associated Establishments, Are you sure?' }, class: "label label-danger"
+                          -if type.available
+                            = link_to "Make unavailable", admin_establishment_type_activate_deactivate_type_path(type), class: "label label-default"
+                          -else
+                            = link_to "Make available", admin_establishment_type_activate_deactivate_type_path(type), class: "label label-success"
 
                 %tfoot
                   %tr
                     %th{:colspan => "1", :rowspan => "1"} Name
                     %th{:colspan => "1", :rowspan => "1"} Description
+                    %th{:colspan => "1", :rowspan => "1"} App Availability
                     %th{:colspan => "1", :rowspan => "1"} Options
           .row
             .col-sm-5
