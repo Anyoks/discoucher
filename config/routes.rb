@@ -77,6 +77,8 @@ Rails.application.routes.draw do
       get '/vouchers/all' #all vouchers
       post '/vouchers/est', :to => 'vouchers#show_for_establishment' #for a particular establishment
       get '/establishment_type/all'
+      get '/establishment_type/available_types'
+      get 'available/cartegories', :to => 'establishment_type#available_types'
 
       post '/favourites/add', :to => 'profile#add_favourite'
       get 'favourites', :to => 'profile#all' 

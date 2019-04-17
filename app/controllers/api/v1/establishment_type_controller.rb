@@ -9,6 +9,13 @@ class Api::V1::EstablishmentTypeController < Api::V1::BaseController
 		
 	end
 
+	def available_types
+		@types = EstablishmentType.where(available: true)
+
+		# return render_data @types
+		render jsonapi: @types, class: { EstablishmentType: Api::V1::SerializableEstablishmentType }
+	end
+
 	def hotel_vouchers
 		hotel = EstablishmentType.where(name: "Hotel").first
 
@@ -51,5 +58,12 @@ class Api::V1::EstablishmentTypeController < Api::V1::BaseController
 	def me
 		
 	end
+
+	private
+
+	def render_data array
+		render json: { data: array }
+	end
+
 	
 end

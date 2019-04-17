@@ -41,5 +41,14 @@ class EstablishmentType < ApplicationRecord
 			
 		end
 	end
+
+	def self.available_types
+		names = []
+		EstablishmentType.where(available: true).each do  |type|
+			names << type.name
+		end
+
+		return names
+	end
 	
 end
