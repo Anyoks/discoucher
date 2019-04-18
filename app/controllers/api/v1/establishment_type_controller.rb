@@ -33,7 +33,7 @@ class Api::V1::EstablishmentTypeController < Api::V1::BaseController
 	end
 
 	def hotel_vouchers
-		hotel = EstablishmentType.where(name: "hotel").first
+		hotel = EstablishmentType.where(name: "hotels").first
 
 		hotel_vouchers = paginate hotel.vouchers.order("RANDOM()"), per_page: 30
 
