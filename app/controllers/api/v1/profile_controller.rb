@@ -41,7 +41,7 @@ class Api::V1::ProfileController < Api::V1::BaseController
 		user = current_api_v1_user
 		return invalid_user unless  user
 
-		favs = user.get_favourte_vouchers
+		favs =  paginate user.get_favourte_vouchers, per_page: 30
 
 		# render jsonapi: favs, class: { Voucher: Api::V1::SerializableVoucher }
 
@@ -79,8 +79,7 @@ class Api::V1::ProfileController < Api::V1::BaseController
 		user = current_api_v1_user
 		return invalid_user unless  user
 
-		redeemed = []
-		user.visits.each { |visit| redeemed << visit.voucher}
+		redeemed = paginate user.get_redeemed_offers, per_page: 30
 
 		context = { user: current_api_v1_user}
 		@voucher_resources = redeemed.map { |voucher| Api::V1::VoucherResource.new(voucher, context) }

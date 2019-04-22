@@ -229,11 +229,19 @@ class User < ApplicationRecord
 
 	def get_favourte_vouchers
 		array = []
-		self.favourites.each do |favourite|
+		self.favourites.order("RANDOM()").each do |favourite|
 			array << favourite.voucher
 		end
 
 		return array
+	end
+
+	def get_redeemed_offers
+
+		redeemed = []
+		self.visits.order("RANDOM()").each { |visit| redeemed << visit.voucher}
+
+		return redeemed
 	end
 
 	# get the ids for this users's registered (bought books)
