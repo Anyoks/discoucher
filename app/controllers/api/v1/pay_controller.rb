@@ -16,7 +16,7 @@ class Api::V1::PayController < Api::V1::BaseController
 		user_id		 = User.where(email: uid).first.id
 
 		mpesa 				= Mpesa.new( phone_number, amount, description)
-		request 			= mpesa.request_mpesa_api
+		request 			= mpesa.request_live_mpesa_api
 
 		# byebug
 		json 				= JSON.parse(request.body)
