@@ -10,7 +10,7 @@ class Api::V1::PayController < Api::V1::BaseController
 	def mobile
 		phone_number = params[:phone_number]
 		description  = params[:description]
-		amount		 = 1 #params[:amount]  # change this to 2000/- when system is ready.
+		amount		 = 2000 #params[:amount]  # change this to 2000/- when system is ready.
 		uid 	     = params[:uid]#params[:user_id]
 
 		user_id		 = User.where(email: uid).first.id
