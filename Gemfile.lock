@@ -248,7 +248,7 @@ GEM
       activerecord (>= 4.0, < 5.3)
     pg (0.18.4)
     public_suffix (3.0.1)
-    puma (3.11.2)
+    puma (3.12.6)
     rack (2.0.3)
     rack-protection (2.0.1)
       rack
@@ -412,7 +412,7 @@ DEPENDENCIES
   paperclip
   paranoia (~> 2.2)
   pg (~> 0.18.4)
-  puma (~> 3.7)
+  puma (~> 3.12)
   rails (~> 5.1.4)
   rake
   rspec-rails (~> 3.8)
